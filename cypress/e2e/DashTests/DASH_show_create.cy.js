@@ -8,7 +8,7 @@ describe("DASH tests", () => {
     })
   
     context("Show creation", ()=>{
-      it.skip("User can log in", () => {
+      it("User can log in", () => {
         cy.url().should('include', '/Home/Homepage')
         cy.contains('Welcome back').should('be.visible')
       })
@@ -128,7 +128,7 @@ describe("DASH tests", () => {
           cy.contains(code).should("exist")
 
         })
-        it.only("Show is visible in Manage Shows", () => {
+        it("Show is visible in Manage Shows", () => {
           cy.get(".link__title").contains("Manage Shows").click()
           cy.location("pathname").should("eq", "/ones/new/shows")
           cy.get(".header-banner__close-button").click()
