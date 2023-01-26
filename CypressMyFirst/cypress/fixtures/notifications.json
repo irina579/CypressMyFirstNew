@@ -1,0 +1,4047 @@
+{
+  "message": "",
+  "status": "fail",
+  "reference": {
+    "categories": [
+      {
+        "id": 1,
+        "name": "WFP rules"
+      },
+      {
+        "id": 2,
+        "name": "Show Ones notifications"
+      },
+      {
+        "id": 3,
+        "name": "Leavers"
+      },
+      {
+        "id": 4,
+        "name": "Contract Extensions"
+      },
+      {
+        "id": 5,
+        "name": "Salary changes requests"
+      },
+      {
+        "id": 6,
+        "name": "EJR requests (New hire)"
+      },
+      {
+        "id": 7,
+        "name": "Read-only notifications"
+      },
+      {
+        "id": 8,
+        "name": "DM Ones status"
+      }
+    ],
+    "labels": [
+      "Contract end date <= 8 weeks",
+      "Contract end date is effective soon",
+      "Contract Extension",
+      "Start date > 21 days",
+      "Ones are not matched with contract",
+      "Hire request",
+      "Salary Change",
+      "Assignment Scenario",
+      "Probation end date <= 1 month",
+      "Created by DM",
+      "Start date < 4 weeks or contract length < 12 weeks",
+      "More than 5% changes",
+      "Start date < 8 weeks or contract length < 12 weeks",
+      "Potential Ones in <= 56 days",
+      "Potential Ones in <= 28 days",
+      "Add Ones in <= 28 days",
+      "Add Ones in <= 14 days"
+    ],
+    "notifications": {
+      "actual": [
+        {
+          "key": "47fc5e8d-52f2-44ea-9277-256d414909ff",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T17:53:00"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "(TestDATA!)WFP Non-Compliant Approval for NH (157628) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157628)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-02-28"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157628,
+              "globalId": null,
+              "username": "157628"
+            }
+          ]
+        },
+        {
+          "key": "0a9a3ed5-852a-4a6e-bbe2-3bb5bdda9c8d",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T17:46:49"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157627) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157627)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-02-28"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157627,
+              "globalId": null,
+              "username": "157627"
+            }
+          ]
+        },
+        {
+          "key": "a5e1f621-8eab-499b-b770-d6d511f94367",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T17:37:38"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157626) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157626)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-02-28"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157626,
+              "globalId": null,
+              "username": "157626"
+            }
+          ]
+        },
+        {
+          "key": "f0e15d3d-0169-4adc-a643-98f563b0292a",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T13:54:23"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157621) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157621)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-08-27"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157621,
+              "globalId": null,
+              "username": "157621"
+            }
+          ]
+        },
+        {
+          "key": "fc806550-a1c2-40b2-90e1-bf18a3aa2dff",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T13:54:23"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157622) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157622)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-08-27"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157622,
+              "globalId": null,
+              "username": "157622"
+            }
+          ]
+        },
+        {
+          "key": "9b99b398-447d-4c3d-bb77-6d1231ae3396",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T13:54:23"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157623) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157623)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-08-27"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157623,
+              "globalId": null,
+              "username": "157623"
+            }
+          ]
+        },
+        {
+          "key": "24a3f0fc-728c-4c93-92cf-0ab822e9207a",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T13:54:23"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157624) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157624)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-08-27"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157624,
+              "globalId": null,
+              "username": "157624"
+            }
+          ]
+        },
+        {
+          "key": "71b5e9fc-a58f-45d0-89a7-4aafd72439f9",
+          "type": 6,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T13:54:23"
+          },
+          "label": "Start date < 8 weeks or contract length < 12 weeks",
+          "title": "WFP Non-Compliant Approval for NH (157625) is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Employee Type",
+                "childContent": [
+                  "NH"
+                ]
+              },
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "NH (157625)"
+                ]
+              },
+              {
+                "parentContent": "Assigned on show(s)",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Employee contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Employee contract end date",
+                "childContent": [
+                  "2023-08-27"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [
+            "reject"
+          ],
+          "categoryId": 1,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157625,
+              "globalId": null,
+              "username": "157625"
+            }
+          ]
+        },
+        {
+          "key": "c9a7c253-59b6-4720-8caf-e9358cec00de",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2023-01-24T13:48:50"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "globalMpcVfx"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "markAsRead",
+              "label": "Acknowledge"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "612cb289-fafa-4263-bfd4-6e903af77514",
+          "type": 3,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-24T13:47:22"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Virtual Production"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "3ad337b3-eadd-4d1a-940e-8d8c968feafc",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2023-01-23T13:27:39"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "PreVis"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "globalMpcVfx"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "markAsRead",
+              "label": "Acknowledge"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "1535fbed-df19-478d-8784-5d59f6aaa2e2",
+          "type": 0,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-22T04:00:03"
+          },
+          "label": "Contract end date <= 8 weeks",
+          "title": "cboo304 contract is expiring on 2023-07-19",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Employee",
+                "childContent": [
+                  "cboo304"
+                ]
+              },
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London"
+                ]
+              },
+              {
+                "parentContent": "Department",
+                "childContent": [
+                  "Assets"
+                ]
+              },
+              {
+                "parentContent": "Contract start date",
+                "childContent": [
+                  "2023-01-24"
+                ]
+              },
+              {
+                "parentContent": "Contract end date",
+                "childContent": [
+                  "2023-07-19"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "markAsRead",
+              "label": "Acknowledge"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 4,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 157606,
+              "globalId": 200304,
+              "username": "cboo304"
+            }
+          ]
+        },
+        {
+          "key": "74e9c278-435e-4edc-af32-0e3503ecfaa6",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2023-01-19T17:09:14"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "PreVis"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "globalMpcVfx"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "markAsRead",
+              "label": "Acknowledge"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "c74ff666-88c7-4870-a662-ae2e35c324c5",
+          "type": 3,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-18T19:19:34"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for AGST awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "Montreal (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "AGST"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Animation"
+                ]
+              }
+            ]
+          },
+          "controls": [],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "67874877-918a-4247-9539-645284107e72",
+          "type": 3,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-18T19:14:36"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for AGST awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "Montreal (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "AGST"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Layout"
+                ]
+              }
+            ]
+          },
+          "controls": [],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "8e1f277a-7d79-40c7-8b49-95721a719444",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2023-01-16T15:32:12"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "PreVis"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "globalMpcVfx"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "markAsRead",
+              "label": "Acknowledge"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "e107a79f-eda8-4e5f-85c3-92f835bd8dbd",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2023-01-16T15:32:09"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "PreVis"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "globalMpcVfx"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "markAsRead",
+              "label": "Acknowledge"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "0132e329-6d89-45b3-ad43-6b0a0899711e",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-06T10:42:51"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by nayanaa-s is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Maddala.Vignesh (Artist) - 3 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "nayanaa-s",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 147052,
+              "globalId": 241203,
+              "username": "Maddala.Vignesh"
+            }
+          ]
+        },
+        {
+          "key": "05d7be15-870a-4105-97c2-3b1efc58f5f3",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-06T08:29:14"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Darshan.MukeshbhaiDhaduk (Lead) - 2 One(s)",
+                  "- Anurag.Narla (Artist) - 2 One(s)",
+                  "- Rajat.Dubey (Artist) - 2 One(s)",
+                  "- Sayantan.Basak (Artist) - 2 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 2 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            },
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            },
+            {
+              "artistId": 42868,
+              "globalId": 204000,
+              "username": "Darshan.MukeshbhaiDhaduk"
+            }
+          ]
+        },
+        {
+          "key": "8d2356a1-d409-4cdd-91ec-a70d20e681e2",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2023-01-06T07:57:31"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by nayanaa-s is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Adinath.SarjeraoChavan (Key Artist) - 3 One(s)",
+                  "- Nikitha.Kini (Key Artist) - 3 One(s)",
+                  "- Sasikumar.Shanmugam (Key Artist) - 3 One(s)",
+                  "- Abhishek.Guha (Artist) - 1 One(s)",
+                  "- Affran.BadhushaK (Artist) - 1 One(s)",
+                  "- Arjun.TakurKomagan (Artist) - 3 One(s)",
+                  "- Ashu.Chauhan (Artist) - 5 One(s)",
+                  "- Enjon.Chakraborty (Artist) - 5 One(s)",
+                  "- Karthik.KumarA (Artist) - 1 One(s)",
+                  "- Kavinkumar.Murugaesan (Artist) - 1 One(s)",
+                  "- Payal.Sheoran (Artist) - 1 One(s)",
+                  "- Pooja.Singh (Artist) - 1 One(s)",
+                  "- RajupetSharathBabu.VishalReddy (Artist) - 1 One(s)",
+                  "- Rhythm.Aggarwal (Artist) - 5 One(s)",
+                  "- Rima.Roy (Artist) - 5 One(s)",
+                  "- Rishabh.Singh (Artist) - 3 One(s)",
+                  "- Rohit.Upadhyay (Artist) - 3 One(s)",
+                  "- Santanu.Saha (Artist) - 3 One(s)",
+                  "- Supramita.Dutta (Artist) - 3 One(s)",
+                  "- Vidul.KAji (Artist) - 5 One(s)",
+                  "- Yadnyesh.DattatrayDalvi (Artist) - 3 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "nayanaa-s",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 102752,
+              "globalId": 228452,
+              "username": "Supramita.Dutta"
+            },
+            {
+              "artistId": 103162,
+              "globalId": 228603,
+              "username": "RajupetSharathBabu.VishalReddy"
+            },
+            {
+              "artistId": 105069,
+              "globalId": 229212,
+              "username": "Ashu.Chauhan"
+            },
+            {
+              "artistId": 111712,
+              "globalId": 230312,
+              "username": "Rishabh.Singh"
+            },
+            {
+              "artistId": 139939,
+              "globalId": 238620,
+              "username": "Rhythm.Aggarwal"
+            },
+            {
+              "artistId": 139940,
+              "globalId": 238601,
+              "username": "Rima.Roy"
+            },
+            {
+              "artistId": 139941,
+              "globalId": 238617,
+              "username": "Rohit.Upadhyay"
+            },
+            {
+              "artistId": 147016,
+              "globalId": 241147,
+              "username": "Abhishek.Guha"
+            },
+            {
+              "artistId": 147018,
+              "globalId": 241195,
+              "username": "Affran.BadhushaK"
+            },
+            {
+              "artistId": 147029,
+              "globalId": 241229,
+              "username": "Arjun.TakurKomagan"
+            },
+            {
+              "artistId": 147046,
+              "globalId": 241174,
+              "username": "Karthik.KumarA"
+            },
+            {
+              "artistId": 147048,
+              "globalId": 241207,
+              "username": "Kavinkumar.Murugaesan"
+            },
+            {
+              "artistId": 147061,
+              "globalId": 241115,
+              "username": "Payal.Sheoran"
+            },
+            {
+              "artistId": 147062,
+              "globalId": 241144,
+              "username": "Pooja.Singh"
+            },
+            {
+              "artistId": 149637,
+              "globalId": 242040,
+              "username": "Enjon.Chakraborty"
+            },
+            {
+              "artistId": 149653,
+              "globalId": 242042,
+              "username": "Santanu.Saha"
+            },
+            {
+              "artistId": 149668,
+              "globalId": 242048,
+              "username": "Vidul.KAji"
+            },
+            {
+              "artistId": 152214,
+              "globalId": 242305,
+              "username": "Yadnyesh.DattatrayDalvi"
+            },
+            {
+              "artistId": 150785,
+              "globalId": 211910,
+              "username": "Adinath.SarjeraoChavan"
+            },
+            {
+              "artistId": 43436,
+              "globalId": 207576,
+              "username": "Nikitha.Kini"
+            },
+            {
+              "artistId": 44308,
+              "globalId": 209530,
+              "username": "Sasikumar.Shanmugam"
+            }
+          ]
+        },
+        {
+          "key": "652a7e4e-1a65-41b7-b3cd-1839b774e842",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2022-12-23T11:53:44"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by aishwarya-rc is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Rigging",
+                "childContent": [
+                  "- Rajat.VijayPakhale (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "aishwarya-rc",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 140821,
+              "globalId": 239265,
+              "username": "Rajat.VijayPakhale"
+            }
+          ]
+        },
+        {
+          "key": "be3fe4cd-55b6-4532-a201-a641293e84c8",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2022-12-23T11:37:05"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Shubham.Gupta1 (Artist) - 5 One(s)",
+                  "- Sourabh.PrasadKR (Artist) - 5 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 145807,
+              "globalId": 240337,
+              "username": "Shubham.Gupta1"
+            },
+            {
+              "artistId": 146279,
+              "globalId": 240943,
+              "username": "Sourabh.PrasadKR"
+            }
+          ]
+        },
+        {
+          "key": "276ee8c3-b269-4998-a93d-5385c3139b43",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2022-12-23T11:34:02"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anand.DilipJoshi (Artist) - 1 One(s)",
+                  "- Nalini.Narayanappa (Artist) - 1 One(s)",
+                  "- Polaboina.ShatanandaDatta (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 140301,
+              "globalId": 239102,
+              "username": "Anand.DilipJoshi"
+            },
+            {
+              "artistId": 140313,
+              "globalId": 239127,
+              "username": "Nalini.Narayanappa"
+            },
+            {
+              "artistId": 140317,
+              "globalId": 239129,
+              "username": "Polaboina.ShatanandaDatta"
+            }
+          ]
+        },
+        {
+          "key": "045770b3-4d61-458b-893d-be0b7880deb9",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2022-12-23T09:35:52"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by aishwarya-rc is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Rigging",
+                "childContent": [
+                  "- karthik.bhat (Artist) - 1 One(s)",
+                  "- Neeraj.Roshan (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "aishwarya-rc",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 101821,
+              "globalId": 228319,
+              "username": "karthik.bhat"
+            },
+            {
+              "artistId": 140816,
+              "globalId": 239269,
+              "username": "Neeraj.Roshan"
+            }
+          ]
+        },
+        {
+          "key": "9b5ee54c-a8b2-427e-9857-21902a0d7cc3",
+          "type": 11,
+          "dateTime": {
+            "label": "Created",
+            "value": "2022-12-23T09:03:09"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by nayanaa-s is awaiting approval",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Adinath.SarjeraoChavan (Key Artist) - 4 One(s)",
+                  "- Nikitha.Kini (Key Artist) - 2 One(s)",
+                  "- Sasikumar.Shanmugam (Key Artist) - 3 One(s)",
+                  "- Abhishek.Guha (Artist) - 2 One(s)",
+                  "- Affran.BadhushaK (Artist) - 1 One(s)",
+                  "- Arjun.TakurKomagan (Artist) - 1 One(s)",
+                  "- Enjon.Chakraborty (Artist) - 1 One(s)",
+                  "- Karthik.KumarA (Artist) - 1 One(s)",
+                  "- Kavinkumar.Murugaesan (Artist) - 1 One(s)",
+                  "- Rhythm.Aggarwal (Artist) - 2 One(s)",
+                  "- Rima.Roy (Artist) - 2 One(s)",
+                  "- Rishabh.Singh (Artist) - 4 One(s)",
+                  "- Rohit.Upadhyay (Artist) - 4 One(s)",
+                  "- Santanu.Saha (Artist) - 4 One(s)",
+                  "- Subham.KumarDash (Artist) - 2 One(s)",
+                  "- Yadnyesh.DattatrayDalvi (Artist) - 4 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "accept",
+              "label": "Approve"
+            },
+            {
+              "key": "reject",
+              "label": "Reject"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "nayanaa-s",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 152214,
+              "globalId": 242305,
+              "username": "Yadnyesh.DattatrayDalvi"
+            },
+            {
+              "artistId": 111712,
+              "globalId": 230312,
+              "username": "Rishabh.Singh"
+            },
+            {
+              "artistId": 139941,
+              "globalId": 238617,
+              "username": "Rohit.Upadhyay"
+            },
+            {
+              "artistId": 149653,
+              "globalId": 242042,
+              "username": "Santanu.Saha"
+            },
+            {
+              "artistId": 150785,
+              "globalId": 211910,
+              "username": "Adinath.SarjeraoChavan"
+            },
+            {
+              "artistId": 43436,
+              "globalId": 207576,
+              "username": "Nikitha.Kini"
+            },
+            {
+              "artistId": 44308,
+              "globalId": 209530,
+              "username": "Sasikumar.Shanmugam"
+            },
+            {
+              "artistId": 139939,
+              "globalId": 238620,
+              "username": "Rhythm.Aggarwal"
+            },
+            {
+              "artistId": 139940,
+              "globalId": 238601,
+              "username": "Rima.Roy"
+            },
+            {
+              "artistId": 149637,
+              "globalId": 242040,
+              "username": "Enjon.Chakraborty"
+            },
+            {
+              "artistId": 147016,
+              "globalId": 241147,
+              "username": "Abhishek.Guha"
+            },
+            {
+              "artistId": 147018,
+              "globalId": 241195,
+              "username": "Affran.BadhushaK"
+            },
+            {
+              "artistId": 147029,
+              "globalId": 241229,
+              "username": "Arjun.TakurKomagan"
+            },
+            {
+              "artistId": 147046,
+              "globalId": 241174,
+              "username": "Karthik.KumarA"
+            },
+            {
+              "artistId": 147048,
+              "globalId": 241207,
+              "username": "Kavinkumar.Murugaesan"
+            },
+            {
+              "artistId": 147089,
+              "globalId": 241208,
+              "username": "Subham.KumarDash"
+            }
+          ]
+        }
+      ],
+      "processed": [
+        {
+          "key": "1ddfb47e-0874-455a-877c-4b25f6ebc5d8",
+          "type": 11,
+          "dateTime": {
+            "label": "Rejected",
+            "value": "2023-01-22T22:03:11"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by nayanaa-s has been rejected",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Varun.SinghWilkhu (Artist) - 2 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "nayanaa-s",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 150179,
+              "globalId": 242144,
+              "username": "Varun.SinghWilkhu"
+            }
+          ]
+        },
+        {
+          "key": "c1e6bdcc-f59e-4c7d-9105-f3b8659b72e3",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-23T08:28:00"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)",
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            },
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "b5a7ffce-dd3d-43a8-a421-5d4ee287c922",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-23T08:27:56"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)",
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            },
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "4298c3c8-a794-41a1-a92c-b7d936f36c82",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-23T08:27:52"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by aishwarya-rc has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Supramita.Dutta (Artist) - 4 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "aishwarya-rc",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 102752,
+              "globalId": 228452,
+              "username": "Supramita.Dutta"
+            }
+          ]
+        },
+        {
+          "key": "a1c193f9-477d-4d0e-9256-6443ae625895",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-23T08:27:40"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by aishwarya-rc has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Groom",
+                "childContent": [
+                  "- Nagendra.Chandrappa (Artist) - 1 One(s)",
+                  "- Venkat.VishnuSai (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "aishwarya-rc",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 105492,
+              "globalId": 229361,
+              "username": "Nagendra.Chandrappa"
+            },
+            {
+              "artistId": 136141,
+              "globalId": 237777,
+              "username": "Venkat.VishnuSai"
+            }
+          ]
+        },
+        {
+          "key": "3a8e5fab-bc96-4bc4-8e38-d501c02274e1",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-23T08:27:34"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "8b69bbc6-5c82-4f21-b836-9ee2b48c3a34",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-23T08:27:29"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            }
+          ]
+        },
+        {
+          "key": "f4f0c488-6181-4f6c-b74c-01919dffeec7",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-06T09:15:23"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "304f7c79-5d90-477e-8969-06bbf64bf741",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-06T09:15:19"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            }
+          ]
+        },
+        {
+          "key": "83b8996e-dd95-47ff-8032-6dd189753412",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-12-06T09:15:16"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)",
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            },
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "29750fd8-c00e-4842-bd79-d4d8d6a03adb",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-22T07:20:55"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)",
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            },
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "0b8c0e1b-3a35-4ea5-bd48-c5ad5561eda3",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-22T07:20:51"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by aishwarya-rc has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Nikitha.Kini (Key Artist) - 1 One(s)",
+                  "- Sasikumar.Shanmugam (Key Artist) - 1 One(s)",
+                  "- Dommadi.Reddy (Artist) - 1 One(s)",
+                  "- Gerard.MathewS (Artist) - 1 One(s)",
+                  "- RajupetSharathBabu.VishalReddy (Artist) - 1 One(s)",
+                  "- Supramita.Dutta (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "aishwarya-rc",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 68118,
+              "globalId": 218229,
+              "username": "Dommadi.Reddy"
+            },
+            {
+              "artistId": 102752,
+              "globalId": 228452,
+              "username": "Supramita.Dutta"
+            },
+            {
+              "artistId": 102986,
+              "globalId": 228473,
+              "username": "Gerard.MathewS"
+            },
+            {
+              "artistId": 103162,
+              "globalId": 228603,
+              "username": "RajupetSharathBabu.VishalReddy"
+            },
+            {
+              "artistId": 43436,
+              "globalId": 207576,
+              "username": "Nikitha.Kini"
+            },
+            {
+              "artistId": 44308,
+              "globalId": 209530,
+              "username": "Sasikumar.Shanmugam"
+            }
+          ]
+        },
+        {
+          "key": "ef165f84-6ce8-4251-8973-2dda8194794f",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-22T07:19:57"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by nayanaa-s has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Nikitha.Kini (Key Artist) - 1 One(s)",
+                  "- Sasikumar.Shanmugam (Key Artist) - 1 One(s)",
+                  "- Dommadi.Reddy (Artist) - 1 One(s)",
+                  "- Gerard.MathewS (Artist) - 1 One(s)",
+                  "- RajupetSharathBabu.VishalReddy (Artist) - 1 One(s)",
+                  "- Supramita.Dutta (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "nayanaa-s",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 68118,
+              "globalId": 218229,
+              "username": "Dommadi.Reddy"
+            },
+            {
+              "artistId": 102986,
+              "globalId": 228473,
+              "username": "Gerard.MathewS"
+            },
+            {
+              "artistId": 103162,
+              "globalId": 228603,
+              "username": "RajupetSharathBabu.VishalReddy"
+            },
+            {
+              "artistId": 102752,
+              "globalId": 228452,
+              "username": "Supramita.Dutta"
+            },
+            {
+              "artistId": 43436,
+              "globalId": 207576,
+              "username": "Nikitha.Kini"
+            },
+            {
+              "artistId": 44308,
+              "globalId": 209530,
+              "username": "Sasikumar.Shanmugam"
+            }
+          ]
+        },
+        {
+          "key": "1ba37b04-9d55-421c-8b6a-09ce7e0320e9",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-22T07:19:52"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Rajat.Dubey (Artist) - 1 One(s)",
+                  "- Sayantan.Basak (Artist) - 1 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "b39aebf2-49eb-406d-a279-d2fbb5c3777c",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-22T07:19:46"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 1 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            }
+          ]
+        },
+        {
+          "key": "320b5edf-57c6-4254-b46a-f184c47d07c3",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-07T09:48:40"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Akash.Pramanick (Artist) - 4 One(s)",
+                  "- Gandhar.UlhasBhandari (Artist) - 4 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 111722,
+              "globalId": 230144,
+              "username": "Akash.Pramanick"
+            },
+            {
+              "artistId": 115652,
+              "globalId": 231873,
+              "username": "Gandhar.UlhasBhandari"
+            }
+          ]
+        },
+        {
+          "key": "092ee189-d4cc-484d-98b0-72b48c9e4e52",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-07T09:48:35"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by nayanaa-s has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Nikitha.Kini (Key Artist) - 6 One(s)",
+                  "- Sasikumar.Shanmugam (Key Artist) - 6 One(s)",
+                  "- Dommadi.Reddy (Artist) - 6 One(s)",
+                  "- Gerard.MathewS (Artist) - 6 One(s)",
+                  "- RajupetSharathBabu.VishalReddy (Artist) - 6 One(s)",
+                  "- Supramita.Dutta (Artist) - 6 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "nayanaa-s",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 44308,
+              "globalId": 209530,
+              "username": "Sasikumar.Shanmugam"
+            },
+            {
+              "artistId": 43436,
+              "globalId": 207576,
+              "username": "Nikitha.Kini"
+            },
+            {
+              "artistId": 102986,
+              "globalId": 228473,
+              "username": "Gerard.MathewS"
+            },
+            {
+              "artistId": 103162,
+              "globalId": 228603,
+              "username": "RajupetSharathBabu.VishalReddy"
+            },
+            {
+              "artistId": 102752,
+              "globalId": 228452,
+              "username": "Supramita.Dutta"
+            },
+            {
+              "artistId": 68118,
+              "globalId": 218229,
+              "username": "Dommadi.Reddy"
+            }
+          ]
+        },
+        {
+          "key": "69288b2e-cbde-4885-8052-0ecc279e1828",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-07T09:48:24"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by Vasantharaj-g has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- Anurag.Narla (Artist) - 6 One(s)",
+                  "- Rajat.Dubey (Artist) - 6 One(s)",
+                  "- Sayantan.Basak (Artist) - 6 One(s)",
+                  "- Swapnil.SanjayNare (Artist) - 6 One(s)",
+                  "- Vighnesh.BhaskaranIyer (Artist) - 3 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "Vasantharaj-g",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 115601,
+              "globalId": 231836,
+              "username": "Vighnesh.BhaskaranIyer"
+            },
+            {
+              "artistId": 144226,
+              "globalId": 240343,
+              "username": "Anurag.Narla"
+            },
+            {
+              "artistId": 144256,
+              "globalId": 240369,
+              "username": "Rajat.Dubey"
+            },
+            {
+              "artistId": 144270,
+              "globalId": 240379,
+              "username": "Sayantan.Basak"
+            },
+            {
+              "artistId": 144279,
+              "globalId": 240436,
+              "username": "Swapnil.SanjayNare"
+            }
+          ]
+        },
+        {
+          "key": "773ef4f1-6311-4e27-bfdb-edb632beddfa",
+          "type": 11,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-11-07T09:48:08"
+          },
+          "label": "Created by DM",
+          "title": "DM Ones request for A-LIB by deexa-t has been approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Discipline: Assets",
+                "childContent": [
+                  "- ShubhamTukaram.Bhogavakar (Artist) - 4 One(s)"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 8,
+          "createdByUserName": "deexa-t",
+          "projectType": null,
+          "artistInfos": [
+            {
+              "artistId": 111733,
+              "globalId": 230023,
+              "username": "ShubhamTukaram.Bhogavakar"
+            }
+          ]
+        },
+        {
+          "key": "d06f444b-a22f-41f7-81bb-d80ed8117b2e",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-09-13T10:13:35"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "krishnane"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "69c50af2-3c72-483b-ab89-f49aea3f5103",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-09-13T10:13:23"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "krishnane"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "893e89b1-f23f-42ba-9c42-3765a38f0597",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-07-11T13:35:56"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Texturing",
+                  "Modelling"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "krishnane"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "5897be50-bc70-4dce-90ae-58b467ebf78b",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-07-11T13:35:46"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "krishnane"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "1d4dc5e9-a632-498f-b518-6e2d4e306e88",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-06-03T10:35:34"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "krishnane"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "b032a057-0e7e-42aa-8745-8e6921bc0c3f",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-05-17T19:43:52"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Texturing",
+                  "Modelling"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "krishnane"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "240d5784-27fb-4000-aedf-e7ddd0357070",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-02-14T12:02:47"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "London (MPC)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Environments"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "charlotte-si"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "ed473717-2abd-4700-a229-e3136e01ff08",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2021-12-14T10:18:59"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "Namita.Gotephode"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "0805a0a9-ca16-44bf-bdc9-4069710f9e7c",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2021-12-14T10:19:03"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "Namita.Gotephode"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "4f8eb017-acee-4897-93d6-81f4dba8a71b",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-01-05T16:51:17"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "Namita.Gotephode"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "6c449c5d-5dff-4038-9527-dfde49a32392",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2022-01-05T16:50:53"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "Namita.Gotephode"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "41e5324e-83a6-477f-9766-bf19ea502998",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2021-05-21T18:22:08"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "4aabe47d-711e-47ab-9fe0-c07c934a5c29",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2021-05-21T18:22:06"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "b4e57f6a-a3d7-4550-9a6f-ff4af7a3ee85",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2021-01-22T11:04:45"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "c4e30359-c9b2-4dd7-9885-eb6f0b48cb11",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2021-01-22T11:04:47"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "f82a5b63-e646-4e88-a11a-5a8c62edd2f5",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2020-12-02T13:38:17"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "1a09d790-7797-4dfe-a560-d77b7a8d8833",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2020-12-02T13:38:19"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "b8e96b9f-1e24-4ae3-99b3-6f9f027efada",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2020-10-08T11:45:32"
+          },
+          "label": "More than 5% changes",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        },
+        {
+          "key": "8489c8c4-e6df-4825-b418-978016486d8a",
+          "type": 3,
+          "dateTime": {
+            "label": "Accepted",
+            "value": "2020-10-08T11:45:34"
+          },
+          "label": "Add Ones in <= 28 days",
+          "title": "Request on publishing of show ones for A-LIB has been  approved",
+          "content": {
+            "contentType": 2,
+            "textContent": null,
+            "tableContent": [
+              {
+                "parentContent": "Site",
+                "childContent": [
+                  "TCI Bangalore (Technicolor India)"
+                ]
+              },
+              {
+                "parentContent": "Show",
+                "childContent": [
+                  "A-LIB"
+                ]
+              },
+              {
+                "parentContent": "Disciplines",
+                "childContent": [
+                  "Modelling",
+                  "Texturing"
+                ]
+              },
+              {
+                "parentContent": "Processed by user",
+                "childContent": [
+                  "matina-p"
+                ]
+              }
+            ]
+          },
+          "controls": [
+            {
+              "key": "delete",
+              "label": "Delete"
+            }
+          ],
+          "forceUpdateActionKeys": [],
+          "categoryId": 2,
+          "createdByUserName": null,
+          "projectType": null,
+          "artistInfos": []
+        }
+      ]
+    }
+  }
+}
