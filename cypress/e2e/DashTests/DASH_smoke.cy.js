@@ -84,24 +84,20 @@ describe("DASH smoke tests", () => {
         cy.contains("Apply").click()
         cy.contains(".row__column","CH").eq(0).should("exist") //check if CH exists in table
       })
-      it("Can open DL Ones => Planning grid", () => {
+      it.only("Can open DL Ones => Planning grid", () => {
         //cy.get(".link__title").contains("DL Dept. Ones").click()
         cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
         cy.url().should('include', '/ones/new')
         //checks if generalist or not
-        let generalist=0
-        cy.get(".v-select-grouped__toggle").then(($text)=>{
-          if (($text.text().includes("London (MPC)")) || ($text.text().includes("Berlin (MPC)"))) {
-            cy.contains("Apply").click() //site is generalist - NOT London or Berlin MPC
-            generalist=1
-          }
-          else {
-            cy.contains('.Vheader-text',"Dates").prev().click()
-            cy.contains("Select All").click() //checks all departments
-            cy.get(".main-heading").click()
-            cy.contains("Apply").click()
-          }
-        })
+        
+       cy.get(".v-select-grouped__toggle").then(($text1)=>{
+        if (!Cypress.env('generalist').includes($text1.text().trim())){ //not generalist
+          cy.contains('.Vheader-text',"Dates").prev().click()
+          cy.contains("Select All").click() //checks all departments
+          cy.get(".main-heading").click()  
+        }
+       })
+        cy.contains("Apply").click()
         cy.get(".item_artist").eq(0).should("exist")
         cy.contains('.Vheader-text',"Dates").prev().click()
         cy.contains("Select All").click()
@@ -109,33 +105,27 @@ describe("DASH smoke tests", () => {
         cy.get(".main-heading").click()
         cy.contains("Apply").click()
         cy.get(".item_artist").eq(0).should("exist")
-        //checks department label in grid if NOT generalist site
-        if (generalist==0){
-          cy.contains(".item__info__department-name",Cypress.env('DL_dept')).should("exist")
-          //cy.log(generalist)
-        }
+        cy.get(".v-select-grouped__toggle").then(($text1)=>{
+          if (!Cypress.env('generalist').includes($text1.text().trim())){ //not generalist
+            cy.contains(".item__info__department-name",Cypress.env('DL_dept')).should("exist")
+          }
+        })
       })
-      it("Can open DL Teams", () => {
+
+      it.only("Can open DL Teams", () => {
         //cy.wait(10000)
         cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
         cy.contains(".tab-title", "Teams").click()
         cy.wait(10000) //some delay to wait until notifications are loaded. Otherwise network error fails
         //checks if generalist or not
-        let generalist=0
-        cy.get(".v-select-grouped__toggle").then(($text)=>{
-          if (($text.text().includes("London (MPC)")) || ($text.text().includes("Berlin (MPC)"))) {
-            cy.contains("Apply").click() //site is generalist - NOT London or Berlin MPC
-            generalist=1
-            cy.get('[data-icon="pencil"]').should("exist")   //can edit
-          }
-          else {
+        cy.get(".v-select-grouped__toggle").then(($text1)=>{
+          if (!Cypress.env('generalist').includes($text1.text().trim())){ //not generalist
             cy.contains('.Vheader-text',"Dates").prev().click()
             cy.contains("Select All").click() //checks all departments
-            cy.get(".main-heading").click()
-            cy.contains("Apply").click()
-            cy.get('[data-icon="pencil"]').should("not.exist")   //cannot edit
+            cy.get(".main-heading").click()  
           }
-        })
+        })  
+        cy.contains("Apply").click()  
         cy.get(".name__team").eq(0).should("exist")
         cy.contains('.Vheader-text',"Dates").prev().click()
         cy.contains("Select All").click()

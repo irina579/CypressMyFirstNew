@@ -13,7 +13,8 @@ env: {
     login_g: 'global',
     password_g: 'global',
     IDL_dept: 'Production Management',
-    DL_dept: 'Assets'
+    DL_dept: 'Assets',
+    generalist: ['London (MPC)', 'Berlin (MPC)']
 
   },
 };
