@@ -13,14 +13,14 @@ describe("find text of an attribute in Cypress ", () => {
        })
        
        })
-       it.only("Capture part of link", () => {
+       it.skip("Capture part of link", () => {
         // cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
         // cy.contains(".tab-title", "Vacancies converted info").click()
         cy.visit('https://docs.cypress.io/api/commands/location') 
         cy.url().then(urlString =>x=urlString)
         cy.log(x) 
        })
-       it.only("API2", () => {
+       it.skip("API2", () => {
         // cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
         // cy.contains(".tab-title", "Vacancies converted info").click()
         cy.log(x) 

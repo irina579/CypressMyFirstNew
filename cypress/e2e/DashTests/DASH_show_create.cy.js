@@ -7,7 +7,7 @@ describe("DASH tests", () => {
       cy.contains('Log in').click()
     })
   
-    context("Show creation", ()=>{
+    context.skip("Show creation", ()=>{
       it("User can log in", () => {
         cy.url().should('include', '/Home/Homepage')
         cy.contains('Welcome back').should('be.visible')

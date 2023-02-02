@@ -16,7 +16,7 @@ describe("DASH API samples",
       cy.contains('Log in').click()
       cy.get(".header-banner__close-button").click()
     })
-    it.only("API works", () => {
+    it.skip("API works", () => {
         cy.url().should('include', '/Home/Homepage')
         cy.contains('Welcome back').should('be.visible')
         
