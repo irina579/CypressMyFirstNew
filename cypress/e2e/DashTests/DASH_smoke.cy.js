@@ -403,7 +403,7 @@ describe("DASH smoke tests",
         })
       })
 
-      it.only("Can open DL Vacancies converted info", () => {
+      it("Can open DL Vacancies converted info", () => {
            cy.contains(".tab-title", "Vacancies converted info").click()
           cy.contains(".btn__overflow","Nothing selected").click()
           cy.contains("a",Cypress.env('DL_dept')).click()
