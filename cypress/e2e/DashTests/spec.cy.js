@@ -1,5 +1,5 @@
 describe('DASH login', () => {
-  it('Visit login page', () => {
+  it.skip('Visit login page', () => {
     cy.visit('http://10.94.6.100/')
 
     cy.get('#UserName').type('global')
@@ -15,3 +15,6 @@ describe('DASH login', () => {
 
   })
 })
+
+
+

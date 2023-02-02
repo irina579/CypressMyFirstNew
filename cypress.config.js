@@ -1,4 +1,5 @@
 module.exports = {
+  projectId: "e3m7sj",
   e2e: {
    experimentalStudio: true,
     setupNodeEvents(on, config) {

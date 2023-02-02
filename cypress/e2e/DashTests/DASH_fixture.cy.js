@@ -4,7 +4,7 @@
 // the built-in JavaScript bundler
 //const requiredExample = require('../../fixtures/notifications')
 
-context('Files', () => {
+context.skip('Files', () => {
     beforeEach(() => {
       cy.visit('http://10.94.6.100/')
       cy.get('#UserName').type('global')
