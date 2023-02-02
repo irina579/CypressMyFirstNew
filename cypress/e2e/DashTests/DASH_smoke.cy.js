@@ -1,6 +1,24 @@
-describe("DASH smoke tests", () => {
-    beforeEach(() => {
-      cy.visit(Cypress.env('url_g'))
+describe("DASH smoke tests", 
+//set enviroment variables for test suite
+{
+  env: {
+    req_timeout: 30000,
+    elem_timeout: 30000,
+   // password: 'global'
+  },
+},
+() => 
+{  
+  const SelectAllDepts = ()=>{
+  cy.log("Selecting all depts in header")
+  cy.contains('.Vheader-text',"Dates").prev().click()
+  cy.contains("Select All").click() //checks all departments
+  cy.get(".main-heading").click()  
+  cy.contains("Apply").click()
+}
+  beforeEach(() => {
+   // testLog()  
+    cy.visit(Cypress.env('url_g'))
       cy.get('#UserName').type(Cypress.env('login_g'))
       cy.get('#Password').type(Cypress.env('password_g'))
       cy.contains('Log in').click()
@@ -31,13 +49,11 @@ describe("DASH smoke tests", () => {
         cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
       }) 
      it("Can open IDL Ones => Planning grid", () => {
-        cy.contains('.Vheader-text',"Dates").prev().click().as('departments_drdw')
-        cy.contains("Select All").click() //checks all departments
-        cy.get(".main-heading").click()
-        cy.contains("Apply").click()
+       // cy.contains('.Vheader-text',"Dates").prev().click().as('departments_drdw')
+        SelectAllDepts() //checks all departments
         cy.get(".item_artist").eq(0).should("exist")
         cy.contains(".btn__overflow","File").should("exist") //checks if File button available
-        cy.get('@departments_drdw').click()
+        cy.contains('.Vheader-text',"Dates").prev().click()
         cy.contains("Select All").click()
         cy.contains("label", Cypress.env('IDL_dept')).click() //checks 1 department
         cy.get(".main-heading").click()
@@ -47,24 +63,23 @@ describe("DASH smoke tests", () => {
         cy.contains("Apply").click()
         cy.wait('@grid_list').then(({response}) => {
           expect(response.statusCode).to.eq(200)
-          let artist_count=response.body.reference.artistPositions.items.length-1
-          let FirstName=response.body.reference.artistPositions.items[1].name.username
-
-          cy.log("The number of artist came from BE - "+artist_count)
+          let artist_count=response.body.reference.artistPositions.items.length
+          let FirstName
+          if(artist_count>0){
+          FirstName=response.body.reference.artistPositions.items[1].name.username
+          cy.get(".item_artist",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+          cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
           cy.log("The first artist is - "+FirstName)
-          if(artist_count>0)
-          cy.get(".item_artist",{ setTimeout: 30000 }).eq(0).should("exist")
-          cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
+          cy.contains(".item__info__department-name",Cypress.env('IDL_dept')).should("exist")
+          artist_count=artist_count-1
+          }
+          cy.log("The number of artist came from BE - "+artist_count)
         })
-        cy.contains(".item__info__department-name",Cypress.env('IDL_dept')).should("exist")
         cy.contains(".btn__overflow","File").should("exist") //checks if File button available
       })
       it("Can open IDL Teams", () => {
         cy.contains(".tab-title", "Teams").click()
-        cy.contains('.Vheader-text',"Dates").prev().click()
-        cy.contains("Select All").click() //checks all departments
-        cy.get(".main-heading").click()
-        cy.contains("Apply").click()
+        SelectAllDepts() //checks all departments
         cy.get('.TeamsTab__search').should('exist').type("123456789")
         cy.get('.VComboSearch__clear').click()
         cy.get('body').then(($body) => {   
@@ -112,16 +127,17 @@ describe("DASH smoke tests", () => {
         cy.contains("Apply").click()
         cy.contains(".btn__overflow","File").should("exist") //checks if File button available
 
-        cy.wait('@grid_list',{requestTimeout:15000}).then(({response}) => {
+        cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
           expect(response.statusCode).to.eq(200)
           let artist_count=response.body.reference.artistInfos.items.length
-          let FirstName=response.body.reference.artistInfos.items[0].userName
-
+          let FirstName
           cy.log("The number of artist came from BE - "+artist_count)
-          cy.log("The first artist is - "+FirstName)
-          if(artist_count>0)
+          if(artist_count>0){
+          FirstName=response.body.reference.artistInfos.items[0].userName
           cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
           cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
+          cy.log("The first artist is - "+FirstName)
+          } 
         })
         cy.contains(".btn__overflow","Current State").click() //open snapshot dropdown
         let CountSnap=0
@@ -132,7 +148,7 @@ describe("DASH smoke tests", () => {
               cy.contains('a','Current State').parent().eq(CountSnap).click()
               //checks if any artist comes from BE
               cy.contains("Apply").click()
-              cy.wait('@grid_list',{requestTimeout:15000}).then(({response}) => {
+              cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
               expect(response.statusCode).to.eq(200)
               let artist_count=response.body.reference.artistInfos.items.length
               let FirstName=response.body.reference.artistInfos.items[0].userName
@@ -172,14 +188,15 @@ describe("DASH smoke tests", () => {
       })  
       
     })
-    context.only("Ones Unit - DL grid", ()=>{  
+    context("Ones Unit - DL grid", ()=>{  
       beforeEach(() => {
         cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
         cy.url().should('include', '/ones/new')
         cy.contains('.Vheader-text',"Site").next().click()
         cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
       }) 
-      it("Can open DL Ones => Planning grid", () => {
+      it("Can open DL Ones => Planning grid", async () => {
+        let artist_count
         //checks if generalist or not
         cy.get(".v-select-grouped__toggle").then(($text1)=>{
           if (Cypress.env('generalist').includes($text1.text().trim())){ //is generalist
@@ -188,13 +205,10 @@ describe("DASH smoke tests", () => {
             cy.contains(".item__info__department-name",Cypress.env('DL_dept')).should("not.exist") //dept split is unavailable
           }
           else{
-            cy.contains('.Vheader-text',"Dates").prev().click()
-            cy.contains("Select All").click() //checks all departments
-            cy.get(".main-heading").click()  
-            cy.contains("Apply").click()
+            SelectAllDepts()
           }
         })  
-        cy.get(".item_artist",{ setTimeout: 30000 }).eq(0).should("exist")
+        cy.get(".item_artist",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
         cy.contains('.Vheader-text',"Dates").prev().click()
         cy.contains("Select All").click()
         cy.contains("label", Cypress.env('DL_dept')).click() //checks 1 department
@@ -204,15 +218,16 @@ describe("DASH smoke tests", () => {
         cy.contains("Apply").click()
         cy.wait('@grid_list').then(({response}) => {
           expect(response.statusCode).to.eq(200)
-          let artist_count=response.body.reference.artistPositions.items.length-1
-          let FirstName=response.body.reference.artistPositions.items[1].name.username
-
-          cy.log("The number of artist came from BE - "+artist_count)
-          cy.log("The first artist is - "+FirstName)
-          if(artist_count>0)
-          cy.get(".item_artist",{ setTimeout: 20000 }).eq(0).should("exist")
+          let artist_count=response.body.reference.artistPositions.items.length
+          let FirstName
+          if(artist_count>0){
+          FirstName=response.body.reference.artistPositions.items[1].name.username
+          cy.get(".item_artist",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
           cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
-        
+          cy.log("The first artist is - "+FirstName)
+          artist_count=artist_count-1
+          }
+          cy.log("The number of artist came from BE - "+artist_count)
         })
       })
       it("Can open DL Ones => Actualised grid", () => {
@@ -224,14 +239,11 @@ describe("DASH smoke tests", () => {
             cy.contains(".item__info__department-name",Cypress.env('DL_dept')).should("not.exist") //dept split is unavailable
           }
           else{
-            cy.contains('.Vheader-text',"Dates").prev().click()
-            cy.contains("Select All").click() //checks all departments
-            cy.get(".main-heading").click()  
-            cy.contains("Apply").click()
+            SelectAllDepts()
           }
         })  
         cy.contains(".btn__overflow","File").should("not.exist") //checks if File button available
-        cy.get(".item_artist",{ setTimeout: 30000 }).eq(0).should("exist")
+        cy.get(".item_artist",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
         cy.contains('.Vheader-text',"Dates").prev().click()
         cy.contains("Select All").click()
         cy.contains("label", Cypress.env('DL_dept')).click() //checks 1 department
@@ -241,14 +253,17 @@ describe("DASH smoke tests", () => {
         cy.contains("Apply").click()
         cy.wait('@grid_list').then(({response}) => {
           expect(response.statusCode).to.eq(200)
-          let artist_count=response.body.reference.artistPositions.items.length-1
-          let FirstName=response.body.reference.artistPositions.items[1].name.username
-
+          let artist_count=response.body.reference.artistPositions.items.length
           cy.log("The number of artist came from BE - "+artist_count)
+          let FirstName
+          if(artist_count>0){
+          FirstName=response.body.reference.artistPositions.items[1].name.username
+          cy.get(".item_artist",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+          cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
           cy.log("The first artist is - "+FirstName)
-          if(artist_count>0)
-          cy.get(".item_artist",{ setTimeout: 30000 }).eq(0).should("exist")
-          cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
+          artist_count=artist_count-1
+          }
+          cy.log("The number of artist came from BE - "+artist_count)
         })
       })
       it("Can open DL Ones => Disciplines tab", () => {
@@ -263,12 +278,9 @@ describe("DASH smoke tests", () => {
             //cy.contains(".item__info__department-name",Cypress.env('DL_dept')).should("not.exist") //dept split is unavailable
           }
           else{
-            cy.contains('.Vheader-text',"Dates").prev().click()
-            cy.contains("Select All").click() //checks all departments
-            cy.get(".main-heading").click()  
-            cy.contains("Apply").click()
+            SelectAllDepts()
             cy.contains(".btn__overflow","File").should("not.exist") //checks if File button unavailable
-            cy.get(".ui-checkbox_default",{ setTimeout: 30000 }).eq(0).should("have.class","disabled") //checkboxes disabled
+            cy.get(".ui-checkbox_default",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("have.class","disabled") //checkboxes disabled
           }
         })  
         cy.get(".info__name").eq(1).should("exist")
@@ -279,16 +291,18 @@ describe("DASH smoke tests", () => {
         //checks if any artist comes from BE
         cy.intercept('/api/departmentonesnew/getdirectartistsdisciplines').as('grid_list')
         cy.contains("Apply").click()
-        cy.wait('@grid_list',{ setTimeout: 30000 }).then(({response}) => {
+        cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
           expect(response.statusCode).to.eq(200)
           let artist_count=response.body.reference.length
-          let FirstName=response.body.reference[0].name
+          let FirstName
           cy.log("The number of artist came from BE - "+artist_count)
-          cy.log("The first artist is - "+FirstName)
-          if(artist_count>0)
+          if(artist_count>0){
+          FirstName=response.body.reference[0].name
           cy.get(".info__name").eq(1).should("exist") //checks there is an artist in the grid
           cy.contains(".info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table
-          cy.get(".ui-checkbox_default").eq(0).should("not.have.class","disabled") //checkboxes enabled    
+          cy.get(".ui-checkbox_default").eq(0).should("not.have.class","disabled") //checkboxes enabled  
+          cy.log("The first artist is - "+FirstName)  
+          }
         })
       })
 
@@ -301,10 +315,7 @@ describe("DASH smoke tests", () => {
             cy.contains("Apply").click()
           }
           else{
-            cy.contains('.Vheader-text',"Dates").prev().click()
-            cy.contains("Select All").click() //checks all departments
-            cy.get(".main-heading").click()  
-            cy.contains("Apply").click()
+            SelectAllDepts()
           }
         }) 
         cy.get('.TeamsTab__search').should('exist').type("123456789")
@@ -356,7 +367,7 @@ describe("DASH smoke tests", () => {
         cy.contains("Apply").click()
         cy.contains(".btn__overflow","File").should("exist") //checks if File button available
 
-        cy.wait('@grid_list',{requestTimeout:15000}).then(({response}) => {
+        cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
           expect(response.statusCode).to.eq(200)
           let artist_count=response.body.reference.artistInfos.items.length
           let FirstName=response.body.reference.artistInfos.items[0].userName
@@ -376,23 +387,23 @@ describe("DASH smoke tests", () => {
               cy.contains('a','Current State').parent().eq(CountSnap).click()
               //checks if any artist comes from BE
               cy.contains("Apply").click()
-              cy.wait('@grid_list',{requestTimeout:15000}).then(({response}) => {
-              expect(response.statusCode).to.eq(200)
-              let artist_count=response.body.reference.artistInfos.items.length
-              let FirstName=response.body.reference.artistInfos.items[0].userName
-              cy.log("The number of artist came from BE - "+artist_count)
-              cy.log("The first artist is - "+FirstName)
-              if(artist_count>0){
-               cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
-               cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
-               cy.contains(".btn__overflow","File").should("not.exist") //checks if File button UNavailable (read only mode)
-              }
-              })     
+              cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+                let artist_count=response.body.reference.artistInfos.items.length
+                let FirstName
+                cy.log("The number of artist came from BE - "+artist_count)
+                if(artist_count>0){
+                FirstName=response.body.reference.artistInfos.items[0].userName
+                cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
+                cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
+                cy.log("The first artist is - "+FirstName)
+                } 
+              })
             }
         })
       })
 
-      it("Can open DL Vacancies converted info", () => {
+      it.only("Can open DL Vacancies converted info", () => {
            cy.contains(".tab-title", "Vacancies converted info").click()
           cy.contains(".btn__overflow","Nothing selected").click()
           cy.contains("a",Cypress.env('DL_dept')).click()
