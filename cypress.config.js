@@ -5,7 +5,7 @@ module.exports = {
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    retries:0,
+    retries:1,
     defaultCommandTimeout: 30000
   
   },
