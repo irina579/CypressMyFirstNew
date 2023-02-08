@@ -4,18 +4,18 @@
 // the built-in JavaScript bundler
 //const requiredExample = require('../../fixtures/notifications')
 
-context.skip('Files', () => {
+context('Files', () => {
     beforeEach(() => {
       cy.visit('http://10.94.6.100/')
-      cy.get('#UserName').type('global')
-      cy.get('#Password').type('global')
+      cy.get('#UserName').type('show')
+      cy.get('#Password').type('show')
       cy.contains('Log in').click()
       cy.wait(10000)
   
       //write a fixture file
       cy.request('GET','http://10.94.6.100/api/NotificationApi/GetNotifications')
         .then((response) => {
-          cy.writeFile('cypress/fixtures/notifications1.json', response.body)
+          cy.writeFile('cypress/fixtures/notifications_write.json', response.body)
         })
   
     })
