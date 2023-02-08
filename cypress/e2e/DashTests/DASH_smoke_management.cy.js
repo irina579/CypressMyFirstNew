@@ -102,21 +102,61 @@ describe("DASH smoke tests/Managements",
           })
 
       })
-      it.skip("Manage Shows=>Show card links work", () => {
-        cy.get('.show__content').eq(0).should("exist") //waits the grid is loaded
-        cy.get('body').then(($body) => {   
-           if ($body.find('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
-             cy.contains(".status__label","Active").eq(0).should("exist")
-             cy.get('.VDataTable').scrollTo('bottom', { ensureScrollable: false })
-             cy.log($body.find('.show__content').length)
+                
+       
+    })
+    context("Manage Shows => Navigation links", ()=>{
+      beforeEach(() => {
+        cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
+        cy.url().should('include', '/ones/new/shows')
+      }) 
+     it("Manage Shows=> Manage link", () => {
+        let show_number
+        cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              show_number=getRandomInt($body.length)
+              cy.get('.show__info').eq(show_number).find('div').eq(0).then(($code)=>{
+                let codeUI=$code.text().trim()
+                cy.intercept('GET', '**/api/ManageShowsApi/GetManageShow*').as('grid_list')
+                cy.get('.show__content').eq(show_number).find('.actions__item').eq(0).should("exist").click() //click Manage
+                cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+                  expect(response.statusCode).to.eq(200)
+                  let ShowCode=response.body.show.code
+                  cy.log('Show number= '+show_number)
+                  cy.url().should('include', '/ones/shows/add-edit')
+                  cy.title().should('include', 'Edit Show - MPC')
+                  cy.contains('.section__block_title','Show Details').should('exist')
+                  expect(codeUI).to.include(ShowCode)
+                })
+              })
            }
            else{
              cy.log("There are NO shows.")
            }
          })
-         
- 
+          
        })  
+       it.only("Manage Shows=> Show Planner link", () => {
+        let show_number
+        cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              show_number=getRandomInt($body.length)
+              cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click()             
+                  cy.log('Show number= '+show_number)
+                  cy.get('#btSim',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.url().should('include', 'ones/shows/showplanner')
+                  cy.title().should('include', 'Show Planner - MPC')
+                  
+           }
+           else{
+             cy.log("There are NO shows.")
+           }
+         })
+          
+       })  
+       
     })
     context("Manage Projects", ()=>{
       beforeEach(() => {
