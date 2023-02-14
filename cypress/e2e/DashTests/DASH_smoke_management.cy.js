@@ -125,7 +125,7 @@ describe("DASH smoke tests/Managements",
                   let ShowCode=response.body.show.code
                   cy.log('Show number= '+show_number)
                   cy.url().should('include', '/ones/shows/add-edit')
-                  cy.title().should('include', 'Edit Show - MPC')
+                  cy.title().should('include', 'Edit Show - '+Cypress.env("bu"))
                   cy.contains('.section__block_title','Show Details').should('exist')
                   expect(codeUI).to.include(ShowCode)
                 })
@@ -137,17 +137,83 @@ describe("DASH smoke tests/Managements",
          })
           
        })  
-       it.only("Manage Shows=> Show Planner link", () => {
+       
+       it("Manage Shows=> Ones link", () => {
+        let show_number
+        cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              show_number=getRandomInt($body.length)
+              cy.get('.show__info').eq(show_number).find('div').eq(0).then(($code)=>{
+                let codeUI=$code.text().trim()
+                cy.get('.show__content').eq(show_number).find('.actions__item').eq(2).should("exist").click()  
+                cy.log('Show number= '+show_number)
+                cy.log('Show code= '+codeUI)
+                cy.url().should('include', '/ones/show/')
+                cy.title().should('include', 'Show Ones -')
+                cy.contains('.btn__overflow','|').should('exist').then(($code)=>{
+                  let code_long=$code.text().trim()
+                  const re = /[|]/;
+                  let ShowCode=code_long.substring(0,code_long.search(re)).trim()
+                  cy.log('Show Ones, Show Code= '+ShowCode)
+                  expect(codeUI).to.include(ShowCode) //verify Show code cliked in Manage shows corresponds to loaded in Ones
+                  })
+                  cy.get('.item__info__department').should('exist')
+              })
+           }
+           else{
+             cy.log("There are NO shows.")
+           }
+         })
+          
+       })  
+       it("Manage Shows=> Financials link", () => {
+        let show_number
+        cy.contains('.actions__item','Financials').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              show_number=getRandomInt($body.length)
+              cy.get('.show__content').eq(show_number).find('.actions__item').eq(3).should("exist").click()             
+                  cy.log('Show number= '+show_number)
+                  cy.contains('.VButton__text','Print',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.url().should('include', 'ones/shows/financials')
+                  cy.title().should('include', 'Financials - '+Cypress.env("bu")) 
+           }
+           else{
+             cy.log("There are NO shows.")
+           }
+         })
+          
+       })    
+      it("Manage Shows=> Publish archive link", () => {
+        let show_number
+        cy.contains('.actions__item','Publish Archive').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              show_number=getRandomInt($body.length)
+              cy.get('.show__content').eq(show_number).find('.actions__item').eq(4).should("exist").click()             
+                  cy.log('Show number= '+show_number)
+                  cy.contains('.btn-content','Back to All Shows',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.url().should('include', 'ones/shows/publish-archive')
+                  cy.title().should('include', 'Publish Archive - '+Cypress.env("bu")) 
+           }
+           else{
+             cy.log("There are NO shows.")
+           }
+         })
+          
+       })  
+       it("Manage Shows=> Show Planner link", () => {
         let show_number
         cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length)
-              cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click()             
+              cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click() //show planner       
                   cy.log('Show number= '+show_number)
                   cy.get('#btSim',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
                   cy.url().should('include', 'ones/shows/showplanner')
-                  cy.title().should('include', 'Show Planner - MPC')
+                  cy.title().should('include', 'Show Planner - '+Cypress.env("bu"))
                   
            }
            else{
@@ -156,6 +222,67 @@ describe("DASH smoke tests/Managements",
          })
           
        })  
+    })
+    context("Create new Show", ()=>{
+     it("Create new Show page", () => {
+        cy.xpath("//div[normalize-space(text()) = 'Create New Show']").click()
+        cy.url().should('include', '/ones/shows/add-edit')
+        cy.contains('.section__block_title','Show Details').should('exist') //check if Show Details block exists
+        cy.contains('.section__block_title','Key Dates').should('exist') //check if Key Dates block exists
+        cy.contains('.section__block_title','Seniority Splits').should('exist') //etc.
+        cy.contains('.section__block_title','Financial').should('exist') //etc.
+        cy.contains('.section__block_title','Locations').should('exist') //etc.
+        //primary location
+        cy.contains("Primary").next(".input-group__input").should("exist").click()
+        cy.xpath("//a[contains(text(), 'London')]").eq(0).click()
+        //secondary location
+        cy.contains("Secondary").next(".input-group__input").should("exist").click()
+        cy.get('ul').find('label').eq(0).click()
+        cy.contains('span', 'Show Inputs').click()
+        cy.contains('.section__block_title','Exchange Rates').should('exist') //Exchange Rates
+        cy.contains('.section__block_title','Rate Cards').should('exist') 
+        cy.contains('span', 'Avg Artist Day Rates').click()
+        cy.contains('.navigation__button', 'London').click() //check is site tab exists
+        cy.contains('.cell', 'Assets').should('exist')
+        cy.contains('.navigation__button', 'London').siblings().click() //checks is the second site exists
+        cy.contains('.cell', 'Assets').should('exist')
+        cy.contains('span', 'Outsource Rates').click()
+        cy.contains('.navigation__tabName', Cypress.env('bu')).should('exist')
+        cy.contains('.cell', 'Assets').should('exist')
+        cy.contains('span', 'Bid Weeks').click()
+        cy.contains('Please, create new show').should('exist')
+        cy.contains('span', 'Contract Value').click()
+        cy.contains('.cell', 'London').should('exist')
+        cy.contains('.navigation__button', 'Adjustments').should('exist')
+        cy.contains('span', 'Add Row').should('exist')
+        cy.contains('span', 'Indirect Costs').click()
+        cy.contains('Please, create new show').should('exist')
+        cy.contains('span', 'Internal Bid').click()
+        cy.contains('.cell', 'London').should('exist')
+        cy.contains('.cell', 'Award Revenue').should('exist')
+        cy.contains('.VButton__text', 'Create show').should('exist')
+        cy.contains('.VButton__text', 'Cancel').click()
+        cy.url().should('include', '/ones/new/shows')
+      })  
+      it("Manage Shows => Create new Show page (on button click)", () => {
+        cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
+        cy.url().should('include', '/ones/new/shows')
+        cy.contains('.VButton__text','Create New Show').click()
+        cy.url().should('include', '/ones/shows/add-edit')
+        cy.contains('.section__block_title','Show Details').should('exist') //check if Show Details block exists
+        //check all tabs exist
+        cy.contains('span', 'Show Stats').should('exist')
+        cy.contains('span', 'Show Inputs').should('exist')
+        cy.contains('span', 'Avg Artist Day Rates').should('exist')
+        cy.contains('span', 'Outsource Rates').should('exist')
+        cy.contains('span', 'Bid Weeks').should('exist')
+        cy.contains('span', 'Contract Value').should('exist')
+        cy.contains('span', 'Indirect Costs').should('exist')
+        cy.contains('span', 'Internal Bid').should('exist')
+        //check back button navigates to Manage Shows
+        cy.contains('.buttons__back_text', 'Back').click()
+        cy.url().should('include', '/ones/new/shows')
+      })   
        
     })
     context("Manage Projects", ()=>{
@@ -233,6 +360,106 @@ describe("DASH smoke tests/Managements",
       })
         
     })
+    context("Manage Projects => Navigation links", ()=>{
+      beforeEach(() => {
+        cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
+        cy.url().should('include', '/ones/projects')
+      })
+      it("Manage Projects=> Summary link", () => {
+        let project_number
+        cy.contains('.actions__item','Summary').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              project_number=getRandomInt($body.length)
+              cy.get('.project__info').eq(project_number).find('div').eq(0).then(($code)=>{
+                let codeUI=$code.text().trim()
+                cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation*').as('grid_list')
+                cy.get('.project__content').eq(project_number).find('.actions__item').eq(0).should("exist").click() //click Summary
+                cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+                  expect(response.statusCode).to.eq(200)
+                  let ProjectCode=response.body.project.code
+                  let ProjectId=response.body.project.id
+                  cy.log('Project number= '+project_number)
+                  cy.url().should('include', '/ones/projects/?projectId='+ProjectId+'&isSummaryView=true')
+                  cy.title().should('include', 'Edit Project')
+                  cy.contains('.summary-table__header','project details').should('exist')
+                  expect(codeUI).to.include(ProjectCode)
+                })
+              })
+           }
+           else{
+             cy.log("There are NO projects.")
+           }
+         }) 
+      })    
+      it("Manage Projects=> Manage link", () => {
+        let project_number
+        cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              project_number=getRandomInt($body.length)
+              cy.get('.project__info').eq(project_number).find('div').eq(0).then(($code)=>{
+                let codeUI=$code.text().trim()
+                cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation?projectId*').as('grid_list')
+                cy.get('.project__content').eq(project_number).find('.actions__item').eq(1).should("exist").click() //click Manage
+                cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+                  expect(response.statusCode).to.eq(200)
+                  let ProjectCode=response.body.project.code
+                  let ProjectId=response.body.project.id
+                  cy.log('Project number= '+project_number)
+                  cy.url().should('include', '/ones/projects/?projectId='+ProjectId+'&isSummaryView=false')
+                  cy.title().should('include', 'Edit Project')
+                  cy.contains('.row__title','Project Details').should('exist')
+                  expect(codeUI).to.include(ProjectCode)
+                })
+              })
+           }
+           else{
+             cy.log("There are NO projects.")
+           }
+         })
+          
+       })  
+                 
+       })  
+    context("Create new Project", ()=>{
+      it("Create new Project page", () => {
+         cy.xpath("//div[normalize-space(text()) = 'Create New Project']").click()
+         cy.url().should('include', '/ones/projects/?isCreateMode=true')
+         cy.contains('.row__title','Project Details').should('exist') //check if Show Details block exists and others
+         cy.contains('.row__title','Key Dates').should('exist')
+         cy.contains('.row__title','Seniority Splits').should('exist')
+         cy.contains('.row__title','Locations').should('exist')
+         cy.contains('.row__title','Project Manager').should('exist')
+         cy.contains('.row__title','Additional info').should('exist')
+         cy.contains('.row__title','Created').should('exist')
+         cy.contains('.row__title','Updated').should('exist')
+         cy.contains('.VButton__text', 'Save').should('exist')
+         cy.contains('.VButton__text', 'Delete').parent().should('have.attr', 'disabled')
+         cy.contains('.VButton__text', 'Cancel').click()
+         cy.url().should('include', '/ones/projects/')
+       })  
+       it("Manage Projects => Create new Projects page (on button click)", () => {
+         cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
+         cy.url().should('include', '/ones/projects/')
+         cy.get('.VButton-theme_default-blue').click()
+         cy.url().should('include', '/ones/projects/?isCreateMode=true')
+         cy.contains('.row__title','Project Details').should('exist') //check if Show Details block exists and others
+         cy.contains('.row__title','Key Dates').should('exist')
+         cy.contains('.row__title','Seniority Splits').should('exist')
+         cy.contains('.row__title','Locations').should('exist')
+         cy.contains('.row__title','Project Manager').should('exist')
+         cy.contains('.row__title','Additional info').should('exist')
+         cy.contains('.row__title','Created').should('exist')
+         cy.contains('.row__title','Updated').should('exist')
+         cy.contains('.VButton__text', 'Save').should('exist')
+         cy.contains('.VButton__text', 'Delete').parent().should('have.attr', 'disabled')
+         cy.contains('.VButton__text', 'Cancel').should('exist')
+         cy.contains('.VButton__text', 'Back').click()
+         cy.url().should('include', '/ones/projects/')
+       })   
+        
+     })
 
     })
     export{}
