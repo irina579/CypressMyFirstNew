@@ -16,5 +16,3 @@ describe('DASH login', () => {
   })
 })
 
-//123456
-
