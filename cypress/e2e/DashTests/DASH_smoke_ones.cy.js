@@ -1,5 +1,5 @@
 describe("DASH smoke tests", 
-//set enviroment variables for test suite
+//set enviroment variables for test suite//12/12
 {
   env: {
     req_timeout: 30000,
