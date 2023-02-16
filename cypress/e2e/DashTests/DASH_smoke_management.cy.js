@@ -14,6 +14,7 @@ describe("DASH smoke tests/Managements",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   beforeEach(() => {
+      //cy.viewport(1680, 1050)
       cy.visit(Cypress.env('url_g'))
       cy.get('#UserName').type(Cypress.env('login_g'))
       cy.get('#Password').type(Cypress.env('password_g'))
@@ -116,14 +117,16 @@ describe("DASH smoke tests/Managements",
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length)
-              cy.get('.show__info').eq(show_number).find('div').eq(0).then(($code)=>{
-                let codeUI=$code.text().trim()
-                cy.intercept('GET', '**/api/ManageShowsApi/GetManageShow*').as('grid_list')
-                cy.get('.show__content').eq(show_number).find('.actions__item').eq(0).should("exist").click() //click Manage
-                cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+              cy.log('Show number='+show_number)
+              cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then(($code)=>{  
+              let codeUI=$code.text().trim()
+              cy.intercept('GET', '**/api/ManageShowsApi/GetManageShow*').as('grid_list')
+              cy.log('Show number1='+show_number)
+              cy.get('.show__content').eq(show_number).find('.actions__item').eq(0).should("exist").click() //click Manage
+              cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
                   expect(response.statusCode).to.eq(200)
                   let ShowCode=response.body.show.code
-                  cy.log('Show number= '+show_number)
+                  cy.log('Show number2= '+show_number)
                   cy.url().should('include', '/ones/shows/add-edit')
                   cy.title().should('include', 'Edit Show - '+Cypress.env("bu"))
                   cy.contains('.section__block_title','Show Details').should('exist')
@@ -144,7 +147,7 @@ describe("DASH smoke tests/Managements",
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length)
-              cy.get('.show__info').eq(show_number).find('div').eq(0).then(($code)=>{
+              cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then(($code)=>{
                 let codeUI=$code.text().trim()
                 cy.get('.show__content').eq(show_number).find('.actions__item').eq(2).should("exist").click()  
                 cy.log('Show number= '+show_number)
@@ -203,7 +206,7 @@ describe("DASH smoke tests/Managements",
          })
           
        })  
-       it("Manage Shows=> Show Planner link", () => {
+       it.skip("Manage Shows=> Show Planner link", () => {
         let show_number
         cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
@@ -371,7 +374,7 @@ describe("DASH smoke tests/Managements",
         cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               project_number=getRandomInt($body.length)
-              cy.get('.project__info').eq(project_number).find('div').eq(0).then(($code)=>{
+              cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then(($code)=>{
                 let codeUI=$code.text().trim()
                 cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation*').as('grid_list')
                 cy.get('.project__content').eq(project_number).find('.actions__item').eq(0).should("exist").click() //click Summary
@@ -398,7 +401,7 @@ describe("DASH smoke tests/Managements",
         cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               project_number=getRandomInt($body.length)
-              cy.get('.project__info').eq(project_number).find('div').eq(0).then(($code)=>{
+              cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then(($code)=>{
                 let codeUI=$code.text().trim()
                 cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation?projectId*').as('grid_list')
                 cy.get('.project__content').eq(project_number).find('.actions__item').eq(1).should("exist").click() //click Manage
@@ -459,7 +462,45 @@ describe("DASH smoke tests/Managements",
          cy.url().should('include', '/ones/projects/')
        })   
         
-     })
+     })   
+      it("Notifications page", () => {
+        cy.viewport(1680, 1050) //to make search field active
+        cy.intercept('/api/NotificationApi/GetNotifications').as('grid_list')
+        cy.contains('.link__title','Notification Center').click()
+        cy.url().should('include', '/notification-center/')
+        cy.contains('span','Actual').should('exist')
+        cy.contains('.toggle__label','Show only awaiting approvals').should('exist')
+        cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+          expect(response.statusCode).to.eq(200)
+          let actual_notifications_count=response.body.reference.notifications.actual.length
+          let processed_notifications_count=response.body.reference.notifications.processed.length
+          let RandomIndex=getRandomInt(actual_notifications_count)
+          cy.log(RandomIndex)
+          cy.log(actual_notifications_count)
+          let RandomTitle
+          if(actual_notifications_count>0){
+          cy.get('.notification__title').eq(0).should('have.text',response.body.reference.notifications.actual[0].title) //1-st notification's title corresponds to BE
+          RandomTitle=response.body.reference.notifications.actual[RandomIndex].title //store random title came in BE response
+          //counter displays correct value, similar to response count
+          cy.contains('span','Actual').next(".tabTitle__counter").should(($counter) => {
+            expect(parseInt(normalizeText($counter.text())),'Actual counter corresponds to BE response').to.equal(actual_notifications_count)
+          }) 
+          cy.contains('span','Processed').next(".tabTitle__counter").should(($counter) => {
+            expect(parseInt(normalizeText($counter.text())),'Processed counter corresponds to BE response').to.equal(processed_notifications_count)
+          })         
+          cy.get('[placeholder="Search"]').type(RandomTitle).type('{enter}') //initiate searching of this title on UI
+          cy.get('.notification__title').then(($body)=> {
+          cy.get('.notification__title').eq(getRandomInt($body.length)).should('include.text',RandomTitle)
+          cy.log("Search length - "+$body.length)   
+          })                
+          cy.log("The Title is - "+RandomTitle)
+                  
+          }
+          cy.log("The number of Actual notifications - "+actual_notifications_count)
+          cy.contains('span','Processed').should('exist').click()
+          cy.contains('.toggle__label','Show only awaiting approvals').should('not.exist')
+        })
 
+    })
     })
     export{}

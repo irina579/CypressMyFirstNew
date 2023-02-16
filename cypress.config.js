@@ -8,6 +8,8 @@ module.exports = {
     retries:0,
     defaultCommandTimeout: 30000,
     pageLoadTimeout: 80000
+    //viewportWidth: 1680,
+    //viewportHeight: 1050,
   
   },
 env: {
@@ -16,17 +18,17 @@ env: {
     IDL_dept: 'Production Management',
     DL_dept: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
-    // bu: 'MPC',
-    // url_g: 'http://10.94.6.100', 
-    // site_id: 20003, //Berlin
-    // IDL_dept_id: 20032, //Production Management
-    // DL_dept_id: 20008 //Assets
+    bu: 'MPC',
+    url_g: 'http://10.94.6.100', 
+    site_id: 20003, //Berlin
+    IDL_dept_id: 20032, //Production Management
+    DL_dept_id: 20008 //Assets
     
-    bu: 'Mikros Animation',
-    url_g: 'http://10.94.6.100:105',
-    site_id: 21002, //London
-    IDL_dept_id: 21031, //Production Management
-    DL_dept_id: 21007 //Assets
+    // bu: 'Mikros Animation',
+    // url_g: 'http://10.94.6.100:105',
+    // site_id: 21002, //London
+    // IDL_dept_id: 21031, //Production Management
+    // DL_dept_id: 21007 //Assets
    
 
   },
