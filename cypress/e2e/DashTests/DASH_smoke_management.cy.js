@@ -116,7 +116,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              show_number=getRandomInt($body.length)
+              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.log('Show number='+show_number)
               cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then(($code)=>{  
               let codeUI=$code.text().trim()
@@ -146,7 +146,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              show_number=getRandomInt($body.length)
+              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then(($code)=>{
                 let codeUI=$code.text().trim()
                 cy.get('.show__content').eq(show_number).find('.actions__item').eq(2).should("exist").click()  
@@ -175,7 +175,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Financials').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              show_number=getRandomInt($body.length)
+              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.actions__item').eq(3).should("exist").click()             
                   cy.log('Show number= '+show_number)
                   cy.contains('.VButton__text','Print',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
@@ -193,7 +193,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Publish Archive').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              show_number=getRandomInt($body.length)
+              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.actions__item').eq(4).should("exist").click()             
                   cy.log('Show number= '+show_number)
                   cy.contains('.btn-content','Back to All Shows',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
@@ -211,7 +211,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
         cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              show_number=getRandomInt($body.length)
+              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click() //show planner       
                   cy.log('Show number= '+show_number)
                   cy.get('#btSim',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
@@ -373,7 +373,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Summary').eq(0).should("exist") //waits the grid is loaded
         cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              project_number=getRandomInt($body.length)
+              project_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then(($code)=>{
                 let codeUI=$code.text().trim()
                 cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation*').as('grid_list')
@@ -400,7 +400,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
         cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
-              project_number=getRandomInt($body.length)
+              project_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then(($code)=>{
                 let codeUI=$code.text().trim()
                 cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation?projectId*').as('grid_list')
