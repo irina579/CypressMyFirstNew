@@ -8,7 +8,7 @@ module.exports = {
     retries:0,
     defaultCommandTimeout: 30000,
     pageLoadTimeout: 80000
-    //viewportWidth: 1680,
+    ///viewportWidth: 1680,
     //viewportHeight: 1050,
   
   },
