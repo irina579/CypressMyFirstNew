@@ -466,13 +466,19 @@ describe("DASH smoke tests",
           }
         })
         cy.contains("to see Ones content").should("exist")
-        cy.contains('.btn__overflow','Select show').click() //selecting a show in dropdown containing current year    
+        cy.contains('.btn__overflow','Select show').click()
+        cy.get('.VSelect__search').eq(0).parent(1).find('li').eq(getRandomInt(10)).click()
+        cy.contains('.item__info__department-name', 'PreVis').should('exist')
+        cy.contains('.btn__overflow',' | ').click()
+
         let date = new Date().getFullYear()
-        ///cy.get('.search__wrapper>input').eq(0).type(date)
+        cy.get('.search__wrapper>input').eq(0).type(date)
         //cy.get('.search__wrapper>input').eq(0).clear()
         cy.get('.VSelect__search').eq(0).parent(1).then(($Filter) => {
-          if($Filter.find(date).length>0) {
-            cy.contains('li',date).eq(0).click()           
+          //cy.log($Filter.find('li').contains(date).length)
+          if($Filter.find('li').length>0) {
+            cy.log($Filter.find('li').length)
+            cy.get('.VSelect__search').eq(0).parent(1).find('li').contains(date).eq(0).click()           
            // cy.contains('a','13L | 29 Mar 2021 - 20 Dec 2021').click()
            //cy.get('[value="961"]').eq(0).click()
           }
