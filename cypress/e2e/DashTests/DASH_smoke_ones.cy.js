@@ -467,7 +467,7 @@ describe("DASH smoke tests",
         })
         cy.contains("to see Ones content").should("exist")
         cy.contains('.btn__overflow','Select show').click()
-        cy.get('.VSelect__search').eq(0).parent(1).find('li').eq(getRandomInt(10)).click()
+        cy.get('.VSelect__search').eq(0).parent(1).find('li').eq(getRandomInt(10)+1).click()
         cy.contains('.item__info__department-name', 'PreVis').should('exist')
         cy.contains('.btn__overflow',' | ').click()
 
