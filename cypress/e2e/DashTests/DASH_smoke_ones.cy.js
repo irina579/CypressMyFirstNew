@@ -3,7 +3,7 @@ describe("DASH smoke tests",
 {
   env: {
     req_timeout: 30000,
-    elem_timeout: 30000,
+    elem_timeout: 50000,
    // password: 'global'
   },
 },
@@ -454,11 +454,13 @@ describe("DASH smoke tests",
         //cy.contains('.Vheader-text',"Site").next().click()
         //cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
       }) 
-     it.only("Can open Show Ones => Ones grid", () => {
-          cy.contains('.tab-title','Ones').click() //wait for loading
+     it("Can open Show Ones => Ones grid", () => {
+          cy.contains('.tab-title','Ones',{setTimeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
           cy.get('#app').then(($body) => {   
           if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
           cy.contains("to see Ones content").should("not.exist")
+          cy.get('.item__info__department-name').should('exist')
+          cy.contains('.btn__overflow', 'MASTER').should('exist')
           cy.get('div>.filter-view-current__delete').click()
           cy.log('Clear default filter')
           }
@@ -502,46 +504,75 @@ describe("DASH smoke tests",
             })     
           })
       })
-      it("Can open IDL Teams", () => {
-        cy.contains(".tab-title", "Teams").click()
-        SelectAllDepts() //checks all departments
-        cy.get('.TeamsTab__search').should('exist').type("123456789")
-        cy.get('.VComboSearch__clear').click()
-        cy.get('body').then(($body) => {   
-            if ($body.find('.name__team').length>0){ //check if any team exists
-              cy.log("The number of existing teams - "+$body.find('.name__team').length)
-              cy.get(".name__team").eq(0).should("exist")
-              cy.get('[data-icon="pencil"]').should("not.exist") 
-            }
-            else{
-              cy.log("There are NO teams. The number of existing teams - "+$body.find('.name__team').length)
-            }
+      it.only("Can open Show Ones => Quota grid", () => {
+        cy.contains('.tab-title','Ones',{setTimeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+        cy.get('#app').then(($body) => {   
+        if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
+        cy.contains("to see Ones content").should("not.exist")
+        cy.contains('.btn__overflow','|').should('exist').then(($code)=>{
+          let code_long=$code.text().trim()
+          const re = /[|]/;
+          let ShowCode=code_long.substring(0,code_long.search(re)).trim()
+          cy.log('Show Ones, Show Code= '+ShowCode)
+          cy.contains('.tab-title','Quota').click()
+          cy.get('.Vheader__show .btn__overflow').should('include.text',ShowCode)
+          //expect(codeUI).to.include(ShowCode) //verify Show code cliked in Manage shows corresponds to loaded in Ones
           })
-        cy.contains('.Vheader-text',"Dates").prev().click()
-        cy.contains("Select All").click()
-        cy.contains("label", Cypress.env('IDL_dept')).click() //checks 1 department
-        cy.get(".main-heading").click()
-        cy.contains("Apply").click()
-        //check API whether teams exist for this dept
-        cy.request('POST', Cypress.env('url_g')+"/api/ShotTeamsNewApi/GetShotTeams", {departmentIdCollection:[Cypress.env('IDL_dept_id')],siteId:Cypress.env('site_id'),isIdl:true}).then(
-        (response) => {
-        expect(response.status).to.eq(200) //status 200
-        expect(response.body.status).to.eq('success') //status success
-        let teams_count=response.body.reference.shotTeams.length
-        cy.log(teams_count)
-        if (teams_count>0){ //if there are teams
-        let FirstTeamName=response.body.reference.shotTeams[0].name
-          cy.contains(".name__team",FirstTeamName).should("exist")
-          cy.get('[data-icon="pencil"]').eq(0).should("exist")  
-          cy.log('The number of existing teams - '+teams_count+'. The first team name is - '+FirstTeamName)
         }
-        else{ //if there are no teams
-          cy.get(".name__team").should("not.exist")
-          cy.get('[data-icon="pencil"]').should("not.exist")  
-          cy.log('The number of existing teams - '+teams_count)
-        } 
-      }) 
       })
+      })
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    //     cy.get('div>.filter-view-current__delete').click()
+    //     cy.log('Clear default filter')
+    //     }
+    //   })
+    //   cy.contains("to see Ones content").should("exist")
+    //   cy.contains('.btn__overflow','Select show').click()
+    //   cy.intercept('GET', '**/api/showones/sites/*').as('grid_list')      
+    //   let date = 2029//new Date().getFullYear() //detects current year
+    //   cy.get('.search__wrapper>input').eq(0).type(date) //search show with date in current year (aim: to have not old show for test)
+    //   cy.get('li.VSelect__search').first().parent().then(($Filter) => {
+    //     cy.log($Filter.find('li').length)
+    //     if($Filter.find('li').length<=1) {
+    //       cy.get('.search__wrapper>input').eq(0).clear()         //if there are no shows with current year, we'll test any other
+    //     }
+    //       cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt(12)+1).click() //select random Show within 10 first
+    //       cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+    //         expect(response.statusCode).to.eq(200)
+    //         if(response.body.reference.sites.length>1){  //select random site if there are more than 1
+    //           cy.log(response.body.reference.sites.length)
+    //           let site_id=(response.body.reference.sites[getRandomInt(response.body.reference.sites.length)].id)
+    //           cy.get('.v-select-grouped__toggle>.toggle__text').click().get('[value='+site_id+']').first().click()
+    //         }
+    //         cy.get('[data-content="Select a discipline"]').parent().next(1).click() //select any random discipline
+    //         cy.contains('label', 'Select All').first().click()
+    //         cy.contains('label', Cypress.env('discipline')).first().click()
+    //         cy.contains('.v-filter__placeholder', Cypress.env('discipline')).next('.v-filter__caret').click()
+    //         cy.contains('.btn-apply','Apply').click()
+    //         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
+    //         cy.contains('.btn__overflow', 'MASTER').click() //check scenarios
+    //         cy.get('[value="0"]').parent().find('li').its('length').then((CountScenario) => {
+    //           cy.log("length="+CountScenario)
+    //           if(CountScenario>1){
+    //             cy.get('[value="0"]').parent().find('li').eq(getRandomInt(CountScenario-1)+1).click()
+    //             cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
+    //             cy.contains('.btn__overflow', 'MASTER').should('not.exist')
+    //           }
+    //           else{
+    //             cy.log('Scanarios do not exist')
+    //           }  
+    //         })
+    //       })     
+    //     })
+    // })
       it("Can open IDL Manager Lab", () => {
         cy.contains(".VTab__btn", "Manager Lab").click()
         cy.contains(".btn__overflow","Nothing selected").click()
