@@ -455,10 +455,8 @@ describe("DASH smoke tests",
         //cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
       }) 
      it.only("Can open Show Ones => Ones grid", () => {
-       // cy.get('div>.filter-view-current').its('length').then((Filter) => {
-        
-        
-        cy.get('.Vheader__form').then(($body) => {   
+          cy.contains('.tab-title','Ones').click() //wait for loading
+          cy.get('#app').then(($body) => {   
           if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
           cy.contains("to see Ones content").should("not.exist")
           cy.get('div>.filter-view-current__delete').click()
@@ -467,51 +465,42 @@ describe("DASH smoke tests",
         })
         cy.contains("to see Ones content").should("exist")
         cy.contains('.btn__overflow','Select show').click()
-        cy.get('.VSelect__search').eq(0).parent(1).find('li').eq(getRandomInt(10)+1).click()
-        cy.contains('.item__info__department-name', 'PreVis').should('exist')
-        cy.contains('.btn__overflow',' | ').click()
-
-        let date = new Date().getFullYear()
-        cy.get('.search__wrapper>input').eq(0).type(date)
-        //cy.get('.search__wrapper>input').eq(0).clear()
-        cy.get('.VSelect__search').eq(0).parent(1).then(($Filter) => {
-          //cy.log($Filter.find('li').contains(date).length)
-          if($Filter.find('li').length>0) {
-            cy.log($Filter.find('li').length)
-            cy.get('.VSelect__search').eq(0).parent(1).find('li').contains(date).eq(0).click()           
-           // cy.contains('a','13L | 29 Mar 2021 - 20 Dec 2021').click()
-           //cy.get('[value="961"]').eq(0).click()
+        cy.intercept('GET', '**/api/showones/sites/*').as('grid_list')      
+        let date = 2029//new Date().getFullYear() //detects current year
+        cy.get('.search__wrapper>input').eq(0).type(date) //search show with date in current year (aim: to have not old show for test)
+        cy.get('li.VSelect__search').first().parent().then(($Filter) => {
+          cy.log($Filter.find('li').length)
+          if($Filter.find('li').length<=1) {
+            cy.get('.search__wrapper>input').eq(0).clear()         //if there are no shows with current year, we'll test any other
           }
-          else{
-            cy.get('.VSelect__search').eq(0).parent(1).find('li').eq(getRandomInt(10)).click() 
-          }
+            cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt(12)+1).click() //select random Show within 10 first
+            cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+              expect(response.statusCode).to.eq(200)
+              if(response.body.reference.sites.length>1){  //select random site if there are more than 1
+                cy.log(response.body.reference.sites.length)
+                let site_id=(response.body.reference.sites[getRandomInt(response.body.reference.sites.length)].id)
+                cy.get('.v-select-grouped__toggle>.toggle__text').click().get('[value='+site_id+']').first().click()
+              }
+              cy.get('[data-content="Select a discipline"]').parent().next(1).click() //select any random discipline
+              cy.contains('label', 'Select All').first().click()
+              cy.contains('label', Cypress.env('discipline')).first().click()
+              cy.contains('.v-filter__placeholder', Cypress.env('discipline')).next('.v-filter__caret').click()
+              cy.contains('.btn-apply','Apply').click()
+              cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
+              cy.contains('.btn__overflow', 'MASTER').click() //check scenarios
+              cy.get('[value="0"]').parent().find('li').its('length').then((CountScenario) => {
+                cy.log("length="+CountScenario)
+                if(CountScenario>1){
+                  cy.get('[value="0"]').parent().find('li').eq(getRandomInt(CountScenario-1)+1).click()
+                  cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
+                  cy.contains('.btn__overflow', 'MASTER').should('not.exist')
+                }
+                else{
+                  cy.log('Scanarios do not exist')
+                }  
+              })
+            })     
           })
-
-        cy.get('[data-content="Select a discipline"]').parent().next(1).click()
-        // cy.contains(".btn__overflow","File").should("exist") //checks if File button available
-        // cy.contains('.Vheader-text',"Dates").prev().click()
-        // cy.contains("Select All").click()
-        // cy.contains("label", Cypress.env('IDL_dept')).click() //checks 1 department
-        // cy.get(".main-heading").click()
-        // cy.contains("Apply").click()
-        // //checks if any artist comes from BE
-        // cy.intercept('/api/idldepartmentonesnew/GetDepartmentOnes').as('grid_list')
-        // cy.contains("Apply").click()
-        // cy.wait('@grid_list').then(({response}) => {
-        //   expect(response.statusCode).to.eq(200)
-        //   let artist_count=response.body.reference.artistPositions.items.length
-        //   let FirstName
-        //   if(artist_count>0){
-        //   FirstName=response.body.reference.artistPositions.items[1].name.username
-        //   cy.get(".item_artist",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
-        //   cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
-        //   cy.log("The first artist is - "+FirstName)
-        //   cy.contains(".item__info__department-name",Cypress.env('IDL_dept')).should("exist")
-        //   artist_count=artist_count-1
-        //   }
-        //   cy.log("The number of artist came from BE - "+artist_count)
-        // })
-        // cy.contains(".btn__overflow","File").should("exist") //checks if File button available
       })
       it("Can open IDL Teams", () => {
         cy.contains(".tab-title", "Teams").click()

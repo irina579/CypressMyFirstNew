@@ -17,6 +17,7 @@ env: {
     password_g: 'global',
     IDL_dept: 'Production Management',
     DL_dept: 'Assets',
+    discipline: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
     bu: 'MPC',
     url_g: 'http://10.94.6.100', 
