@@ -10,7 +10,7 @@ describe('DASH login', () => {
 
     cy.request('GET','http://10.94.6.100/api/NotificationApi/GetNotifications')
       .then((response) => {
-        cy.writeFile('cypress/fixtures/notifications.json', response.body)
+        cy.writeFile('cypress/fixtures/notifications.json', response.body) ///
       })
 
   })
