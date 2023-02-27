@@ -14,13 +14,26 @@ describe("DASH smoke tests/Managements",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   beforeEach(() => {
-      //cy.viewport(1680, 1050)
-      cy.visit(Cypress.env('url_g'))
-      cy.get('#UserName').type(Cypress.env('login_g'))
-      cy.get('#Password').type(Cypress.env('password_g'))
-      cy.contains('Log in').click()
-      cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
-    })
+    // testLog()  
+    cy.session('Login',()=>{
+       cy.visit(Cypress.env('url_g'))
+       cy.get('#UserName').type(Cypress.env('login_g'))
+       cy.get('#Password').type(Cypress.env('password_g'))
+       cy.contains('Log in').click()
+       cy.get(".header-banner__close-button",{timeout: 40000}).click()}, 
+       {cacheAcrossSpecs: true}
+     ) 
+     cy.visit(Cypress.env('url_g'))
+ 
+ 
+     //regular login
+       // cy.visit(Cypress.env('url_g'))
+       // cy.get('#UserName').type(Cypress.env('login_g'))
+       // cy.get('#Password').type(Cypress.env('password_g'))
+       // cy.contains('Log in').click()
+       // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
+ 
+     })
     context("Manage Shows", ()=>{
       beforeEach(() => {
         cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()

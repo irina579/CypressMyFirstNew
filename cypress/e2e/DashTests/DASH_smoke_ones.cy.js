@@ -21,13 +21,30 @@ describe("DASH smoke tests",
   } 
   beforeEach(() => {
    // testLog()  
-    cy.visit(Cypress.env('url_g'))
+   cy.session('Login',()=>{
+      cy.visit(Cypress.env('url_g'))
       cy.get('#UserName').type(Cypress.env('login_g'))
       cy.get('#Password').type(Cypress.env('password_g'))
       cy.contains('Log in').click()
-      cy.get(".header-banner__close-button",{timeout: 40000}).click()
-      
+      cy.get(".header-banner__close-button",{timeout: 40000}).click()}, 
+      {cacheAcrossSpecs: true}
+    ) 
+    cy.visit(Cypress.env('url_g'))
+
+
+    //regular login
+      // cy.visit(Cypress.env('url_g'))
+      // cy.get('#UserName').type(Cypress.env('login_g'))
+      // cy.get('#Password').type(Cypress.env('password_g'))
+      // cy.contains('Log in').click()
+      // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
+
     })
+    
+
+
+
+
     it.skip("Sample of Intercept in  Notification request", () => {
       cy
         .intercept('/api/NotificationApi/GetNotifications')
@@ -198,8 +215,8 @@ describe("DASH smoke tests",
         cy.contains('.Vheader-text',"Site").next().click()
         cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
       }) 
-      it("Can open DL Ones => Planning grid", async () => {
-        let artist_count
+      it("Can open DL Ones => Planning grid",  () => {
+       // let artist_count
         //checks if generalist or not
         cy.get(".v-select-grouped__toggle").then(($text1)=>{
           if (Cypress.env('generalist').includes($text1.text().trim())){ //is generalist
@@ -223,7 +240,7 @@ describe("DASH smoke tests",
           expect(response.statusCode).to.eq(200)
           let artist_count=response.body.reference.artistPositions.items.length
           let FirstName
-          if(artist_count>0){
+          if(artist_count>1){
           FirstName=response.body.reference.artistPositions.items[1].name.username
           cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
           cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
@@ -259,7 +276,7 @@ describe("DASH smoke tests",
           let artist_count=response.body.reference.artistPositions.items.length
           cy.log("The number of artist came from BE - "+artist_count)
           let FirstName
-          if(artist_count>0){
+          if(artist_count>1){
           FirstName=response.body.reference.artistPositions.items[1].name.username
           cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
           cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
