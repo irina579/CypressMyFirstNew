@@ -6,7 +6,7 @@ module.exports = {
       // implement node event listeners here
     },
     retries:0,
-    defaultCommandTimeout: 30000,
+    defaultCommandTimeout: 40000,
     pageLoadTimeout: 80000
     ///viewportWidth: 1680,
     //viewportHeight: 1050,

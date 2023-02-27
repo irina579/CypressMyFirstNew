@@ -19,7 +19,7 @@ describe("DASH smoke tests/Managements",
       cy.get('#UserName').type(Cypress.env('login_g'))
       cy.get('#Password').type(Cypress.env('password_g'))
       cy.contains('Log in').click()
-      cy.get(".header-banner__close-button",{setTimeout: 40000}).click()
+      cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
     })
     context("Manage Shows", ()=>{
       beforeEach(() => {
@@ -29,7 +29,7 @@ describe("DASH smoke tests/Managements",
      it("Can open Manage Shows", () => {
        cy.get('.show__content').eq(0).should("exist") //waits the grid is loaded
        cy.get('body').then(($body) => {   
-          if ($body.find('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
+          if ($body.find('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
             cy.contains(".status__label","Active").eq(0).should("exist")
             //Inactive Shows counter=0
             cy.contains(".counters__item","Inactive").find("span").should(($counter) => {
@@ -55,7 +55,7 @@ describe("DASH smoke tests/Managements",
             let FirstName
             if(show_count>0){
             FirstName=response.body.items[0].showCode
-            cy.get(".show__content",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+            cy.get(".show__content",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
             cy.contains(".info__title",FirstName).eq(0).should("exist") //check if 1-st show exists and matches response
             //active Shows UI counter displays correct value, similar to response count
             cy.contains(".counters__item","Active").find("span").should(($counter) => {
@@ -91,7 +91,7 @@ describe("DASH smoke tests/Managements",
             })         
             cy.get('.search__input').type(RandomName) //initiate searching of this Show Code on UI
             cy.contains('.VButton__text',"Apply").click()
-            cy.contains(".info__title",RandomName,{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist") //check if the searched Show exists
+            cy.contains(".info__title",RandomName,{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist") //check if the searched Show exists
             cy.log("The show is - "+RandomName)
             //Active Shows counter=0
             cy.contains(".counters__item","Active").find("span").should(($counter) => {
@@ -114,7 +114,7 @@ describe("DASH smoke tests/Managements",
      it("Manage Shows=> Manage link", () => {
         let show_number
         cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.log('Show number='+show_number)
@@ -144,7 +144,7 @@ describe("DASH smoke tests/Managements",
        it("Manage Shows=> Ones link", () => {
         let show_number
         cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then(($code)=>{
@@ -173,12 +173,12 @@ describe("DASH smoke tests/Managements",
        it("Manage Shows=> Financials link", () => {
         let show_number
         cy.contains('.actions__item','Financials').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.actions__item').eq(3).should("exist").click()             
                   cy.log('Show number= '+show_number)
-                  cy.contains('.VButton__text','Print',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.contains('.VButton__text','Print',{timeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
                   cy.url().should('include', 'ones/shows/financials')
                   cy.title().should('include', 'Financials - '+Cypress.env("bu")) 
            }
@@ -191,12 +191,12 @@ describe("DASH smoke tests/Managements",
       it("Manage Shows=> Publish archive link", () => {
         let show_number
         cy.contains('.actions__item','Publish Archive').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.actions__item').eq(4).should("exist").click()             
                   cy.log('Show number= '+show_number)
-                  cy.contains('.btn-content','Back to All Shows',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.contains('.btn-content','Back to All Shows',{timeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
                   cy.url().should('include', 'ones/shows/publish-archive')
                   cy.title().should('include', 'Publish Archive - '+Cypress.env("bu")) 
            }
@@ -209,12 +209,12 @@ describe("DASH smoke tests/Managements",
        it.skip("Manage Shows=> Show Planner link", () => {
         let show_number
         cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.show__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click() //show planner       
                   cy.log('Show number= '+show_number)
-                  cy.get('#btSim',{setTimeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.get('#btSim',{timeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
                   cy.url().should('include', 'ones/shows/showplanner')
                   cy.title().should('include', 'Show Planner - '+Cypress.env("bu"))
                   
@@ -296,7 +296,7 @@ describe("DASH smoke tests/Managements",
      it("Can open Manage Projects", () => {
        cy.get('.project__content').eq(0).should("exist") //waits the grid is loaded
        cy.get('body').then(($body) => {   
-          if ($body.find('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
+          if ($body.find('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
             cy.contains(".actions__item","Summary").eq(0).should("exist")
             cy.log($body.find('.project__content').length)
           }
@@ -313,7 +313,7 @@ describe("DASH smoke tests/Managements",
             let FirstName
             if(project_count>0){
             FirstName=response.body.items[0].showCode
-            cy.get(".project__content",{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+            cy.get(".project__content",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
             cy.contains(".info__title",FirstName).eq(0).should("exist") //check if 1-st show exists and matches response
             //active Shows UI counter displays correct value, similar to response count
             cy.contains(".counters__item","Active").find("span").then(($counterA) => {
@@ -353,7 +353,7 @@ describe("DASH smoke tests/Managements",
             })             
             cy.get('.search__input').type(RandomName) //initiate searching of this Show Code on UI
             cy.contains('.VButton__text',"Apply").click()
-            cy.contains(".info__title",RandomName,{setTimeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist") //check if the searched Show exists
+            cy.contains(".info__title",RandomName,{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist") //check if the searched Show exists
             cy.log("The show is - "+RandomName) 
           
             }
@@ -371,7 +371,7 @@ describe("DASH smoke tests/Managements",
       it("Manage Projects=> Summary link", () => {
         let project_number
         cy.contains('.actions__item','Summary').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               project_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then(($code)=>{
@@ -398,7 +398,7 @@ describe("DASH smoke tests/Managements",
       it("Manage Projects=> Manage link", () => {
         let project_number
         cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.project__content',{setTimeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+        cy.get('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
            if ($body.length>1){ //check if any show exists
               project_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
               cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then(($code)=>{
