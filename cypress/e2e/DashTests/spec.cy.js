@@ -1,4 +1,29 @@
 describe('DASH login', () => {
+   
+  
+  
+  it('Test new options', () => {
+   // cy.visit('https://example.cypress.io/commands/actions')
+    cy.visit('https://belitsoft.com/')
+    cy.scrollTo('bottom')
+    cy.get('#quoteTextarea').focus()
+
+    
+  })
+  it.only('Scroll into view', () => {
+    // cy.visit('https://example.cypress.io/commands/actions')
+     cy.visit('https://belitsoft.com/')
+     cy.get('footer').scrollIntoView()
+
+     //cy.contains('.card-name', 'Academy and Learning').scrollIntoView()
+ 
+     
+   })
+  
+  
+  
+  
+  
   it.skip('Visit login page', () => {
     cy.visit('http://10.94.6.100/')
 
@@ -15,11 +40,11 @@ describe('DASH login', () => {
 
   })
 
-  it('SQL', function () {
-    cy.task('queryDb', `SELECT COUNT(*) as "rowCount" FROM dwh.Artist WHERE EmployeeType='NH' and BuId=1001`).then((result) => {
+//   it.skip('SQL', function () {
+//     cy.task('queryDb', `SELECT COUNT(*) as "rowCount" FROM dwh.Artist WHERE EmployeeType='NH' and BuId=1001`).then((result) => {
 
-        expect(result[0].rowCount).to.equal(394)
-    })
-})
+//         expect(result[0].rowCount).to.equal(394)
+//     })
+// })
 })
 
