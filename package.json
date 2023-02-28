@@ -1,6 +1,9 @@
 {
   "devDependencies": {
     "@cypress/xpath": "^2.0.3",
-    "cypress-xpath": "^2.0.1"
+    "cypress-sql-server": "^1.0.0",
+    "cypress-xpath": "^2.0.1",
+    "mssql": "^9.1.1",
+    "mysql": "^2.18.1"
   }
 }

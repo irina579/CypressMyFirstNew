@@ -1,0 +1,16 @@
+{
+  "reporter": "teamcity",
+  "viewportWidth": 1400,
+  "viewportHeight": 880,
+  "chromeWebSecurity": false,
+  "db": {
+    "userName": "",
+    "password": "",
+    "server": "",
+    "options": {
+      "database": "",
+      "encrypt": true,
+      "rowCollectionOnRequestCompletion" : true
+    }
+  }
+}
