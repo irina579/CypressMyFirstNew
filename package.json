@@ -1,10 +1,10 @@
 {
   "devDependencies": {
     "@cypress/xpath": "^2.0.3",
+    "cypress": "^12.5.1",
+    "cypress-mochawesome-reporter": "^2.4.0",
     "cypress-sql-server": "^1.0.0",
     "cypress-xpath": "^2.0.1",
-    "cypress":"^12.5.1",
-    "cypress-mochawesome-reporter":"^2.2.0",
     "mssql": "^9.1.1",
     "mysql": "^2.18.1"
   }

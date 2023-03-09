@@ -1,10 +1,12 @@
 module.exports = {
   projectId: "e3m7sj",
+  reporter: 'cypress-mochawesome-reporter',
   e2e: {
    experimentalStudio: true,
     setupNodeEvents(on, config) {
       // implement node event listeners here
       on('task', { queryDb: query => { return queryTestDb(query, config) }, }); 
+       require('cypress-mochawesome-reporter/plugin')(on);
     },
     retries:0,
     defaultCommandTimeout: 40000,
