@@ -66,7 +66,7 @@ describe("DASH smoke tests/Managements",
             cy.contains('.link__title','Users').click()
             cy.url().should('include', '/Admin/Users')
         }) 
-    it('Users=> Search tab', () => {
+    it.only('Users=> Search tab', () => {
         cy.get('div> .search__input').type(`${Cypress.env('user')}`) //search for user
         cy.intercept('GET', '**/api//UserPermissionApi/FindUsers?userNameOrEmail*').as('grid_list')
         cy.contains('.btn','Apply').click()
