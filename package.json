@@ -7,5 +7,10 @@
     "cypress-xpath": "^2.0.1",
     "mssql": "^9.1.1",
     "mysql": "^2.18.1"
+  },
+  "scripts": {
+    "cypress:chrome": "cypress run --headless --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_admin.cy.js",
+    "cypress:headless": "cypress run --headless --spec cypress/e2e/DashTests/smoke/DASH_smoke_admin.cy.js"
   }
 }
+
