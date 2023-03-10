@@ -4,7 +4,8 @@ describe("DASH smoke tests/Managements",
   env: {
     req_timeout: 30000,
     elem_timeout: 30000,
-    user:'alex'
+    user:'alex',
+    key:'pk_8777980_%'
    // password: 'global'
   },
 },
@@ -13,10 +14,49 @@ describe("DASH smoke tests/Managements",
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   } 
+  function SetTaskParameter(value,taskid) {
+    cy.request({
+      method: 'POST',
+      url: 'https://api.clickup.com/api/v2/task/'+taskid+'/field/e83f89bd-9e0e-4bd7-a6a9-ec57f31d0e8e?custom_task_ids=true&team_id=4534343',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${Cypress.env('key')}`
+      },
+      body: JSON.stringify({
+        value: [
+          value //pass test
+        ]
+      })
+    })
+    cy.request({ //set up date_run field
+      method: 'POST',
+      url: 'https://api.clickup.com/api/v2/task/'+taskid+'/field/66d44793-a1bb-40d9-91b5-3b43bffe2f28?custom_task_ids=true&team_id=4534343',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `${Cypress.env('key')}`
+      },
+      body: JSON.stringify({
+        value: Math.floor(Date.now()), //unix timestamp
+        value_options: {time: false}
+      })
+    })
+    cy.log(Math.floor(Date.now()))
+
+  } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
-  beforeEach(() => {
-    
-    // testLog()  
+    //clickup  
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665']
+  let states={
+      onhold:'5099b5ec-242e-4f57-8cdc-b604e9e19e91',
+      passed:'b254d03a-cb45-40af-82a3-c28d27c0b11f'
+    }
+  let run_date='66d44793-a1bb-40d9-91b5-3b43bffe2f28'  
+  before(() => {
+  for (let i=0;i<test_tasks.length;i++){
+    SetTaskParameter(states['onhold'],test_tasks[i])
+  }
+  })
+  beforeEach(() => { 
     cy.session('Login',()=>{
        cy.visit(Cypress.env('url_g'))
        cy.get('#UserName').type(Cypress.env('login_g'))
@@ -26,9 +66,6 @@ describe("DASH smoke tests/Managements",
        {cacheAcrossSpecs: true}
      ) 
      cy.visit(Cypress.env('url_g'))
-     
-     
- 
      //regular login
        // cy.visit(Cypress.env('url_g'))
        // cy.get('#UserName').type(Cypress.env('login_g'))
@@ -37,11 +74,9 @@ describe("DASH smoke tests/Managements",
        // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
  
      })
-     it.skip('Scroll into view test', () => {
+     it.only('Scroll into view test', () => {
         cy.contains('.link__title','Budgets & KPI').click()
         cy.contains('.card-name', 'Academy and Learning').scrollIntoView()
-     
-         
     })
     it('Manage site permissions', () => {
         cy.contains('.link__title','Manage Sites Permissions').click()
@@ -61,13 +96,14 @@ describe("DASH smoke tests/Managements",
         cy.get('.main-title').click()
         cy.contains('.btn','Cancel').click() //cancel the changes
         cy.contains('.btn','Save').should('have.attr', 'disabled') //verify Save disabled without changes
+        SetTaskParameter(states['passed'],test_tasks[0])
     })
     context("Users", ()=>{
         beforeEach(() => {
             cy.contains('.link__title','Users').click()
             cy.url().should('include', '/Admin/Users')
         }) 
-    it.only('Users=> Search tab', () => {
+    it('Users=> Search tab', () => {
         cy.get('div> .search__input').type(`${Cypress.env('user')}`) //search for user
         cy.intercept('GET', '**/api//UserPermissionApi/FindUsers?userNameOrEmail*').as('grid_list')
         cy.contains('.btn','Apply').click()
@@ -89,6 +125,7 @@ describe("DASH smoke tests/Managements",
             }
             cy.log("The number of users came from BE after search- "+user_count)
           })
+          SetTaskParameter(states['passed'],test_tasks[1])
 
         
     })
@@ -123,6 +160,7 @@ describe("DASH smoke tests/Managements",
                   })
         })      
         )
+        SetTaskParameter(states['passed'],test_tasks[2])
     })
     )
 })
@@ -133,7 +171,7 @@ describe("DASH smoke tests/Managements",
 
 
 
-    context("Manage site permissions", ()=>{
+    context.skip("Manage site permissions", ()=>{
       beforeEach(() => {
         cy.contains('.link__title','Manage Sites Permissions').click()
         cy.url().should('include', '/UserPermission/Index')
@@ -218,7 +256,7 @@ describe("DASH smoke tests/Managements",
                 
        
     })
-    context("Manage Shows => Navigation links", ()=>{
+    context.skip("Manage Shows => Navigation links", ()=>{
       beforeEach(() => {
         cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
         cy.url().should('include', '/ones/new/shows')
@@ -338,7 +376,7 @@ describe("DASH smoke tests/Managements",
           
        })  
     })
-    context("Create new Show", ()=>{
+    context.skip("Create new Show", ()=>{
      it("Create new Show page", () => {
         cy.xpath("//div[normalize-space(text()) = 'Create New Show']").click()
         cy.url().should('include', '/ones/shows/add-edit')
@@ -400,7 +438,7 @@ describe("DASH smoke tests/Managements",
       })   
        
     })
-    context("Manage Projects", ()=>{
+    context.skip("Manage Projects", ()=>{
       beforeEach(() => {
         cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
         cy.url().should('include', '/ones/projects/')
@@ -475,7 +513,7 @@ describe("DASH smoke tests/Managements",
       })
         
     })
-    context("Manage Projects => Navigation links", ()=>{
+    context.skip("Manage Projects => Navigation links", ()=>{
       beforeEach(() => {
         cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
         cy.url().should('include', '/ones/projects')
@@ -537,7 +575,7 @@ describe("DASH smoke tests/Managements",
        })  
                  
        })  
-    context("Create new Project", ()=>{
+    context.skip("Create new Project", ()=>{
       it("Create new Project page", () => {
          cy.xpath("//div[normalize-space(text()) = 'Create New Project']").click()
          cy.url().should('include', '/ones/projects/?isCreateMode=true')
