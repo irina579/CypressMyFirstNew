@@ -1,6 +1,10 @@
 module.exports = {
   projectId: "e3m7sj",
   reporter: 'cypress-mochawesome-reporter',
+  reporterOptions: {
+    reportDir:'cypress/reports',
+    charts: 'true'
+     },
   e2e: {
    experimentalStudio: true,
     setupNodeEvents(on, config) {
