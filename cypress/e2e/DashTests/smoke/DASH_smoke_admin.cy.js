@@ -15,6 +15,7 @@ describe("DASH smoke tests/Managements",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   beforeEach(() => {
+    
     // testLog()  
     cy.session('Login',()=>{
        cy.visit(Cypress.env('url_g'))
@@ -88,8 +89,10 @@ describe("DASH smoke tests/Managements",
             }
             cy.log("The number of users came from BE after search- "+user_count)
           })
+
+        
     })
-    it.only('Users=> Filter tab', () => {
+    it('Users=> Filter tab', () => {
         cy.contains('.tab-title', 'Filter').click()
         cy.contains('.header__label', 'Entity').next('div').first().click()
         cy.get("[value="+Cypress.env("site_id")+"]").click() //select site mentioned in config
