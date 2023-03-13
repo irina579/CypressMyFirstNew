@@ -20,7 +20,7 @@ module.exports = {
   
   },
 env: {
-    key:'pk_8777980_', //to be replaced while running
+    key:'pk_8777980_9C24F28JF', //to be replaced while running
     login_g: 'global',
     password_g: 'global',
     IDL_dept: 'Production Management',
