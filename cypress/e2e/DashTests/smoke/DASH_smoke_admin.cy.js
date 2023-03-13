@@ -5,7 +5,7 @@ describe("DASH smoke tests/Managements",
     req_timeout: 30000,
     elem_timeout: 30000,
     user:'alex',
-    key:'pk_8777980_%'
+    //key:'pk_8777980_9C24F28JFIX3JDZ7RJ6GM7AN42D65TFF'
    // password: 'global'
   },
 },
@@ -20,7 +20,7 @@ describe("DASH smoke tests/Managements",
       url: 'https://api.clickup.com/api/v2/task/'+taskid+'/field/e83f89bd-9e0e-4bd7-a6a9-ec57f31d0e8e?custom_task_ids=true&team_id=4534343',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${Cypress.env('key')}`
+        Authorization: Cypress.env('key')
       },
       body: JSON.stringify({
         value: [
@@ -33,7 +33,7 @@ describe("DASH smoke tests/Managements",
       url: 'https://api.clickup.com/api/v2/task/'+taskid+'/field/66d44793-a1bb-40d9-91b5-3b43bffe2f28?custom_task_ids=true&team_id=4534343',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `${Cypress.env('key')}`
+        Authorization: Cypress.env('key')
       },
       body: JSON.stringify({
         value: Math.floor(Date.now()), //unix timestamp
