@@ -19,6 +19,13 @@ describe('DASH login', () => {
  
      
    })
+   it.skip("API", () => {
+    // cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
+    // cy.contains(".tab-title", "Vacancies converted info").click()
+    cy.visit(Cypress.env('https://mail.ru/')) 
+    let url=cy.url()
+     cy.log("URL"+url+"/"+cy.url().toString())
+   })
   
   
   

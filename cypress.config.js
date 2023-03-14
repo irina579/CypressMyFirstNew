@@ -20,7 +20,15 @@ module.exports = {
   
   },
 env: {
-    key:'pk_8777980_9C24F28JF', //to be replaced while running
+    //clickup parameters
+    clickup_usage: true,
+    key:'pk_54525861_I991M9GR8VQ8GHZ3VH8OVEVIFFWJA5AC',
+    states:"{\"onhold\": \"5099b5ec-242e-4f57-8cdc-b604e9e19e91\", \"passed\": \"b254d03a-cb45-40af-82a3-c28d27c0b11f\"}",
+    // states:{
+    //   onhold:'5099b5ec-242e-4f57-8cdc-b604e9e19e91',
+    //   passed:'b254d03a-cb45-40af-82a3-c28d27c0b11f'
+    // },
+
     login_g: 'global',
     password_g: 'global',
     IDL_dept: 'Production Management',

@@ -23,3 +23,37 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+//Sets resolution for click up and updates date
+Cypress.Commands.add('SetClickUpParameter', (value, taskid,usage) => { 
+  //clickup 
+  if (usage){ 
+  const run_date='66d44793-a1bb-40d9-91b5-3b43bffe2f28'
+  const resolution='e83f89bd-9e0e-4bd7-a6a9-ec57f31d0e8e'  
+        cy.request({
+          method: 'POST',
+          url: 'https://api.clickup.com/api/v2/task/'+taskid+'/field/'+resolution+'?custom_task_ids=true&team_id=4534343',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: Cypress.env('key')
+          },
+          body: JSON.stringify({
+            value: [
+              value //pass test
+            ]
+          })
+        })
+        cy.request({ //set up date_run field
+          method: 'POST',
+          url: 'https://api.clickup.com/api/v2/task/'+taskid+'/field/'+run_date+'?custom_task_ids=true&team_id=4534343',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: Cypress.env('key')
+          },
+          body: JSON.stringify({
+            value: Math.floor(Date.now()), //unix timestamp
+            value_options: {time: false}
+          })
+        })
+    }
+      })
