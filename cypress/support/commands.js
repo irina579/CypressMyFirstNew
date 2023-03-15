@@ -52,7 +52,7 @@ Cypress.Commands.add('SetClickUpParameter', (value, taskid,usage) => {
           },
           body: JSON.stringify({
             value: Math.floor(Date.now()), //unix timestamp
-            value_options: {time: false}
+            value_options: {time: true}
           })
         })
     }
