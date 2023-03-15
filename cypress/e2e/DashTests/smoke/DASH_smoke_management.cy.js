@@ -13,6 +13,13 @@ describe("DASH smoke tests/Managements",
     return Math.floor(Math.random() * max);
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+  before(() => {
+    Cypress.session.clearAllSavedSessions()  
+   // for (let i=0;i<test_tasks.length;i++){
+   
+   //   cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
+    
+  })
   beforeEach(() => {
     // testLog()  
     cy.session('Login',()=>{
