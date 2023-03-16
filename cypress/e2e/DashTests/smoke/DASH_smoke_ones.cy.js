@@ -528,7 +528,7 @@ describe("DASH smoke tests/Ones",
           cy.contains("to see Ones content").should("exist")
           cy.contains('.tab-title','Quota').click()
           cy.contains('.btn__overflow','Select show').click()
-          let random_search='ag'//generateString(2)
+          let random_search=generateString(2)
           cy.get('.search__wrapper>input').eq(0).type(random_search) //search generated 2 symbols combination
           cy.get('li.VSelect__search').first().parent().then(($Filter) => {
             cy.log($Filter.find('li').length)
