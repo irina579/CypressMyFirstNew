@@ -10,14 +10,23 @@ describe("DASH smoke tests/Ones",
 () => 
 {  
   const SelectAllDepts = ()=>{
-  cy.log("Selecting all depts in header")
-  cy.contains('.Vheader-text',"Dates").prev().click()
-  cy.contains("Select All").click() //checks all departments
-  cy.get(".main-heading").click()  
-  cy.contains("Apply").click()
-}
+    cy.log("Selecting all depts in header")
+    cy.contains('.Vheader-text',"Dates").prev().click()
+    cy.contains("Select All").click() //checks all departments
+    cy.get(".main-heading").click()  
+    cy.contains("Apply").click()
+  }
   function getRandomInt(max) {
-  return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max);
+  }
+  const characters ='abcdefghijklmnopqrstu';
+  function generateString(length) { //used for random show title search generation
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   } 
   let test_tasks=['DASHCU-3675','DASHCU-3676','DASHCU-3677','DASHCU-3678','DASHCU-3679','DASHCU-3680','DASHCU-3681','DASHCU-3682','DASHCU-3683','DASHCU-3684','DASHCU-3685','DASHCU-3686','DASHCU-3687']
   const myObject = JSON.parse(Cypress.env('states'));
@@ -501,7 +510,7 @@ describe("DASH smoke tests/Ones",
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))
     })
-    it("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
+    it.only("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
@@ -514,6 +523,38 @@ describe("DASH smoke tests/Ones",
             cy.contains('.tab-title','Quota').click()
             cy.get('.Vheader__show .btn__overflow').should('include.text',ShowCode)
           })
+        }
+        else {
+          cy.contains("to see Ones content").should("exist")
+          cy.contains('.tab-title','Quota').click()
+          cy.contains('.btn__overflow','Select show').click()
+          let random_search='ag'//generateString(2)
+          cy.get('.search__wrapper>input').eq(0).type(random_search) //search generated 2 symbols combination
+          cy.get('li.VSelect__search').first().parent().then(($Filter) => {
+            cy.log($Filter.find('li').length)
+            if($Filter.find('li').length<=1) {
+              cy.get('.search__wrapper>input').eq(0).clear()         //if there are no shows with current year, we'll test any other
+            }
+            else{
+              cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt($Filter.find('li').length-1)+1).find('a').contains(random_search.trim(), { matchCase: false }) //check random search result includes search text
+            } 
+            cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt($Filter.find('li').length-1)+1).click() //select random Show within 10 first
+          })  
+          cy.contains('.VButton__text','Sync Show Ones').click()
+          cy.contains('.VButton__text','Cancel').click()
+          cy.get('#app').then(($body) => { 
+            cy.log($body.find('Select discipline').length)  
+            if ($body.find('Select discipline').length==0){ 
+              cy.contains('div','Scheduled Q').should('exist')
+              cy.contains('div','Show Ones').should('exist')
+              cy.contains('.toggle__text','Select Site').click()
+              cy.get('div>.VCheckboxSimple').first().click()
+              cy.get('div>.VCheckboxSimple').first().find('span').then(($text) => {
+                let site=$text.text()
+                cy.get('div>.p-10').first().should('include.text',site.trim())
+              })   
+            }          
+          })  
         }
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
