@@ -243,9 +243,9 @@ describe("DASH smoke tests/Managements",
            else{
              cy.log("There are NO shows.")
            }
-         })          
+         })   
+         cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage'))          
        }) 
-       cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage')) 
     })
     context("Create new Show", ()=>{
      it("Create new Show page", () => {
@@ -307,8 +307,8 @@ describe("DASH smoke tests/Managements",
         //check back button navigates to Manage Shows
         cy.contains('.buttons__back_text', 'Back').click()
         cy.url().should('include', '/ones/new/shows')
+        cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))  
       })   
-      cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))  
     })
     context("Manage Projects", ()=>{
       beforeEach(() => {
@@ -381,9 +381,9 @@ describe("DASH smoke tests/Managements",
             }
             cy.log("The number of projects came from BE - "+project_count)
           })
+          cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))  
 
-      })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))    
+      })  
     })
     context("Manage Projects => Navigation links", ()=>{
       beforeEach(() => {
@@ -444,9 +444,8 @@ describe("DASH smoke tests/Managements",
              cy.log("There are NO projects.")
            }
          })
-          
-       })  
-       cy.SetClickUpParameter((myObject.passed),test_tasks[12],Cypress.env('clickup_usage'))            
+         cy.SetClickUpParameter((myObject.passed),test_tasks[12],Cypress.env('clickup_usage'))           
+       })             
        })  
     context("Create new Project", ()=>{
       it("Create new Project page", () => {
@@ -484,8 +483,8 @@ describe("DASH smoke tests/Managements",
          cy.contains('.VButton__text', 'Cancel').should('exist')
          cy.contains('.VButton__text', 'Back').click()
          cy.url().should('include', '/ones/projects/')
-       })   
-       cy.SetClickUpParameter((myObject.passed),test_tasks[14],Cypress.env('clickup_usage'))   
+         cy.SetClickUpParameter((myObject.passed),test_tasks[14],Cypress.env('clickup_usage'))
+       })      
      })   
       it("Notifications page", () => {
         cy.viewport(1680, 1050) //to make search field active
@@ -525,7 +524,6 @@ describe("DASH smoke tests/Managements",
           cy.contains('.toggle__label','Show only awaiting approvals').should('not.exist')
         })
         cy.SetClickUpParameter((myObject.passed),test_tasks[15],Cypress.env('clickup_usage'))  
-
     })
     })
     export{}
