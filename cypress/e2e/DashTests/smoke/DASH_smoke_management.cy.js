@@ -13,12 +13,14 @@ describe("DASH smoke tests/Managements",
     return Math.floor(Math.random() * max);
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+  let test_tasks=['DASHCU-3691','DASHCU-3692','DASHCU-3693','DASHCU-3694','DASHCU-3695','DASHCU-3696','DASHCU-3697','DASHCU-3698','DASHCU-3699','DASHCU-3700','DASHCU-3701','DASHCU-3702','DASHCU-3703','DASHCU-3704','DASHCU-3705','DASHCU-3706']
+  const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
     Cypress.session.clearAllSavedSessions()  
-   // for (let i=0;i<test_tasks.length;i++){
-   
-   //   cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
-    
+    for (let i=0;i<test_tasks.length;i++){
+     // SetTaskParameter(states['onhold'],test_tasks[i])
+      cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
+    }
   })
   beforeEach(() => {
     // testLog()  
@@ -86,7 +88,7 @@ describe("DASH smoke tests/Managements",
             }
             cy.log("The number of shows came from BE - "+show_count)
           })
-
+          cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
       })
       it("Manage Shows=> search and filters work", () => {
         cy.contains('.v-filter__placeholder', 'Active').click()
@@ -121,7 +123,7 @@ describe("DASH smoke tests/Managements",
             }
             cy.log("The number of shows came from BE - "+show_count)
           })
-
+          cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
       })
                 
        
@@ -158,9 +160,27 @@ describe("DASH smoke tests/Managements",
              cy.log("There are NO shows.")
            }
          })
-          
+         cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage')) 
        })  
-       
+       it.skip("Manage Shows=> Show Planner link", () => {
+        let show_number
+        cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
+        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
+           if ($body.length>1){ //check if any show exists
+              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
+              cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click() //show planner       
+                  cy.log('Show number= '+show_number)
+                  cy.get('#btSim',{timeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
+                  cy.url().should('include', 'ones/shows/showplanner')
+                  cy.title().should('include', 'Show Planner - '+Cypress.env("bu"))
+                  
+           }
+           else{
+             cy.log("There are NO shows.")
+           }
+         })
+         cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))       
+       })  
        it("Manage Shows=> Ones link", () => {
         let show_number
         cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
@@ -188,7 +208,7 @@ describe("DASH smoke tests/Managements",
              cy.log("There are NO shows.")
            }
          })
-          
+         cy.SetClickUpParameter((myObject.passed),test_tasks[4],Cypress.env('clickup_usage')) 
        })  
        it("Manage Shows=> Financials link", () => {
         let show_number
@@ -206,7 +226,7 @@ describe("DASH smoke tests/Managements",
              cy.log("There are NO shows.")
            }
          })
-          
+         cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage')) 
        })    
       it("Manage Shows=> Publish archive link", () => {
         let show_number
@@ -223,28 +243,9 @@ describe("DASH smoke tests/Managements",
            else{
              cy.log("There are NO shows.")
            }
-         })
-          
-       })  
-       it.skip("Manage Shows=> Show Planner link", () => {
-        let show_number
-        cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
-        cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
-           if ($body.length>1){ //check if any show exists
-              show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
-              cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should("exist").click() //show planner       
-                  cy.log('Show number= '+show_number)
-                  cy.get('#btSim',{timeout: `${Cypress.env('elem_timeout')}`}).should('exist')  
-                  cy.url().should('include', 'ones/shows/showplanner')
-                  cy.title().should('include', 'Show Planner - '+Cypress.env("bu"))
-                  
-           }
-           else{
-             cy.log("There are NO shows.")
-           }
-         })
-          
-       })  
+         })          
+       }) 
+       cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage')) 
     })
     context("Create new Show", ()=>{
      it("Create new Show page", () => {
@@ -286,6 +287,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.VButton__text', 'Create show').should('exist')
         cy.contains('.VButton__text', 'Cancel').click()
         cy.url().should('include', '/ones/new/shows')
+        cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage')) 
       })  
       it("Manage Shows => Create new Show page (on button click)", () => {
         cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
@@ -306,7 +308,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('.buttons__back_text', 'Back').click()
         cy.url().should('include', '/ones/new/shows')
       })   
-       
+      cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))  
     })
     context("Manage Projects", ()=>{
       beforeEach(() => {
@@ -348,7 +350,7 @@ describe("DASH smoke tests/Managements",
             }
             cy.log("The number of projects came from BE - "+project_count)
           })
-
+          cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))  
       })
       it("Manage Projects=> search and filters work", () => {
         cy.contains('.v-filter__placeholder', 'Active, Inactive, Delivered').click()
@@ -381,7 +383,7 @@ describe("DASH smoke tests/Managements",
           })
 
       })
-        
+      cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))    
     })
     context("Manage Projects => Navigation links", ()=>{
       beforeEach(() => {
@@ -414,6 +416,7 @@ describe("DASH smoke tests/Managements",
              cy.log("There are NO projects.")
            }
          }) 
+         cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))  
       })    
       it("Manage Projects=> Manage link", () => {
         let project_number
@@ -443,7 +446,7 @@ describe("DASH smoke tests/Managements",
          })
           
        })  
-                 
+       cy.SetClickUpParameter((myObject.passed),test_tasks[12],Cypress.env('clickup_usage'))            
        })  
     context("Create new Project", ()=>{
       it("Create new Project page", () => {
@@ -461,6 +464,7 @@ describe("DASH smoke tests/Managements",
          cy.contains('.VButton__text', 'Delete').parent().should('have.attr', 'disabled')
          cy.contains('.VButton__text', 'Cancel').click()
          cy.url().should('include', '/ones/projects/')
+         cy.SetClickUpParameter((myObject.passed),test_tasks[13],Cypress.env('clickup_usage'))  
        })  
        it("Manage Projects => Create new Projects page (on button click)", () => {
          cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
@@ -481,7 +485,7 @@ describe("DASH smoke tests/Managements",
          cy.contains('.VButton__text', 'Back').click()
          cy.url().should('include', '/ones/projects/')
        })   
-        
+       cy.SetClickUpParameter((myObject.passed),test_tasks[14],Cypress.env('clickup_usage'))   
      })   
       it("Notifications page", () => {
         cy.viewport(1680, 1050) //to make search field active
@@ -520,6 +524,7 @@ describe("DASH smoke tests/Managements",
           cy.contains('span','Processed').should('exist').click()
           cy.contains('.toggle__label','Show only awaiting approvals').should('not.exist')
         })
+        cy.SetClickUpParameter((myObject.passed),test_tasks[15],Cypress.env('clickup_usage'))  
 
     })
     })
