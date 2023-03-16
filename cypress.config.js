@@ -47,6 +47,14 @@ env: {
     // IDL_dept_id: 21031, //Production Management
     // DL_dept_id: 21007 //Assets
     
+    // bu: 'TCI',
+    // url_g: 'http://10.94.6.100:105',
+    // site_id: 1002, //TCI
+    // IDL_dept_id: 1030, //Production Management
+    // DL_dept_id: 1006 //Assets
+
+
+
 
     //useless for now
       /* db: {
