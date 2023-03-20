@@ -41,11 +41,22 @@ describe("DASH smoke tests/Admin",
        // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
  
   })
+  afterEach(() => { 
+// Check if the test failed
+    cy.log(Cypress.currentTest.state)
+    if (Cypress.currentTest.state === 'failed') {
+      cy.SetClickUpParameter((myObject.failed),test_tasks[0],Cypress.env('clickup_usage'))       // Mark the ClickUp task as failed
+    }
+    else {
+      cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
+    }
+  })
+
   it.skip('Scroll into view test', () => {
     cy.contains('.link__title','Budgets & KPI').click()
     cy.contains('.card-name', 'Academy and Learning').scrollIntoView()
   })
-  it('Manage site permissions', () => {
+  it.only('Manage site permissions', () => {
     cy.contains('.link__title','Manage Sites Permissions').click()
     cy.url().should('include', '/UserPermission/Index')
     cy.contains('.btn','Save').should('have.attr', 'disabled') //verify Save disabled until changes are done
@@ -64,7 +75,7 @@ describe("DASH smoke tests/Admin",
     cy.contains('.btn','Cancel').click() //cancel the changes
     cy.contains('.btn','Save').should('have.attr', 'disabled') //verify Save disabled without changes
     // SetTaskParameter(states['passed'],test_tasks[0])
-    cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
+  //  cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
   })
   context("Users", ()=>{
     beforeEach(() => {
