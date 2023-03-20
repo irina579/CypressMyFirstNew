@@ -510,7 +510,7 @@ describe("DASH smoke tests/Ones",
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))
     })
-    it.only("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
+    it("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
