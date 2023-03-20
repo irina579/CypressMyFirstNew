@@ -542,9 +542,9 @@ describe("DASH smoke tests/Ones",
           })  
           cy.contains('.VButton__text','Sync Show Ones').click()
           cy.contains('.VButton__text','Cancel').click()
-          cy.get('#app').then(($body) => { 
-            cy.log($body.find('Select discipline').length)  
-            if ($body.find('Select discipline').length==0){ 
+          cy.get('div>.show-ones-quota__header__settings__disciplines').find('span').first().then(($text) => { 
+            cy.log($text.text())  
+            if ($text.text().trim()!=='Select discipline'){ 
               cy.contains('div','Scheduled Q').should('exist')
               cy.contains('div','Show Ones').should('exist')
               cy.contains('.toggle__text','Select Site').click()
@@ -556,7 +556,7 @@ describe("DASH smoke tests/Ones",
             }          
           })  
         }
-      })
+      })           
       cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
     })    
   })
