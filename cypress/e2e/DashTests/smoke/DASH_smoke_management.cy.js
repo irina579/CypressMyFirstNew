@@ -14,6 +14,7 @@ describe("DASH smoke tests/Managements",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   let test_tasks=['DASHCU-3691','DASHCU-3692','DASHCU-3693','DASHCU-3694','DASHCU-3695','DASHCU-3696','DASHCU-3697','DASHCU-3698','DASHCU-3699','DASHCU-3700','DASHCU-3701','DASHCU-3702','DASHCU-3703','DASHCU-3704','DASHCU-3705','DASHCU-3706']
+  let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
     Cypress.session.clearAllSavedSessions()  
@@ -40,12 +41,26 @@ describe("DASH smoke tests/Managements",
        // cy.contains('Log in').click()
        // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
   })
+  afterEach(function() { 
+    // Check if the test failed
+      cy.log(this.currentTest.state)
+      cy.log(Cypress.currentTest.title)
+      if (this.currentTest.state === 'passed') {
+        cy.SetClickUpParameter((myObject.passed),task_id,Cypress.env('clickup_usage'))       // Mark the ClickUp task as failed
+        cy.log('Test passed',task_id)
+      }
+      else {
+        cy.SetClickUpParameter((myObject.failed),task_id,Cypress.env('clickup_usage'))
+        cy.log('Test failed',task_id)
+      }
+  })
   context("Manage Shows", ()=>{
     beforeEach(() => {
       cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
       cy.url().should('include', '/ones/new/shows')
     }) 
-    it("Can open Manage Shows", () => {
+    it("Can open Manage Shows", () => { //https://app.clickup.com/t/4534343/DASHCU-3691
+      task_id='DASHCU-3691'
       cy.get('.show__content').eq(0).should("exist") //waits the grid is loaded
       cy.get('body').then(($body) => {   
         if ($body.find('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
@@ -85,9 +100,10 @@ describe("DASH smoke tests/Managements",
         }
         cy.log("The number of shows came from BE - "+show_count)
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
     })
-    it("Manage Shows=> search and filters work", () => {
+    it("Manage Shows=> search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3692
+      task_id='DASHCU-3692'
       cy.contains('.v-filter__placeholder', 'Active').click()
       cy.contains('label','Active').click()
       let filter_status=['Delivered', 'Inactive']
@@ -119,7 +135,7 @@ describe("DASH smoke tests/Managements",
         }
         cy.log("The number of shows came from BE - "+show_count)
       })
-          cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
+         // cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
     })    
   })
   context("Manage Shows => Navigation links", ()=>{
@@ -127,7 +143,8 @@ describe("DASH smoke tests/Managements",
       cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
       cy.url().should('include', '/ones/new/shows')
     }) 
-    it("Manage Shows=> Manage link", () => {
+    it("Manage Shows=> Manage link", () => { //https://app.clickup.com/t/4534343/DASHCU-3693
+      task_id='DASHCU-3693'
       let show_number
       cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
       cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
@@ -156,7 +173,8 @@ describe("DASH smoke tests/Managements",
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage')) 
     })  
-    it.skip("Manage Shows=> Show Planner link", () => {
+    it.skip("Manage Shows=> Show Planner link", () => { //https://app.clickup.com/t/4534343/DASHCU-3694
+      task_id='DASHCU-3694'
       let show_number
       cy.contains('.actions__item','Show Planner').eq(0).should("exist") //waits the grid is loaded
       cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
@@ -174,8 +192,9 @@ describe("DASH smoke tests/Managements",
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))       
     })  
-    it("Manage Shows=> Ones link", () => {
+    it("Manage Shows=> Ones link", () => { //https://app.clickup.com/t/4534343/DASHCU-3695
       let show_number
+      task_id='DASHCU-3695'
       cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
       cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
         if ($body.length>1){ //check if any show exists
@@ -201,10 +220,11 @@ describe("DASH smoke tests/Managements",
           cy.log("There are NO shows.")
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[4],Cypress.env('clickup_usage')) 
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[4],Cypress.env('clickup_usage')) 
     })  
-    it("Manage Shows=> Financials link", () => {
+    it("Manage Shows=> Financials link", () => { //https://app.clickup.com/t/4534343/DASHCU-3696
       let show_number
+      task_id='DASHCU-3696'
       cy.contains('.actions__item','Financials').eq(0).should("exist") //waits the grid is loaded
       cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
         if ($body.length>1){ //check if any show exists
@@ -219,9 +239,10 @@ describe("DASH smoke tests/Managements",
           cy.log("There are NO shows.")
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage')) 
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage')) 
     })    
-    it("Manage Shows=> Publish archive link", () => {
+    it("Manage Shows=> Publish archive link", () => { //https://app.clickup.com/t/4534343/DASHCU-3697
+      task_id='DASHCU-3697'
       let show_number
       cy.contains('.actions__item','Publish Archive').eq(0).should("exist") //waits the grid is loaded
       cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
@@ -237,11 +258,12 @@ describe("DASH smoke tests/Managements",
           cy.log("There are NO shows.")
         }
       })   
-      cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage'))          
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage'))          
     }) 
   })
   context("Create new Show", ()=>{
-    it("Create new Show page", () => {
+    it("Create new Show page", () => { //https://app.clickup.com/t/4534343/DASHCU-3698
+      task_id='DASHCU-3698'
       cy.xpath("//div[normalize-space(text()) = 'Create New Show']").click()
       cy.url().should('include', '/ones/shows/add-edit')
       cy.contains('.section__block_title','Show Details').should('exist') //check if Show Details block exists
@@ -280,9 +302,10 @@ describe("DASH smoke tests/Managements",
       cy.contains('.VButton__text', 'Create show').should('exist')
       cy.contains('.VButton__text', 'Cancel').click()
       cy.url().should('include', '/ones/new/shows')
-      cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage')) 
+    //  cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage')) 
     })  
-    it("Manage Shows => Create new Show page (on button click)", () => {
+    it("Manage Shows => Create new Show page (on button click)", () => { //https://app.clickup.com/t/4534343/DASHCU-3699
+      task_id='DASHCU-3699'
       cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
       cy.url().should('include', '/ones/new/shows')
       cy.contains('.VButton__text','Create New Show').click()
@@ -300,7 +323,7 @@ describe("DASH smoke tests/Managements",
       //check back button navigates to Manage Shows
       cy.contains('.buttons__back_text', 'Back').click()
       cy.url().should('include', '/ones/new/shows')
-      cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))  
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))  
     })   
   })
   context("Manage Projects", ()=>{
@@ -308,7 +331,8 @@ describe("DASH smoke tests/Managements",
       cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
       cy.url().should('include', '/ones/projects/')
     }) 
-    it("Can open Manage Projects", () => {
+    it("Can open Manage Projects", () => { //https://app.clickup.com/t/4534343/DASHCU-3700
+      task_id='DASHCU-3700'
       cy.get('.project__content').eq(0).should("exist") //waits the grid is loaded
       cy.get('body').then(($body) => {   
         if ($body.find('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).length>1){ //check if any show exists
@@ -342,9 +366,10 @@ describe("DASH smoke tests/Managements",
         }
         cy.log("The number of projects came from BE - "+project_count)
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))  
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))  
     })
-    it("Manage Projects=> search and filters work", () => {
+    it("Manage Projects=> search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3701
+      task_id='DASHCU-3701'
       cy.contains('.v-filter__placeholder', 'Active, Inactive, Delivered').click()
       cy.get('.header__control').eq(3).find('li').eq(0).click()
       let filter_status=['Active','Inactive','Delivered']
@@ -372,7 +397,7 @@ describe("DASH smoke tests/Managements",
         }
         cy.log("The number of projects came from BE - "+project_count)
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))  
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))  
     })  
   })
   context("Manage Projects => Navigation links", ()=>{
@@ -380,7 +405,8 @@ describe("DASH smoke tests/Managements",
       cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
       cy.url().should('include', '/ones/projects')
     })
-    it("Manage Projects=> Summary link", () => {
+    it("Manage Projects=> Summary link", () => { //https://app.clickup.com/t/4534343/DASHCU-3702
+      task_id='DASHCU-3702'
       let project_number
       cy.contains('.actions__item','Summary').eq(0).should("exist") //waits the grid is loaded
       cy.get('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
@@ -406,9 +432,10 @@ describe("DASH smoke tests/Managements",
           cy.log("There are NO projects.")
         }
       }) 
-      cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))  
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))  
     })    
-    it("Manage Projects=> Manage link", () => {
+    it("Manage Projects=> Manage link", () => { //https://app.clickup.com/t/4534343/DASHCU-3703
+      task_id='DASHCU-3703'
       let project_number
       cy.contains('.actions__item','Manage').eq(0).should("exist") //waits the grid is loaded
       cy.get('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
@@ -434,11 +461,12 @@ describe("DASH smoke tests/Managements",
           cy.log("There are NO projects.")
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[12],Cypress.env('clickup_usage'))           
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[12],Cypress.env('clickup_usage'))           
     })             
   })  
   context("Create new Project", ()=>{
-    it("Create new Project page", () => {
+    it("Create new Project page", () => { //https://app.clickup.com/t/4534343/DASHCU-3704
+      task_id='DASHCU-3704'
       cy.xpath("//div[normalize-space(text()) = 'Create New Project']").click()
       cy.url().should('include', '/ones/projects/?isCreateMode=true')
       cy.contains('.row__title','Project Details').should('exist') //check if Show Details block exists and others
@@ -453,9 +481,10 @@ describe("DASH smoke tests/Managements",
       cy.contains('.VButton__text', 'Delete').parent().should('have.attr', 'disabled')
       cy.contains('.VButton__text', 'Cancel').click()
       cy.url().should('include', '/ones/projects/')
-      cy.SetClickUpParameter((myObject.passed),test_tasks[13],Cypress.env('clickup_usage'))  
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[13],Cypress.env('clickup_usage'))  
     })  
-    it("Manage Projects => Create new Projects page (on button click)", () => {
+    it("Manage Projects => Create new Projects page (on button click)", () => { //https://app.clickup.com/t/4534343/DASHCU-3705
+      task_id='DASHCU-3705'
       cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
       cy.url().should('include', '/ones/projects/')
       cy.get('.VButton-theme_default-blue').click()
@@ -473,10 +502,11 @@ describe("DASH smoke tests/Managements",
       cy.contains('.VButton__text', 'Cancel').should('exist')
       cy.contains('.VButton__text', 'Back').click()
       cy.url().should('include', '/ones/projects/')
-      cy.SetClickUpParameter((myObject.passed),test_tasks[14],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[14],Cypress.env('clickup_usage'))
     })      
   })   
-    it("Notifications page", () => {
+    it("Notifications page", () => { //https://app.clickup.com/t/4534343/DASHCU-3706
+      task_id='DASHCU-3706'
       cy.viewport(1680, 1050) //to make search field active
       cy.intercept('/api/NotificationApi/GetNotifications').as('grid_list')
       cy.contains('.link__title','Notification Center').click()
@@ -512,7 +542,7 @@ describe("DASH smoke tests/Managements",
         cy.contains('span','Processed').should('exist').click()
         cy.contains('.toggle__label','Show only awaiting approvals').should('not.exist')
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[15],Cypress.env('clickup_usage'))  
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[15],Cypress.env('clickup_usage'))  
     })
 })
     //export{}

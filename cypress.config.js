@@ -12,7 +12,7 @@ module.exports = {
       on('task', { queryDb: query => { return queryTestDb(query, config) }, }); 
        require('cypress-mochawesome-reporter/plugin')(on);
     },
-    retries:1,
+    retries:0,
     defaultCommandTimeout: 40000,
     pageLoadTimeout: 80000
     ///viewportWidth: 1680,

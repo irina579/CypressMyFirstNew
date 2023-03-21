@@ -15,6 +15,7 @@ describe("DASH smoke tests/Admin",
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
   let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665']
+  let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
   Cypress.session.clearAllSavedSessions()  
@@ -41,22 +42,27 @@ describe("DASH smoke tests/Admin",
        // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
  
   })
-  afterEach(() => { 
-// Check if the test failed
-    cy.log(Cypress.currentTest.state)
-    if (Cypress.currentTest.state === 'failed') {
-      cy.SetClickUpParameter((myObject.failed),test_tasks[0],Cypress.env('clickup_usage'))       // Mark the ClickUp task as failed
+  afterEach(function() { 
+  // Check if the test failed
+    cy.log(this.currentTest.state)
+    cy.log(Cypress.currentTest.title)
+    if (this.currentTest.state === 'passed') {
+      cy.SetClickUpParameter((myObject.passed),task_id,Cypress.env('clickup_usage'))       // Mark the ClickUp task as failed
+      cy.log('Test passed',task_id)
     }
     else {
-      cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
+      cy.SetClickUpParameter((myObject.failed),task_id,Cypress.env('clickup_usage'))
+      cy.log('Test failed',task_id)
     }
   })
-
   it.skip('Scroll into view test', () => {
+    task_id='DASHCU-3687'
     cy.contains('.link__title','Budgets & KPI').click()
+    //cy.contains('.link__title','fbajbchbsacjhsabj').click() - for testing purposes
     cy.contains('.card-name', 'Academy and Learning').scrollIntoView()
   })
-  it.only('Manage site permissions', () => {
+  it('Manage site permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-3663
+    task_id='DASHCU-3663'
     cy.contains('.link__title','Manage Sites Permissions').click()
     cy.url().should('include', '/UserPermission/Index')
     cy.contains('.btn','Save').should('have.attr', 'disabled') //verify Save disabled until changes are done
@@ -82,7 +88,8 @@ describe("DASH smoke tests/Admin",
       cy.contains('.link__title','Users').click()
       cy.url().should('include', '/Admin/Users')
     }) 
-    it('Users=> Search tab', () => {
+    it('Users=> Search tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3664
+      task_id='DASHCU-3664'
       cy.get('div> .search__input').type(`${Cypress.env('user')}`) //search for user
       cy.intercept('GET', '**/api//UserPermissionApi/FindUsers?userNameOrEmail*').as('grid_list')
       cy.contains('.btn','Apply').click()
@@ -104,9 +111,10 @@ describe("DASH smoke tests/Admin",
         }
         cy.log("The number of users came from BE after search- "+user_count)
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
     })
-    it('Users=> Filter tab', () => {
+    it('Users=> Filter tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3665
+      task_id='DASHCU-3665'
       cy.contains('.tab-title', 'Filter').click()
       cy.contains('.header__label', 'Entity').next('div').first().click()
       cy.get("[value="+Cypress.env("site_id")+"]").click() //select site mentioned in config
@@ -136,7 +144,7 @@ describe("DASH smoke tests/Admin",
           })
         })      
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage'))
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage'))
     })
   })
 })

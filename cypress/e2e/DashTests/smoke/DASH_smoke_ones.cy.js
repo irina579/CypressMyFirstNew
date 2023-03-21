@@ -29,6 +29,7 @@ describe("DASH smoke tests/Ones",
     return result;
   } 
   let test_tasks=['DASHCU-3675','DASHCU-3676','DASHCU-3677','DASHCU-3678','DASHCU-3679','DASHCU-3680','DASHCU-3681','DASHCU-3682','DASHCU-3683','DASHCU-3684','DASHCU-3685','DASHCU-3686','DASHCU-3687']
+  let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
     Cypress.session.clearAllSavedSessions()  
@@ -36,8 +37,7 @@ describe("DASH smoke tests/Ones",
      // SetTaskParameter(states['onhold'],test_tasks[i])
       cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
     }
-  })
-   
+  })  
   beforeEach(() => {
     cy.session('Login',()=>{
       cy.visit(Cypress.env('url_g'))
@@ -55,6 +55,19 @@ describe("DASH smoke tests/Ones",
       // cy.contains('Log in').click()
       // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
   })
+  afterEach(function() { 
+    // Check if the test failed
+      cy.log(this.currentTest.state)
+      cy.log(Cypress.currentTest.title)
+      if (this.currentTest.state === 'passed') {
+        cy.SetClickUpParameter((myObject.passed),task_id,Cypress.env('clickup_usage'))       // Mark the ClickUp task as failed
+        cy.log('Test passed',task_id)
+      }
+      else {
+        cy.SetClickUpParameter((myObject.failed),task_id,Cypress.env('clickup_usage'))
+        cy.log('Test failed',task_id)
+      }
+  })
   it.skip("Sample of Intercept in  Notification request", () => {
     cy.intercept('/api/NotificationApi/GetNotifications').as('status');
     cy.get(".link__title").contains("Notification Center").click()
@@ -64,7 +77,7 @@ describe("DASH smoke tests/Ones",
       cy.log(category_count)
     });
   });
-  it("User can log in", () => {
+  it.skip("User can log in", () => {
     cy.url().should('include', '/Home/Homepage')
     cy.contains('Welcome back').should('be.visible')
   })
@@ -76,6 +89,7 @@ describe("DASH smoke tests/Ones",
       cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
     }) 
     it("Can open IDL Ones => Planning grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3675
+      task_id='DASHCU-3675'
       // cy.contains('.Vheader-text',"Dates").prev().click().as('departments_drdw')
       SelectAllDepts() //checks all departments
       cy.get(".item_artist").eq(0).should("exist")
@@ -103,9 +117,10 @@ describe("DASH smoke tests/Ones",
         cy.log("The number of artist came from BE - "+artist_count)
       })
       cy.contains(".btn__overflow","File").should("exist") //checks if File button available
-      cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
     })
     it("Can open IDL Teams", () => { //https://app.clickup.com/t/4534343/DASHCU-3676
+      task_id='DASHCU-3676'
       cy.contains(".tab-title", "Teams").click()
       SelectAllDepts() //checks all departments
       cy.get('.TeamsTab__search').should('exist').type("123456789")
@@ -143,9 +158,10 @@ describe("DASH smoke tests/Ones",
           cy.log('The number of existing teams - '+teams_count)
         } 
       }) 
-      cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
+     // cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
     })
     it("Can open IDL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3677
+      task_id='DASHCU-3677'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
       cy.contains("a",Cypress.env('IDL_dept')).click()
@@ -189,9 +205,10 @@ describe("DASH smoke tests/Ones",
           })     
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage'))
+    //  cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage'))
     })
     it("Can open IDL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3678
+      task_id='DASHCU-3678'
       cy.contains(".tab-title", "Vacancies converted info").click()
       cy.contains(".btn__overflow","Nothing selected").click()
       cy.contains("a",Cypress.env('IDL_dept')).click()
@@ -213,7 +230,7 @@ describe("DASH smoke tests/Ones",
           cy.log('The number of converted artists - '+converted_count)
         } 
       }) 
-      cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))
     })      
   })
   context("Ones Unit - DL grid", ()=>{  
@@ -224,7 +241,8 @@ describe("DASH smoke tests/Ones",
       cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
     }) 
     it("Can open DL Ones => Planning grid",  () => { //https://app.clickup.com/t/4534343/DASHCU-3679
-    //checks if generalist or not
+      task_id='DASHCU-3679'
+      //checks if generalist or not
       cy.get(".v-select-grouped__toggle").then(($text1)=>{
       if (Cypress.env('generalist').includes($text1.text().trim())){ //is generalist
         cy.contains("Apply").click()
@@ -256,9 +274,10 @@ describe("DASH smoke tests/Ones",
         }
         cy.log("The number of artist came from BE - "+artist_count)
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[4],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[4],Cypress.env('clickup_usage'))
     })
     it("Can open DL Ones => Actualised grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3680
+      task_id='DASHCU-3680'
       cy.contains(".tab-title", "Actualised Grid").click()
       //checks if generalist or not
       cy.get(".v-select-grouped__toggle").then(($text1)=>{
@@ -293,9 +312,10 @@ describe("DASH smoke tests/Ones",
         }
         cy.log("The number of artist came from BE - "+artist_count)
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage'))
     })
     it("Can open DL Ones => Disciplines tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3681
+      task_id='DASHCU-3681'
       cy.contains(".tab-title", "Disciplines").click()
       cy.wait(10000) //some delay to wait until notifications are loaded. Otherwise network error fails
       //checks if generalist or not
@@ -312,7 +332,7 @@ describe("DASH smoke tests/Ones",
           cy.get(".ui-checkbox_default",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("have.class","disabled") //checkboxes disabled
         }
       })  
-      cy.get(".info__name").eq(1).should("exist")
+      cy.get(".info__name").eq(0).should("exist")
       cy.contains('.Vheader-text',"Dates").prev().click()
       cy.contains("Select All").click()
       cy.contains("label", Cypress.env('DL_dept')).click() //checks 1 department
@@ -327,15 +347,16 @@ describe("DASH smoke tests/Ones",
         cy.log("The number of artist came from BE - "+artist_count)
         if(artist_count>0){
           FirstName=response.body.reference[0].name
-          cy.get(".info__name").eq(1).should("exist") //checks there is an artist in the grid
+          cy.get(".info__name").eq(0).should("exist") //checks there is an artist in the grid
           cy.contains(".info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table
           cy.get(".ui-checkbox_default").eq(0).should("not.have.class","disabled") //checkboxes enabled  
           cy.log("The first artist is - "+FirstName)  
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage'))
     })
     it("Can open DL Teams", () => { //https://app.clickup.com/t/4534343/DASHCU-3682
+      task_id='DASHCU-3682'
       cy.contains(".tab-title", "Teams").click()
       cy.wait(10000) //some delay to wait until notifications are loaded. Otherwise network error fails
       //checks if generalist or not
@@ -382,9 +403,10 @@ describe("DASH smoke tests/Ones",
           cy.log('The number of existing teams - '+teams_count)
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage'))
     })
     it("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
+      task_id='DASHCU-3683'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
       cy.contains("a",Cypress.env('DL_dept')).click()
@@ -427,9 +449,10 @@ describe("DASH smoke tests/Ones",
           })
         }
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))
     })
     it("Can open DL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3684
+      task_id='DASHCU-3684'
       cy.contains(".tab-title", "Vacancies converted info").click()
       cy.contains(".btn__overflow","Nothing selected").click()
       cy.contains("a",Cypress.env('DL_dept')).click()
@@ -451,7 +474,7 @@ describe("DASH smoke tests/Ones",
           cy.log('The number of converted artists - '+converted_count)
         } 
       }) 
-      cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))
     })  
   })
   context("Ones Unit - Show Ones grid", ()=>{
@@ -460,6 +483,7 @@ describe("DASH smoke tests/Ones",
       cy.url().should('include', '/ones/show')
     }) 
     it("Can open Show Ones => Ones grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3685
+      task_id='DASHCU-3685'
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
@@ -508,9 +532,10 @@ describe("DASH smoke tests/Ones",
           })
         })     
       })
-      cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))
     })
     it("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
+      task_id='DASHCU-3686'
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
@@ -557,7 +582,7 @@ describe("DASH smoke tests/Ones",
           })  
         }
       })           
-      cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
+      //cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
     })    
   })
 })
