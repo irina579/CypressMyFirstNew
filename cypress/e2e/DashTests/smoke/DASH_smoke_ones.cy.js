@@ -185,10 +185,10 @@ describe("DASH smoke tests/Ones",
       cy.contains(".btn__overflow","Current State").click() //open snapshot dropdown
       let CountSnap=0
       // further checks will go if there are any snapshots
-      cy.contains('a','Current State').parent().its('length').then((CountSnap) => {
+      cy.get('[value="0"]').parent().find('li').its('length').then((CountSnap) => {
         cy.log("length="+CountSnap)
         if(CountSnap>=2){
-          cy.contains('a','Current State').parent().eq(CountSnap).click()
+          cy.get('[value="0"]').parent().find('li').eq(CountSnap-1).click()
           //checks if any artist comes from BE
           cy.contains("Apply").click()
           cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
@@ -429,10 +429,10 @@ describe("DASH smoke tests/Ones",
       cy.contains(".btn__overflow","Current State").click() //open snapshot dropdown
       let CountSnap=0
       // further checks will go if there are any snapshots
-      cy.contains('a','Current State').parent().its('length').then((CountSnap) => {
+      cy.get('[value="0"]').parent().find('li').its('length').then((CountSnap) => {
         cy.log("length="+CountSnap)
         if(CountSnap>=2){
-          cy.contains('a','Current State').parent().eq(CountSnap).click()
+          cy.get('[value="0"]').parent().find('li').eq(CountSnap-1).click()
           //checks if any artist comes from BE
           cy.contains("Apply").click()
           cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {

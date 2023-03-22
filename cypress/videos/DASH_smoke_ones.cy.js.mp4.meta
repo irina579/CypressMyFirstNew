@@ -1,0 +1,71 @@
+;FFMETADATA1
+[CHAPTER]
+TIMEBASE=1/1000
+START=3879
+END=3879
+title=DASH smoke tests/Ones Sample of Intercept in  Notification request
+[CHAPTER]
+TIMEBASE=1/1000
+START=0
+END=null
+title=DASH smoke tests/Ones User can log in
+[CHAPTER]
+TIMEBASE=1/1000
+START=-79914
+END=20259
+title=DASH smoke tests/Ones Ones Unit - IDL grid Can open IDL Ones => Planning grid
+[CHAPTER]
+TIMEBASE=1/1000
+START=90921
+END=120480
+title=DASH smoke tests/Ones Ones Unit - IDL grid Can open IDL Teams
+[CHAPTER]
+TIMEBASE=1/1000
+START=122207
+END=150052
+title=DASH smoke tests/Ones Ones Unit - IDL grid Can open IDL Manager Lab
+[CHAPTER]
+TIMEBASE=1/1000
+START=157808
+END=177906
+title=DASH smoke tests/Ones Ones Unit - IDL grid Can open IDL Vacancies converted info
+[CHAPTER]
+TIMEBASE=1/1000
+START=160455
+END=198015
+title=DASH smoke tests/Ones Ones Unit - DL grid Can open DL Ones => Planning grid
+[CHAPTER]
+TIMEBASE=1/1000
+START=194589
+END=235584
+title=DASH smoke tests/Ones Ones Unit - DL grid Can open DL Ones => Actualised grid
+[CHAPTER]
+TIMEBASE=1/1000
+START=183205
+END=276592
+title=DASH smoke tests/Ones Ones Unit - DL grid Can open DL Ones => Disciplines tab
+[CHAPTER]
+TIMEBASE=1/1000
+START=327522
+END=370169
+title=DASH smoke tests/Ones Ones Unit - DL grid Can open DL Teams
+[CHAPTER]
+TIMEBASE=1/1000
+START=385115
+END=412828
+title=DASH smoke tests/Ones Ones Unit - DL grid Can open DL Manager Lab
+[CHAPTER]
+TIMEBASE=1/1000
+START=420923
+END=440552
+title=DASH smoke tests/Ones Ones Unit - DL grid Can open DL Vacancies converted info
+[CHAPTER]
+TIMEBASE=1/1000
+START=393197
+END=460190
+title=DASH smoke tests/Ones Ones Unit - Show Ones grid Can open Show Ones => Ones grid
+[CHAPTER]
+TIMEBASE=1/1000
+START=491228
+END=527196
+title=DASH smoke tests/Ones Ones Unit - Show Ones grid Can open Show Ones => Quota grid

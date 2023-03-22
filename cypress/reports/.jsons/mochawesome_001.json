@@ -1,0 +1,513 @@
+{
+  "stats": {
+    "suites": 7,
+    "tests": 15,
+    "passes": 15,
+    "pending": 1,
+    "failures": -1,
+    "start": "2023-03-21T15:10:57.350Z",
+    "end": "2023-03-21T15:18:24.272Z",
+    "duration": 446922,
+    "testsRegistered": 16,
+    "passPercent": 100,
+    "pendingPercent": 6.25,
+    "other": 1,
+    "hasOther": true,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "35d01e1d-246b-486d-9a52-b03b4fcb6c1c",
+      "title": "",
+      "fullFile": "cypress\\e2e\\DashTests\\smoke\\DASH_smoke_management.cy.js",
+      "file": "cypress\\e2e\\DashTests\\smoke\\DASH_smoke_management.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f46c0070-62e7-4e34-b17d-2e0f48a7deeb",
+          "title": "DASH smoke tests/Managements",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Notifications page",
+              "fullTitle": "DASH smoke tests/Managements Notifications page",
+              "timedOut": null,
+              "duration": 56372,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "//https://app.clickup.com/t/4534343/DASHCU-3706\ntask_id = 'DASHCU-3706';\ncy.viewport(1680, 1050); //to make search field active\ncy.intercept('/api/NotificationApi/GetNotifications').as('grid_list');\ncy.contains('.link__title', 'Notification Center').click();\ncy.url().should('include', '/notification-center/');\ncy.contains('span', 'Actual').should('exist');\ncy.contains('.toggle__label', 'Show only awaiting approvals').should('exist');\ncy.wait('@grid_list', {\n  requestTimeout: `${Cypress.env('req_timeout')}`\n}).then(({\n  response\n}) => {\n  expect(response.statusCode).to.eq(200);\n  let actual_notifications_count = response.body.reference.notifications.actual.length;\n  let processed_notifications_count = response.body.reference.notifications.processed.length;\n  let RandomIndex = getRandomInt(actual_notifications_count);\n  cy.log(RandomIndex);\n  cy.log(actual_notifications_count);\n  let RandomTitle;\n  if (actual_notifications_count > 0) {\n    cy.get('.notification__title').eq(0).should('have.text', response.body.reference.notifications.actual[0].title); //1-st notification's title corresponds to BE\n    RandomTitle = response.body.reference.notifications.actual[RandomIndex].title; //store random title came in BE response\n    //counter displays correct value, similar to response count\n    cy.contains('span', 'Actual').next(\".tabTitle__counter\").should($counter => {\n      expect(parseInt(normalizeText($counter.text())), 'Actual counter corresponds to BE response').to.equal(actual_notifications_count);\n    });\n    cy.contains('span', 'Processed').next(\".tabTitle__counter\").should($counter => {\n      expect(parseInt(normalizeText($counter.text())), 'Processed counter corresponds to BE response').to.equal(processed_notifications_count);\n    });\n    cy.get('[placeholder=\"Search\"]').type(RandomTitle).type('{enter}'); //initiate searching of this title on UI\n    cy.get('.notification__title').then($body => {\n      cy.get('.notification__title').eq(getRandomInt($body.length)).should('include.text', RandomTitle);\n      cy.log(\"Search length - \" + $body.length);\n    });\n    cy.log(\"The Title is - \" + RandomTitle);\n  }\n  cy.log(\"The number of Actual notifications - \" + actual_notifications_count);\n  cy.contains('span', 'Processed').should('exist').click();\n  cy.contains('.toggle__label', 'Show only awaiting approvals').should('not.exist');\n});\n//cy.SetClickUpParameter((myObject.passed),test_tasks[15],Cypress.env('clickup_usage'))",
+              "err": {},
+              "uuid": "c88409e8-050a-416d-9c31-0ed74beb4e5a",
+              "parentUUID": "f46c0070-62e7-4e34-b17d-2e0f48a7deeb",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [
+            {
+              "uuid": "f6e51c9e-e409-455d-bbe3-c912d75fb543",
+              "title": "Manage Shows",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Can open Manage Shows",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows Can open Manage Shows",
+                  "timedOut": null,
+                  "duration": 26177,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3691\ntask_id = 'DASHCU-3691';\ncy.get('.show__content').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('body').then($body => {\n  if ($body.find('.show__content', {\n    timeout: `${Cypress.env('elem_timeout')}`\n  }).length > 1) {\n    //check if any show exists\n    cy.contains(\".status__label\", \"Active\").eq(0).should(\"exist\");\n    //Inactive Shows counter=0\n    cy.contains(\".counters__item\", \"Inactive\").find(\"span\").should($counter => {\n      expect(normalizeText($counter.text()), 'Count of Inactive Shows is zero by default').to.equal(\"0\");\n    });\n    //Delivered Shows counter=0\n    cy.contains(\".counters__item\", \"Delivered\").find(\"span\").should($counter => {\n      expect(normalizeText($counter.text()), 'Count of Delivered Shows is zero by default').to.equal(\"0\");\n    });\n    cy.log($body.find('.show__content').length);\n  } else {\n    cy.log(\"There are NO shows.\");\n  }\n});\ncy.contains('.VButton__text', \"Apply\").click(); //click Apply to initiate response\ncy.intercept('/api/Shows/Search').as('grid_list');\ncy.wait('@grid_list', {\n  requestTimeout: `${Cypress.env('req_timeout')}`\n}).then(({\n  response\n}) => {\n  expect(response.statusCode).to.eq(200);\n  expect(JSON.stringify(response.body), 'There are no inactive shows in response by deafult').to.not.contain('Inactive');\n  expect(JSON.stringify(response.body), 'There are no delivered shows in response by deafult').to.not.contain('Delivered');\n  let show_count = response.body.items.length;\n  let FirstName;\n  if (show_count > 0) {\n    FirstName = response.body.items[0].showCode;\n    cy.get(\".show__content\", {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).eq(0).should(\"exist\");\n    cy.contains(\".info__title\", FirstName).eq(0).should(\"exist\"); //check if 1-st show exists and matches response\n    //active Shows UI counter displays correct value, similar to response count\n    cy.contains(\".counters__item\", \"Active\").find(\"span\").should($counter => {\n      expect(parseInt(normalizeText($counter.text())), 'Count of Active Shows corresponds to BE response').to.equal(show_count);\n    });\n    cy.log(\"The show is - \" + FirstName);\n    cy.contains(\".VButton__text\", \"Create New Show\").should(\"exist\"); //create button exists\n  }\n  cy.log(\"The number of shows came from BE - \" + show_count);\n});\n//cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "6db18c15-8085-43ed-9215-5c8b05befc62",
+                  "parentUUID": "f6e51c9e-e409-455d-bbe3-c912d75fb543",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Shows=> search and filters work",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows Manage Shows=> search and filters work",
+                  "timedOut": null,
+                  "duration": 23956,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3692\ntask_id = 'DASHCU-3692';\ncy.contains('.v-filter__placeholder', 'Active').click();\ncy.contains('label', 'Active').click();\nlet filter_status = ['Delivered', 'Inactive'];\nlet status = filter_status[getRandomInt(2)]; //selects random status to filter\ncy.contains('label', status).click();\ncy.contains('.VButton__text', \"Apply\").click();\ncy.intercept('/api/Shows/Search').as('grid_list');\ncy.wait('@grid_list', {\n  requestTimeout: `${Cypress.env('req_timeout')}`\n}).then(({\n  response\n}) => {\n  expect(response.statusCode).to.eq(200);\n  let show_count = response.body.items.length;\n  let RandomIndex = getRandomInt(show_count);\n  cy.log(RandomIndex);\n  let RandomName;\n  if (show_count > 0) {\n    expect(response.body.items[RandomIndex].showStatus, 'Random Show status corresponds to filtered one').to.equal(status);\n    RandomName = response.body.items[RandomIndex].showCode; //store random show code came in BE response\n    //filtered Shows UI counter displays correct value, similar to response count\n    cy.contains(\".counters__item\", status).find(\"span\").should($counter => {\n      expect(parseInt(normalizeText($counter.text())), 'Count of ' + status + ' Shows corresponds to BE response').to.equal(show_count);\n    });\n    cy.get('.search__input').type(RandomName); //initiate searching of this Show Code on UI\n    cy.contains('.VButton__text', \"Apply\").click();\n    cy.contains(\".info__title\", RandomName, {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).eq(0).should(\"exist\"); //check if the searched Show exists\n    cy.log(\"The show is - \" + RandomName);\n    //Active Shows counter=0\n    cy.contains(\".counters__item\", \"Active\").find(\"span\").should($counter => {\n      expect(normalizeText($counter.text()), 'Count of Active Shows is zero').to.equal(\"0\");\n    });\n  }\n  cy.log(\"The number of shows came from BE - \" + show_count);\n});\n// cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "0c4133b7-e304-451d-aa02-bc0f3df487c7",
+                  "parentUUID": "f6e51c9e-e409-455d-bbe3-c912d75fb543",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "6db18c15-8085-43ed-9215-5c8b05befc62",
+                "0c4133b7-e304-451d-aa02-bc0f3df487c7"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 50133,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "7a09ab12-3a21-450b-b7e6-f90d8abdf26d",
+              "title": "Manage Shows => Navigation links",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Manage Shows=> Manage link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows => Navigation links Manage Shows=> Manage link",
+                  "timedOut": null,
+                  "duration": 38553,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3693\ntask_id = 'DASHCU-3693';\nlet show_number;\ncy.contains('.actions__item', 'Manage').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.show__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    show_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.log('Show number=' + show_number);\n    cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then($code => {\n      let codeUI = $code.text().trim();\n      cy.intercept('GET', '**/api/ManageShowsApi/GetManageShow*').as('grid_list');\n      cy.log('Show number1=' + show_number);\n      cy.get('.show__content').eq(show_number).find('.actions__item').eq(0).should(\"exist\").click(); //click Manage\n      cy.wait('@grid_list', {\n        requestTimeout: `${Cypress.env('req_timeout')}`\n      }).then(({\n        response\n      }) => {\n        expect(response.statusCode).to.eq(200);\n        let ShowCode = response.body.show.code;\n        cy.log('Show number2= ' + show_number);\n        cy.url().should('include', '/ones/shows/add-edit');\n        cy.title().should('include', 'Edit Show - ' + Cypress.env(\"bu\"));\n        cy.contains('.section__block_title', 'Show Details').should('exist');\n        expect(codeUI).to.include(ShowCode);\n      });\n    });\n  } else {\n    cy.log(\"There are NO shows.\");\n  }\n});\ncy.SetClickUpParameter(myObject.passed, test_tasks[2], Cypress.env('clickup_usage'));",
+                  "err": {},
+                  "uuid": "589c26aa-35a3-484c-b53a-85dd88c66735",
+                  "parentUUID": "7a09ab12-3a21-450b-b7e6-f90d8abdf26d",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Shows=> Show Planner link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows => Navigation links Manage Shows=> Show Planner link",
+                  "timedOut": null,
+                  "duration": 0,
+                  "state": "pending",
+                  "speed": null,
+                  "pass": false,
+                  "fail": false,
+                  "pending": true,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3694\ntask_id = 'DASHCU-3694';\nlet show_number;\ncy.contains('.actions__item', 'Show Planner').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.show__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    show_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.get('.show__content').eq(show_number).find('.actions__item').eq(1).should(\"exist\").click(); //show planner       \n    cy.log('Show number= ' + show_number);\n    cy.get('#btSim', {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).should('exist');\n    cy.url().should('include', 'ones/shows/showplanner');\n    cy.title().should('include', 'Show Planner - ' + Cypress.env(\"bu\"));\n  } else {\n    cy.log(\"There are NO shows.\");\n  }\n});\ncy.SetClickUpParameter(myObject.passed, test_tasks[3], Cypress.env('clickup_usage'));",
+                  "err": {},
+                  "uuid": "cc4c61f8-3dc4-4d81-8b89-43c426e809b1",
+                  "parentUUID": "7a09ab12-3a21-450b-b7e6-f90d8abdf26d",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Shows=> Ones link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows => Navigation links Manage Shows=> Ones link",
+                  "timedOut": null,
+                  "duration": 45023,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3695\nlet show_number;\ntask_id = 'DASHCU-3695';\ncy.contains('.actions__item', 'Ones').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.show__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    show_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then($code => {\n      let codeUI = $code.text().trim();\n      cy.get('.show__content').eq(show_number).find('.actions__item').eq(2).should(\"exist\").click();\n      cy.log('Show number= ' + show_number);\n      cy.log('Show code= ' + codeUI);\n      cy.url().should('include', '/ones/show/');\n      cy.title().should('include', 'Show Ones -');\n      cy.contains('.btn__overflow', '|').should('exist').then($code => {\n        let code_long = $code.text().trim();\n        const re = /[|]/;\n        let ShowCode = code_long.substring(0, code_long.search(re)).trim();\n        cy.log('Show Ones, Show Code= ' + ShowCode);\n        expect(codeUI).to.include(ShowCode); //verify Show code cliked in Manage shows corresponds to loaded in Ones\n      });\n      cy.get('.item__info__department').should('exist');\n    });\n  } else {\n    cy.log(\"There are NO shows.\");\n  }\n});\n//cy.SetClickUpParameter((myObject.passed),test_tasks[4],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "6cf8910c-016e-4ad5-9efa-72ed74bfd483",
+                  "parentUUID": "7a09ab12-3a21-450b-b7e6-f90d8abdf26d",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Shows=> Financials link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows => Navigation links Manage Shows=> Financials link",
+                  "timedOut": null,
+                  "duration": 17239,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3696\nlet show_number;\ntask_id = 'DASHCU-3696';\ncy.contains('.actions__item', 'Financials').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.show__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    show_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.get('.show__content').eq(show_number).find('.actions__item').eq(3).should(\"exist\").click();\n    cy.log('Show number= ' + show_number);\n    cy.contains('.VButton__text', 'Print', {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).should('exist');\n    cy.url().should('include', 'ones/shows/financials');\n    cy.title().should('include', 'Financials - ' + Cypress.env(\"bu\"));\n  } else {\n    cy.log(\"There are NO shows.\");\n  }\n});\n// cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "0a004791-1b13-4e2c-a0dc-e76a51729dbc",
+                  "parentUUID": "7a09ab12-3a21-450b-b7e6-f90d8abdf26d",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Shows=> Publish archive link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Shows => Navigation links Manage Shows=> Publish archive link",
+                  "timedOut": null,
+                  "duration": 17545,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3697\ntask_id = 'DASHCU-3697';\nlet show_number;\ncy.contains('.actions__item', 'Publish Archive').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.show__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    show_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.get('.show__content').eq(show_number).find('.actions__item').eq(4).should(\"exist\").click();\n    cy.log('Show number= ' + show_number);\n    cy.contains('.btn-content', 'Back to All Shows', {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).should('exist');\n    cy.url().should('include', 'ones/shows/publish-archive');\n    cy.title().should('include', 'Publish Archive - ' + Cypress.env(\"bu\"));\n  } else {\n    cy.log(\"There are NO shows.\");\n  }\n});\n// cy.SetClickUpParameter((myObject.passed),test_tasks[6],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "a1bcaa73-f370-41b4-ad9b-7f4e65190acb",
+                  "parentUUID": "7a09ab12-3a21-450b-b7e6-f90d8abdf26d",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "589c26aa-35a3-484c-b53a-85dd88c66735",
+                "6cf8910c-016e-4ad5-9efa-72ed74bfd483",
+                "0a004791-1b13-4e2c-a0dc-e76a51729dbc",
+                "a1bcaa73-f370-41b4-ad9b-7f4e65190acb"
+              ],
+              "failures": [],
+              "pending": [
+                "cc4c61f8-3dc4-4d81-8b89-43c426e809b1"
+              ],
+              "skipped": [],
+              "duration": 118360,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "60af14f5-292b-43d6-a7b6-b4eda45725e4",
+              "title": "Create new Show",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Create new Show page",
+                  "fullTitle": "DASH smoke tests/Managements Create new Show Create new Show page",
+                  "timedOut": null,
+                  "duration": 40802,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3698\ntask_id = 'DASHCU-3698';\ncy.xpath(\"//div[normalize-space(text()) = 'Create New Show']\").click();\ncy.url().should('include', '/ones/shows/add-edit');\ncy.contains('.section__block_title', 'Show Details').should('exist'); //check if Show Details block exists\ncy.contains('.section__block_title', 'Key Dates').should('exist'); //check if Key Dates block exists\ncy.contains('.section__block_title', 'Seniority Splits').should('exist'); //etc.\ncy.contains('.section__block_title', 'Financial').should('exist'); //etc.\ncy.contains('.section__block_title', 'Locations').should('exist'); //etc.\n//primary location\ncy.contains(\"Primary\").next(\".input-group__input\").should(\"exist\").click();\ncy.xpath(\"//a[contains(text(), 'London')]\").eq(0).click();\n//secondary location\ncy.contains(\"Secondary\").next(\".input-group__input\").should(\"exist\").click();\ncy.get('ul').find('label').eq(0).click();\ncy.contains('span', 'Show Inputs').click();\ncy.contains('.section__block_title', 'Exchange Rates').should('exist'); //Exchange Rates\ncy.contains('.section__block_title', 'Rate Cards').should('exist');\ncy.contains('span', 'Avg Artist Day Rates').click();\ncy.contains('.navigation__button', 'London').click(); //check is site tab exists\ncy.contains('.cell', 'Assets').should('exist');\ncy.contains('.navigation__button', 'London').siblings().click(); //checks is the second site exists\ncy.contains('.cell', 'Assets').should('exist');\ncy.contains('span', 'Outsource Rates').click();\ncy.contains('.navigation__tabName', Cypress.env('bu')).should('exist');\ncy.contains('.cell', 'Assets').should('exist');\ncy.contains('span', 'Bid Weeks').click();\ncy.contains('Please, create new show').should('exist');\ncy.contains('span', 'Contract Value').click();\ncy.contains('.cell', 'London').should('exist');\ncy.contains('.navigation__button', 'Adjustments').should('exist');\ncy.contains('span', 'Add Row').should('exist');\ncy.contains('span', 'Indirect Costs').click();\ncy.contains('Please, create new show').should('exist');\ncy.contains('span', 'Internal Bid').click();\ncy.contains('.cell', 'London').should('exist');\ncy.contains('.cell', 'Award Revenue').should('exist');\ncy.contains('.VButton__text', 'Create show').should('exist');\ncy.contains('.VButton__text', 'Cancel').click();\ncy.url().should('include', '/ones/new/shows');\n//  cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "3ec5ff2a-0fdf-46a9-a227-639e0282c928",
+                  "parentUUID": "60af14f5-292b-43d6-a7b6-b4eda45725e4",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Shows => Create new Show page (on button click)",
+                  "fullTitle": "DASH smoke tests/Managements Create new Show Manage Shows => Create new Show page (on button click)",
+                  "timedOut": null,
+                  "duration": 32764,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3699\ntask_id = 'DASHCU-3699';\ncy.xpath(\"//div[normalize-space(text()) = 'Manage Shows']\").click();\ncy.url().should('include', '/ones/new/shows');\ncy.contains('.VButton__text', 'Create New Show').click();\ncy.url().should('include', '/ones/shows/add-edit');\ncy.contains('.section__block_title', 'Show Details').should('exist'); //check if Show Details block exists\n//check all tabs exist\ncy.contains('span', 'Show Stats').should('exist');\ncy.contains('span', 'Show Inputs').should('exist');\ncy.contains('span', 'Avg Artist Day Rates').should('exist');\ncy.contains('span', 'Outsource Rates').should('exist');\ncy.contains('span', 'Bid Weeks').should('exist');\ncy.contains('span', 'Contract Value').should('exist');\ncy.contains('span', 'Indirect Costs').should('exist');\ncy.contains('span', 'Internal Bid').should('exist');\n//check back button navigates to Manage Shows\ncy.contains('.buttons__back_text', 'Back').click();\ncy.url().should('include', '/ones/new/shows');\n// cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "f645b33b-93d1-4efc-ba43-ce9deaa07c67",
+                  "parentUUID": "60af14f5-292b-43d6-a7b6-b4eda45725e4",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "3ec5ff2a-0fdf-46a9-a227-639e0282c928",
+                "f645b33b-93d1-4efc-ba43-ce9deaa07c67"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 73566,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "ab6b2762-38ea-4bc4-bf81-a0a2ad20878f",
+              "title": "Manage Projects",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Can open Manage Projects",
+                  "fullTitle": "DASH smoke tests/Managements Manage Projects Can open Manage Projects",
+                  "timedOut": null,
+                  "duration": 29702,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3700\ntask_id = 'DASHCU-3700';\ncy.get('.project__content').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('body').then($body => {\n  if ($body.find('.project__content', {\n    timeout: `${Cypress.env('elem_timeout')}`\n  }).length > 1) {\n    //check if any show exists\n    cy.contains(\".actions__item\", \"Summary\").eq(0).should(\"exist\");\n    cy.log($body.find('.project__content').length);\n  } else {\n    cy.log(\"There are NO projects.\");\n  }\n});\ncy.intercept('/api/Projects/Search').as('grid_list');\ncy.contains('.VButton__text', \"Apply\").click(); //click Apply to initiate response\ncy.wait('@grid_list', {\n  requestTimeout: `${Cypress.env('req_timeout')}`\n}).then(({\n  response\n}) => {\n  expect(response.statusCode).to.eq(200);\n  let project_count = response.body.items.length;\n  let FirstName;\n  if (project_count > 0) {\n    FirstName = response.body.items[0].showCode;\n    cy.get(\".project__content\", {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).eq(0).should(\"exist\");\n    cy.contains(\".info__title\", FirstName).eq(0).should(\"exist\"); //check if 1-st show exists and matches response\n    //active Shows UI counter displays correct value, similar to response count\n    cy.contains(\".counters__item\", \"Active\").find(\"span\").then($counterA => {\n      cy.contains(\".counters__item\", \"Inactive\").find(\"span\").then($counterI => {\n        cy.contains(\".counters__item\", \"Delivered\").find(\"span\").then($counterD => {\n          expect(parseInt(normalizeText($counterA.text())) + parseInt(normalizeText($counterI.text())) + parseInt(normalizeText($counterD.text())), 'Count of Active&Inactive&Delivered Shows corresponds to total shows in BE response').to.equal(project_count);\n          cy.log(parseInt(normalizeText($counterA.text())) + parseInt(normalizeText($counterI.text())) + parseInt(normalizeText($counterD.text())));\n        });\n      });\n    });\n    cy.log(\"The project is - \" + FirstName);\n  }\n  cy.log(\"The number of projects came from BE - \" + project_count);\n});\n// cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "ad076067-97b0-4946-9997-c77d200c9c2e",
+                  "parentUUID": "ab6b2762-38ea-4bc4-bf81-a0a2ad20878f",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Projects=> search and filters work",
+                  "fullTitle": "DASH smoke tests/Managements Manage Projects Manage Projects=> search and filters work",
+                  "timedOut": null,
+                  "duration": 20824,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3701\ntask_id = 'DASHCU-3701';\ncy.contains('.v-filter__placeholder', 'Active, Inactive, Delivered').click();\ncy.get('.header__control').eq(3).find('li').eq(0).click();\nlet filter_status = ['Active', 'Inactive', 'Delivered'];\nlet status = filter_status[getRandomInt(3)]; //selects random status to filter\ncy.contains('label', status).click();\ncy.intercept('/api/Projects/Search').as('grid_list');\ncy.contains('.VButton__text', \"Apply\").click();\ncy.wait('@grid_list', {\n  requestTimeout: `${Cypress.env('req_timeout')}`\n}).then(({\n  response\n}) => {\n  expect(response.statusCode).to.eq(200);\n  let project_count = response.body.items.length;\n  let RandomIndex = getRandomInt(project_count);\n  cy.log(RandomIndex);\n  let RandomName;\n  if (project_count > 0) {\n    expect(response.body.items[RandomIndex].showStatus, 'Random Project status corresponds to filtered one').to.equal(status);\n    RandomName = response.body.items[RandomIndex].showCode; //store random show code came in BE response\n    //filtered Project UI counter displays correct value, similar to response count\n    cy.contains(\".counters__item\", status).find(\"span\").should($counter => {\n      expect(parseInt(normalizeText($counter.text())), 'Count of ' + status + ' Projects corresponds to BE response').to.equal(project_count);\n    });\n    cy.get('.search__input').type(RandomName); //initiate searching of this Show Code on UI\n    cy.contains('.VButton__text', \"Apply\").click();\n    cy.contains(\".info__title\", RandomName, {\n      timeout: `${Cypress.env('elem_timeout')}`\n    }).eq(0).should(\"exist\"); //check if the searched Show exists\n    cy.log(\"The show is - \" + RandomName);\n  }\n  cy.log(\"The number of projects came from BE - \" + project_count);\n});\n// cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "bb314ed0-f5e3-45f7-b9b6-757144d5459d",
+                  "parentUUID": "ab6b2762-38ea-4bc4-bf81-a0a2ad20878f",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "ad076067-97b0-4946-9997-c77d200c9c2e",
+                "bb314ed0-f5e3-45f7-b9b6-757144d5459d"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 50526,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "4619c1d0-8874-4578-acd8-32d6e54d15e1",
+              "title": "Manage Projects => Navigation links",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Manage Projects=> Summary link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Projects => Navigation links Manage Projects=> Summary link",
+                  "timedOut": null,
+                  "duration": 19440,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3702\ntask_id = 'DASHCU-3702';\nlet project_number;\ncy.contains('.actions__item', 'Summary').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.project__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    project_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then($code => {\n      let codeUI = $code.text().trim();\n      cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation*').as('grid_list');\n      cy.get('.project__content').eq(project_number).find('.actions__item').eq(0).should(\"exist\").click(); //click Summary\n      cy.wait('@grid_list', {\n        requestTimeout: `${Cypress.env('req_timeout')}`\n      }).then(({\n        response\n      }) => {\n        expect(response.statusCode).to.eq(200);\n        let ProjectCode = response.body.project.code;\n        let ProjectId = response.body.project.id;\n        cy.log('Project number= ' + project_number);\n        cy.url().should('include', '/ones/projects/?projectId=' + ProjectId + '&isSummaryView=true');\n        cy.title().should('include', 'Edit Project');\n        cy.contains('.summary-table__header', 'project details').should('exist');\n        expect(codeUI).to.include(ProjectCode);\n      });\n    });\n  } else {\n    cy.log(\"There are NO projects.\");\n  }\n});\n//cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "d4cc799d-3391-4ab6-a873-f448cac29b43",
+                  "parentUUID": "4619c1d0-8874-4578-acd8-32d6e54d15e1",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Projects=> Manage link",
+                  "fullTitle": "DASH smoke tests/Managements Manage Projects => Navigation links Manage Projects=> Manage link",
+                  "timedOut": null,
+                  "duration": 17900,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3703\ntask_id = 'DASHCU-3703';\nlet project_number;\ncy.contains('.actions__item', 'Manage').eq(0).should(\"exist\"); //waits the grid is loaded\ncy.get('.project__content', {\n  timeout: `${Cypress.env('elem_timeout')}`\n}).then($body => {\n  if ($body.length > 1) {\n    //check if any show exists\n    project_number = getRandomInt($body.length - 1) + 1; //minim value should be 1, since the class exists even without shows\n    cy.get('.project__content').eq(project_number).find('.project__info').find('div').eq(0).then($code => {\n      let codeUI = $code.text().trim();\n      cy.intercept('GET', '**/api/ProjectApi/GetDataForProjectCreation?projectId*').as('grid_list');\n      cy.get('.project__content').eq(project_number).find('.actions__item').eq(1).should(\"exist\").click(); //click Manage\n      cy.wait('@grid_list', {\n        requestTimeout: `${Cypress.env('req_timeout')}`\n      }).then(({\n        response\n      }) => {\n        expect(response.statusCode).to.eq(200);\n        let ProjectCode = response.body.project.code;\n        let ProjectId = response.body.project.id;\n        cy.log('Project number= ' + project_number);\n        cy.url().should('include', '/ones/projects/?projectId=' + ProjectId + '&isSummaryView=false');\n        cy.title().should('include', 'Edit Project');\n        cy.contains('.row__title', 'Project Details').should('exist');\n        expect(codeUI).to.include(ProjectCode);\n      });\n    });\n  } else {\n    cy.log(\"There are NO projects.\");\n  }\n});\n// cy.SetClickUpParameter((myObject.passed),test_tasks[12],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "367406cc-ed4a-44fa-8a61-73f69b64be11",
+                  "parentUUID": "4619c1d0-8874-4578-acd8-32d6e54d15e1",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "d4cc799d-3391-4ab6-a873-f448cac29b43",
+                "367406cc-ed4a-44fa-8a61-73f69b64be11"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 37340,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            },
+            {
+              "uuid": "f9a1b264-a473-465e-bf74-0b3029c435a4",
+              "title": "Create new Project",
+              "fullFile": "",
+              "file": "",
+              "beforeHooks": [],
+              "afterHooks": [],
+              "tests": [
+                {
+                  "title": "Create new Project page",
+                  "fullTitle": "DASH smoke tests/Managements Create new Project Create new Project page",
+                  "timedOut": null,
+                  "duration": 14215,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3704\ntask_id = 'DASHCU-3704';\ncy.xpath(\"//div[normalize-space(text()) = 'Create New Project']\").click();\ncy.url().should('include', '/ones/projects/?isCreateMode=true');\ncy.contains('.row__title', 'Project Details').should('exist'); //check if Show Details block exists and others\ncy.contains('.row__title', 'Key Dates').should('exist');\ncy.contains('.row__title', 'Seniority Splits').should('exist');\ncy.contains('.row__title', 'Locations').should('exist');\ncy.contains('.row__title', 'Project Manager').should('exist');\ncy.contains('.row__title', 'Additional info').should('exist');\ncy.contains('.row__title', 'Created').should('exist');\ncy.contains('.row__title', 'Updated').should('exist');\ncy.contains('.VButton__text', 'Save').should('exist');\ncy.contains('.VButton__text', 'Delete').parent().should('have.attr', 'disabled');\ncy.contains('.VButton__text', 'Cancel').click();\ncy.url().should('include', '/ones/projects/');\n// cy.SetClickUpParameter((myObject.passed),test_tasks[13],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "01e85db5-6186-43e2-a7d4-b100ca24d249",
+                  "parentUUID": "f9a1b264-a473-465e-bf74-0b3029c435a4",
+                  "isHook": false,
+                  "skipped": false
+                },
+                {
+                  "title": "Manage Projects => Create new Projects page (on button click)",
+                  "fullTitle": "DASH smoke tests/Managements Create new Project Manage Projects => Create new Projects page (on button click)",
+                  "timedOut": null,
+                  "duration": 17313,
+                  "state": "passed",
+                  "speed": "slow",
+                  "pass": true,
+                  "fail": false,
+                  "pending": false,
+                  "context": null,
+                  "code": "//https://app.clickup.com/t/4534343/DASHCU-3705\ntask_id = 'DASHCU-3705';\ncy.xpath(\"//div[normalize-space(text()) = 'Manage Projects']\").click();\ncy.url().should('include', '/ones/projects/');\ncy.get('.VButton-theme_default-blue').click();\ncy.url().should('include', '/ones/projects/?isCreateMode=true');\ncy.contains('.row__title', 'Project Details').should('exist'); //check if Show Details block exists and others\ncy.contains('.row__title', 'Key Dates').should('exist');\ncy.contains('.row__title', 'Seniority Splits').should('exist');\ncy.contains('.row__title', 'Locations').should('exist');\ncy.contains('.row__title', 'Project Manager').should('exist');\ncy.contains('.row__title', 'Additional info').should('exist');\ncy.contains('.row__title', 'Created').should('exist');\ncy.contains('.row__title', 'Updated').should('exist');\ncy.contains('.VButton__text', 'Save').should('exist');\ncy.contains('.VButton__text', 'Delete').parent().should('have.attr', 'disabled');\ncy.contains('.VButton__text', 'Cancel').should('exist');\ncy.contains('.VButton__text', 'Back').click();\ncy.url().should('include', '/ones/projects/');\n//cy.SetClickUpParameter((myObject.passed),test_tasks[14],Cypress.env('clickup_usage'))",
+                  "err": {},
+                  "uuid": "b203e092-4077-4161-971d-cdfd3caab83b",
+                  "parentUUID": "f9a1b264-a473-465e-bf74-0b3029c435a4",
+                  "isHook": false,
+                  "skipped": false
+                }
+              ],
+              "suites": [],
+              "passes": [
+                "01e85db5-6186-43e2-a7d4-b100ca24d249",
+                "b203e092-4077-4161-971d-cdfd3caab83b"
+              ],
+              "failures": [],
+              "pending": [],
+              "skipped": [],
+              "duration": 31528,
+              "root": false,
+              "rootEmpty": false,
+              "_timeout": 2000
+            }
+          ],
+          "passes": [
+            "c88409e8-050a-416d-9c31-0ed74beb4e5a"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 56372,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.3.1"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress\\reports\\.jsons",
+        "charts": "true",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "5.2.0"
+    }
+  }
+}
