@@ -17,13 +17,6 @@ describe("DASH smoke tests/Admin",
   let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
-  before(() => {
-  Cypress.session.clearAllSavedSessions()  
-  for (let i=0;i<test_tasks.length;i++){
-   // SetTaskParameter(states['onhold'],test_tasks[i])
-    cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
-  }
-  })
   beforeEach(() => { 
     cy.session('Login',()=>{
        cy.visit(Cypress.env('url_g'))
@@ -43,9 +36,23 @@ describe("DASH smoke tests/Admin",
  
   })
   
-  it('Upload test', () => {
-    cy.contains('.link__title','Budgets & KPI').click()
-    //cy.contains('.link__title','fbajbchbsacjhsabj').click() - for testing purposes
-    cy.contains('.card-name', 'Academy and Learning').scrollIntoView()
+  it('Upload test', () => { //Hardcoded for Mikros Animation and ASTX show
+    cy.contains('.link__title','Show Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+    cy.get('#app').then(($body) => {   
+        if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
+          cy.contains("to see Ones content").should("not.exist")
+          cy.get('.item__info__department-name').should('exist')
+          cy.contains('.btn__overflow', 'MASTER').should('exist')
+          cy.get('div>.filter-view-current__delete').click()
+          cy.log('Clear default filter')
+        }
+      })
+      cy.contains('.tab-title','Bid Weeks').click()
+      cy.contains('.btn__overflow','Select show').click()
+      cy.get('li.VSelect__search').first().parent().find('li').eq(4).click()
+      cy.fixture('Bidweeks_Template.xlsx', { encoding: null }).as('myFixture')
+      cy.get('input[type=file]').selectFile('@myFixture',{force: true})
+      cy.contains('.uploader__btn','Upload').click()
+      cy.contains('Upload successfully').should('exist')       
   })
 })
