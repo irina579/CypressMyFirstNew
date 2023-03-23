@@ -21,7 +21,7 @@ module.exports = {
   },
 env: {
     //clickup parameters
-    clickup_usage: false,
+    clickup_usage: true,
     key:'pk_54525861_I991M9GR8VQ8GHZ3VH8OVEVIFFWJA5AC',
     states:"{\"onhold\": \"5099b5ec-242e-4f57-8cdc-b604e9e19e91\", \"failed\": \"d06a1041-540d-43e9-a833-e29676b4a12d\", \"passed\": \"b254d03a-cb45-40af-82a3-c28d27c0b11f\"}",
     // states:{
