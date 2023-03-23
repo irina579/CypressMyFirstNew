@@ -1,5 +1,6 @@
 describe('DASH login', () => {
-   
+   //cy.get('[data-test=new-todo]')
+   cy.get('[data-icon="pencil"]')
   
   
   it('Test new options', () => {
