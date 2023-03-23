@@ -594,7 +594,7 @@ describe("DASH smoke tests/Ones",
       })           
       //cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
     })    
-    it.only("Can open Show Ones => Bid weeks tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3687
+    it("Can open Show Ones => Bid weeks tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3687
       task_id='DASHCU-3687'
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
