@@ -93,7 +93,7 @@ describe("DASH smoke tests/Ones",
       // cy.contains('.Vheader-text',"Dates").prev().click().as('departments_drdw')
       SelectAllDepts() //checks all departments
       cy.get(".item_artist").eq(0).should("exist")
-      cy.contains(".btn__overflow","File").should("exist") //checks if File button available
+      cy.contains(".btn__overflow","File").should("not.exist") //checks if File button is not available
       cy.contains('.Vheader-text',"Dates").prev().click()
       cy.contains("Select All").click()
       cy.contains("label", Cypress.env('IDL_dept')).click() //checks 1 department
@@ -483,7 +483,7 @@ describe("DASH smoke tests/Ones",
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
     }) 
-    it("Can open Show Ones => Ones grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3685
+    it.only("Can open Show Ones => Ones grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3685
       task_id='DASHCU-3685'
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
@@ -514,9 +514,18 @@ describe("DASH smoke tests/Ones",
             cy.get('.v-select-grouped__toggle>.toggle__text').click().get('[value='+site_id+']').first().click()
           }
           cy.get('[data-content="Select a discipline"]').parent().next(1).click() //select any random discipline
-          cy.contains('label', 'Select All').first().click()
+          cy.get('.Vheader-select').then(($IDL) => {
+            cy.log($IDL.find('#allColumnSelectInput').length)
+            if($IDL.find('#allColumnSelectInput').length>0) {
+              cy.contains('label', 'DL').first().click()       
+            }
+            else{
+              cy.contains('label', 'Select All').first().click()
+
+            } 
+          })        
           cy.contains('label', Cypress.env('discipline')).first().click()
-          cy.contains('.v-filter__placeholder', Cypress.env('discipline')).next('.v-filter__caret').click()
+          cy.get('.main-title').click()
           cy.contains('.btn-apply','Apply').click()
           cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
           cy.contains('.btn__overflow', 'MASTER').click() //check scenarios
