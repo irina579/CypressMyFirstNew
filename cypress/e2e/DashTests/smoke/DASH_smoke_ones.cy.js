@@ -483,7 +483,7 @@ describe("DASH smoke tests/Ones",
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
     }) 
-    it.only("Can open Show Ones => Ones grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3685
+    it("Can open Show Ones => Ones grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3685
       task_id='DASHCU-3685'
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
@@ -594,6 +594,55 @@ describe("DASH smoke tests/Ones",
       })           
       //cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
     })    
+    it.only("Can open Show Ones => Bid weeks tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3687
+      task_id='DASHCU-3687'
+      cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+      cy.get('#app').then(($body) => {   
+        if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
+          cy.contains("to see Ones content").should("not.exist")
+          cy.contains('.btn__overflow','|').should('exist').then(($code)=>{
+            let code_long=$code.text().trim()
+            const re = /[|]/;
+            let ShowCode=code_long.substring(0,code_long.search(re)).trim()
+            cy.log('Show Ones, Show Code= '+ShowCode)
+            cy.contains('.tab-title','Bid Weeks').click()
+            cy.get('.Vheader__show .btn__overflow').should('include.text',ShowCode)
+          })
+        }
+        else {
+          cy.contains("to see Ones content").should("exist")
+          cy.contains('.tab-title','Bid Weeks').click()
+          cy.contains('.btn__overflow','Select show').click()
+          let random_search=generateString(2)
+          cy.get('.search__wrapper>input').eq(0).type(random_search) //search generated 2 symbols combination
+          cy.get('li.VSelect__search').first().parent().then(($Filter) => {
+            cy.log($Filter.find('li').length)
+            if($Filter.find('li').length<=1) {
+              cy.get('.search__wrapper>input').eq(0).clear()         //if there are no shows with current year, we'll test any other
+            }
+            else{
+              cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt($Filter.find('li').length-1)+1).find('a').contains(random_search.trim(), { matchCase: false }) //check random search result includes search text
+            } 
+            cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt($Filter.find('li').length-1)+1).click() //select random      
+          })  
+        } 
+      })
+      cy.get('.VTab__body').then(($TPS) => {
+        if($TPS.find('.tab-placeholder').length>0) {
+          cy.contains("You don't have permissions to view this show.")
+          cy.get('.dropdown-toggle>.btn__overflow').first().should('include.text','(')
+        }
+        else{
+          cy.contains('.unit-btn','Total').click()
+          cy.get('[placeholder="Enter name..."]').type(Cypress.env('discipline')).type('{enter}')
+          cy.contains('div>.total-disciplines',Cypress.env('discipline')).should('exist')
+          //expect(n).to.be.gte(1).and.be.lte(10)
+          cy.get('div>.total-disciplines').last().should('include.text',Cypress.env('discipline'))
+          cy.get('.unit-btn').last().click()
+          cy.contains('.discipline-name',Cypress.env('discipline')).scrollIntoView()           
+        }           
+      }) 
+    })
   })
-})
+})  
 //export{}
