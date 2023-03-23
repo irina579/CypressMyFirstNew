@@ -314,7 +314,7 @@ describe("DASH smoke tests/Ones",
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage'))
     })
-    it("Can open DL Ones => Disciplines tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3681
+    it.only("Can open DL Ones => Disciplines tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3681
       task_id='DASHCU-3681'
       cy.contains(".tab-title", "Disciplines").click()
       cy.wait(10000) //some delay to wait until notifications are loaded. Otherwise network error fails
@@ -348,6 +348,7 @@ describe("DASH smoke tests/Ones",
         if(artist_count>0){
           FirstName=response.body.reference[0].name
           cy.get(".info__name").eq(0).should("exist") //checks there is an artist in the grid
+          cy.get('[placeholder="Enter name..."]').type(FirstName).type('{enter}')
           cy.contains(".info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table
           cy.get(".ui-checkbox_default").eq(0).should("not.have.class","disabled") //checkboxes enabled  
           cy.log("The first artist is - "+FirstName)  
