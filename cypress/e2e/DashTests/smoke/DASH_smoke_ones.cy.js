@@ -314,7 +314,7 @@ describe("DASH smoke tests/Ones",
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[5],Cypress.env('clickup_usage'))
     })
-    it.only("Can open DL Ones => Disciplines tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3681
+    it("Can open DL Ones => Disciplines tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3681
       task_id='DASHCU-3681'
       cy.contains(".tab-title", "Disciplines").click()
       cy.wait(10000) //some delay to wait until notifications are loaded. Otherwise network error fails
