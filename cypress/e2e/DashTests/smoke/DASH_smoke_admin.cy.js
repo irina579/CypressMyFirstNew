@@ -88,7 +88,7 @@ describe("DASH smoke tests/Admin",
       cy.contains('.link__title','Users').click()
       cy.url().should('include', '/Admin/Users')
     }) 
-    it.only('Users=> Search tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3664
+    it('Users=> Search tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3664
       task_id='DASHCU-3664'
       cy.get('div> .search__input').type(`${Cypress.env('user')}`, {delay: 1000}) //search for user
       cy.intercept('GET', '**/api//UserPermissionApi/FindUsers?userNameOrEmail*').as('grid_list')
