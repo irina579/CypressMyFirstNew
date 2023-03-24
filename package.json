@@ -18,7 +18,7 @@
     "cypress:headless_feature2": "cypress run --headless --env url_g=http://10.94.6.100:60000 --spec cypress/e2e/DashTests/smoke/DASH_smoke_admin.cy.js",
     "cypress:headless_stage_admin": "cypress run --headless --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_admin.cy.js",
     "cypress:headless_stage_ones": "cypress run --headless --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_ones.cy.js",
-    "cypress:headless_stage_management": "cypress run --headless --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_admin.cy.js"
+    "cypress:headless_stage_management": "cypress run --headless --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_management.cy.js"
   }
 }
 
