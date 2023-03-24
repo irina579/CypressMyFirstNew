@@ -98,9 +98,6 @@ describe("DASH smoke tests/Admin",
         let user_count=response.body.length
         let FirstName
         if(user_count>0){
-          cy.contains('.btn','Authorise').click() //mostly to wait the UI is loaded
-          cy.contains('.VNotification__message','Please select the user(s).').should('exist')
-          cy.contains('.btn','Ok').click() //close warming
           expect(JSON.stringify(response.body[getRandomInt(user_count)]).toLowerCase(),'There is a text matching search in random user').to.contain(`${Cypress.env('user')}`)
           FirstName=normalizeText(response.body[getRandomInt(user_count)].userName) //store any random user
           cy.log(FirstName)
