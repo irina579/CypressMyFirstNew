@@ -88,7 +88,7 @@ describe("DASH smoke tests/Admin",
       cy.contains('.link__title','Users').click()
       cy.url().should('include', '/Admin/Users')
     }) 
-    it('Users=> Search tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3664
+    it.only('Users=> Search tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3664
       task_id='DASHCU-3664'
       cy.get('div> .search__input').type(`${Cypress.env('user')}`) //search for user
       cy.intercept('GET', '**/api//UserPermissionApi/FindUsers?userNameOrEmail*').as('grid_list')
@@ -101,6 +101,7 @@ describe("DASH smoke tests/Admin",
           cy.contains('.btn','Authorise').click() //mostly to wait the UI is loaded
           cy.contains('.VNotification__message','Please select the user(s).').should('exist')
           cy.contains('.btn','Ok').click() //close warming
+          cy.wait(10000)
           expect(JSON.stringify(response.body[getRandomInt(user_count)]).toLowerCase(),'There is a text matching search in random user').to.contain(`${Cypress.env('user')}`)
           FirstName=normalizeText(response.body[getRandomInt(user_count)].userName) //store any random user
           cy.log(FirstName)
