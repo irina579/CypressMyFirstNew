@@ -25,22 +25,7 @@ describe("DASH smoke tests/Admin",
   }
   })
   beforeEach(() => { 
-    cy.session('Login',()=>{
-       cy.visit(Cypress.env('url_g'))
-       cy.get('#UserName').type(Cypress.env('login_g'))
-       cy.get('#Password').type(Cypress.env('password_g'))
-       cy.contains('Log in').click()
-       cy.get(".header-banner__close-button",{timeout: 60000}).click()}, 
-       {cacheAcrossSpecs: true}
-     ) 
-    cy.visit(Cypress.env('url_g'))
-     //regular login
-       // cy.visit(Cypress.env('url_g'))
-       // cy.get('#UserName').type(Cypress.env('login_g'))
-       // cy.get('#Password').type(Cypress.env('password_g'))
-       // cy.contains('Log in').click()
-       // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
- 
+    cy.Login()
   })
   afterEach(function() { 
   // Check if the test failed
