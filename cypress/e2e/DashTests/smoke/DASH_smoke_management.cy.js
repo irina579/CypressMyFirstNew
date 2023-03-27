@@ -198,7 +198,7 @@ describe("DASH smoke tests/Managements",
               cy.log('Show Ones, Show Code= '+ShowCode)
               expect(codeUI).to.include(ShowCode) //verify Show code cliked in Manage shows corresponds to loaded in Ones
             })
-          cy.get('.item__info__department').should('exist')
+          cy.get('.item__info__department',{timeout: `${Cypress.env('elem_timeout')}`}).should('exist')
           })
         }
         else{
