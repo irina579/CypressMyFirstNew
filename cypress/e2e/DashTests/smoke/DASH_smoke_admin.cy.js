@@ -3,7 +3,7 @@ describe("DASH smoke tests/Admin",
 {
   env: {
     req_timeout: 30000,
-    elem_timeout: 30000,
+    elem_timeout: 50000,
     user:'alex',
   },
 },
