@@ -511,7 +511,7 @@ describe("DASH smoke tests/Ones",
           if(response.body.reference.sites.length>1){  //select random site if there are more than 1
             cy.log(response.body.reference.sites.length)
             let site_id=(response.body.reference.sites[getRandomInt(response.body.reference.sites.length)].id)
-            cy.get('.v-select-grouped__toggle>.toggle__text').click().get('[value='+site_id+']').first().click()
+            cy.get('.v-select-grouped__toggle>.toggle__text',{timeout: `${Cypress.env('elem_timeout')}`}).click().get('[value='+site_id+']').first().click()
           }
           cy.get('[data-content="Select a discipline"]').parent().next(1).click() //select any random discipline
           cy.get('.Vheader-select').then(($IDL) => {
