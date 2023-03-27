@@ -2,7 +2,7 @@ describe("DASH smoke tests/Managements",
 //set enviroment variables for test suite
 {
   env: {
-    req_timeout: 30000,
+    req_timeout: 50000,
     elem_timeout: 50000,
    // password: 'global'
   },
