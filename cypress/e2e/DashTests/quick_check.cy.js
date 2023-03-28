@@ -20,7 +20,7 @@ describe('DASH login', () => {
  
      
    })
-   it.only('Random test', () => {
+   it.only('Random value test', () => {
     let random_search=Math.random().toString(36).substring(2,4)
     cy.log(random_search)
  
