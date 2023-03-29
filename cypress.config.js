@@ -14,7 +14,10 @@ module.exports = {
     },
     retries:1,
     defaultCommandTimeout: 60000,
-    pageLoadTimeout: 80000
+    pageLoadTimeout: 80000,
+    requestTimeout:20000,
+    responseTimeout:60000,
+    video:false,
     ///viewportWidth: 1680,
     //viewportHeight: 1050,
   
@@ -36,7 +39,7 @@ env: {
     discipline: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
     bu: 'MPC',
-    url_g: 'http://localhost', 
+    url_g: 'http://10.94.6.100', 
     site_id: 20002, //London
     IDL_dept_id: 20032, //Production Management
     DL_dept_id: 20008, //Assets
