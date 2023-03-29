@@ -36,7 +36,7 @@ env: {
     discipline: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
     bu: 'MPC',
-    url_g: 'http://10.94.6.100', 
+    url_g: 'http://localhost', 
     site_id: 20002, //London
     IDL_dept_id: 20032, //Production Management
     DL_dept_id: 20008, //Assets
