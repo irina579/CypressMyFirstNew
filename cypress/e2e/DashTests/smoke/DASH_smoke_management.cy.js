@@ -44,7 +44,7 @@ describe("DASH smoke tests/Managements",
       cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
       cy.url().should('include', '/ones/new/shows')
     }) 
-    it.only("Can open Manage Shows", () => { //https://app.clickup.com/t/4534343/DASHCU-3691
+    it("Can open Manage Shows", () => { //https://app.clickup.com/t/4534343/DASHCU-3691
       task_id='DASHCU-3691'
       cy.get('.show__content').eq(0).should("exist") //waits the grid is loaded
       cy.get('body').then(($body) => {   
