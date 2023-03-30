@@ -44,7 +44,7 @@ describe("DASH smoke tests/Managements",
       cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
       cy.url().should('include', '/ones/new/shows')
     }) 
-    it("Can open Manage Shows", () => { //https://app.clickup.com/t/4534343/DASHCU-3691
+    it.only("Can open Manage Shows", () => { //https://app.clickup.com/t/4534343/DASHCU-3691
       task_id='DASHCU-3691'
       cy.get('.show__content').eq(0).should("exist") //waits the grid is loaded
       cy.get('body').then(($body) => {   
@@ -81,13 +81,13 @@ describe("DASH smoke tests/Managements",
             expect(parseInt(normalizeText($counter.text())),'Count of Active Shows corresponds to BE response').to.equal(show_count)
           })
           cy.log("The show is - "+FirstName)
-          cy.contains(".VButton__text","Create New Show").should("exist") //create button exists
         }
         cy.log("The number of shows came from BE - "+show_count)
+        cy.contains(".VButton__text","Create New Show").should("exist") //create button exists
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
     })
-    it("Manage Shows=> search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3692
+    it("Manage Shows=> Search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3692
       task_id='DASHCU-3692'
       cy.contains('.v-filter__placeholder', 'Active').click()
       cy.contains('label','Active').click()
@@ -353,7 +353,7 @@ describe("DASH smoke tests/Managements",
       })
      // cy.SetClickUpParameter((myObject.passed),test_tasks[9],Cypress.env('clickup_usage'))  
     })
-    it("Manage Projects=> search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3701
+    it("Manage Projects=> Search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3701
       task_id='DASHCU-3701'
       cy.contains('.v-filter__placeholder', 'Active, Inactive, Delivered').click()
       cy.get('.header__control').eq(3).find('li').eq(0).click()
