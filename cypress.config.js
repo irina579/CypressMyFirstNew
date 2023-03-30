@@ -38,6 +38,8 @@ env: {
     DL_dept: 'Assets',
     discipline: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
+
+    //can be changed for test runs
     bu: 'MPC',
     url_g: 'http://10.94.6.100', 
     site_id: 20002, //London
