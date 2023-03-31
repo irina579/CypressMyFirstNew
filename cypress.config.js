@@ -18,6 +18,7 @@ module.exports = {
     //requestTimeout:20000,
     responseTimeout:60000,
     video:false,
+    numTestsKeptInMemory: 1,
     ///viewportWidth: 1680,
     //viewportHeight: 1050,
   
