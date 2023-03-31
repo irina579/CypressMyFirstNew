@@ -4,7 +4,6 @@ describe("DASH smoke tests/Ones",
   env: {
     req_timeout: 60000,
     elem_timeout: 80000,
-   // password: 'global'
   },
 },
 () => 
