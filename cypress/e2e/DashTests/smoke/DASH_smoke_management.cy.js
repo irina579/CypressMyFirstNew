@@ -18,7 +18,6 @@ describe("DASH smoke tests/Managements",
   before(() => {
     Cypress.session.clearAllSavedSessions()  
     for (let i=0;i<test_tasks.length;i++){
-     // SetTaskParameter(states['onhold'],test_tasks[i])
       cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
     }
   })
@@ -40,7 +39,7 @@ describe("DASH smoke tests/Managements",
   })
   context("Manage Shows", ()=>{
     beforeEach(() => {
-      cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
+      cy.contains('.link__title','Manage Shows').click()
       cy.url().should('include', '/ones/new/shows')
     }) 
     it("Can open Manage Shows", () => { //https://app.clickup.com/t/4534343/DASHCU-3691
@@ -124,7 +123,7 @@ describe("DASH smoke tests/Managements",
   })
   context("Manage Shows => Navigation links", ()=>{
     beforeEach(() => {
-      cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
+      cy.contains('.link__title','Manage Shows').click()
       cy.url().should('include', '/ones/new/shows')
     }) 
     it("Manage Shows=> Manage link", () => { //https://app.clickup.com/t/4534343/DASHCU-3693
@@ -248,7 +247,7 @@ describe("DASH smoke tests/Managements",
   context("Create new Show", ()=>{
     it("Create new Show page", () => { //https://app.clickup.com/t/4534343/DASHCU-3698
       task_id='DASHCU-3698'
-      cy.xpath("//div[normalize-space(text()) = 'Create New Show']").click()
+      cy.contains('.link__title','Create New Show').click()
       cy.url().should('include', '/ones/shows/add-edit')
       cy.contains('.section__block_title','Show Details').should('exist') //check if Show Details block exists
       cy.contains('.section__block_title','Key Dates').should('exist') //check if Key Dates block exists
@@ -290,7 +289,7 @@ describe("DASH smoke tests/Managements",
     })  
     it("Manage Shows => Create new Show page (on button click)", () => { //https://app.clickup.com/t/4534343/DASHCU-3699
       task_id='DASHCU-3699'
-      cy.xpath("//div[normalize-space(text()) = 'Manage Shows']").click()
+      cy.contains('.link__title','Manage Shows').click()
       cy.url().should('include', '/ones/new/shows')
       cy.contains('.VButton__text','Create New Show').click()
       cy.url().should('include', '/ones/shows/add-edit')
@@ -312,7 +311,7 @@ describe("DASH smoke tests/Managements",
   })
   context("Manage Projects", ()=>{
     beforeEach(() => {
-      cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
+      cy.contains('.link__title','Manage Projects').click()
       cy.url().should('include', '/ones/projects/')
     }) 
     it("Can open Manage Projects", () => { //https://app.clickup.com/t/4534343/DASHCU-3700
@@ -386,7 +385,7 @@ describe("DASH smoke tests/Managements",
   })
   context("Manage Projects => Navigation links", ()=>{
     beforeEach(() => {
-      cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
+      cy.contains('.link__title','Manage Projects').click()
       cy.url().should('include', '/ones/projects')
     })
     it("Manage Projects=> Summary link", () => { //https://app.clickup.com/t/4534343/DASHCU-3702
@@ -451,7 +450,7 @@ describe("DASH smoke tests/Managements",
   context("Create new Project", ()=>{
     it("Create new Project page", () => { //https://app.clickup.com/t/4534343/DASHCU-3704
       task_id='DASHCU-3704'
-      cy.xpath("//div[normalize-space(text()) = 'Create New Project']").click()
+      cy.contains('.link__title','Manage Projects').click()
       cy.url().should('include', '/ones/projects/?isCreateMode=true')
       cy.contains('.row__title','Project Details').should('exist') //check if Show Details block exists and others
       cy.contains('.row__title','Key Dates').should('exist')
@@ -469,7 +468,7 @@ describe("DASH smoke tests/Managements",
     })  
     it("Manage Projects => Create new Projects page (on button click)", () => { //https://app.clickup.com/t/4534343/DASHCU-3705
       task_id='DASHCU-3705'
-      cy.xpath("//div[normalize-space(text()) = 'Manage Projects']").click()
+      cy.contains('.link__title','Manage Projects').click()
       cy.url().should('include', '/ones/projects/')
       cy.get('.VButton-theme_default-blue').click()
       cy.url().should('include', '/ones/projects/?isCreateMode=true')

@@ -20,7 +20,6 @@ describe("DASH smoke tests/Admin",
   before(() => {
   Cypress.session.clearAllSavedSessions()  
   for (let i=0;i<test_tasks.length;i++){
-   // SetTaskParameter(states['onhold'],test_tasks[i])
     cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
   }
   })
