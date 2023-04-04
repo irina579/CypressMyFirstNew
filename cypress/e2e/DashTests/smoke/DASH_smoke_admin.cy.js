@@ -39,12 +39,6 @@ describe("DASH smoke tests/Admin",
       cy.log('Test failed',task_id)
     }
   })
-  it.skip('Scroll into view test', () => {
-    task_id='DASHCU-3687'
-    cy.contains('.link__title','Budgets & KPI').click()
-    //cy.contains('.link__title','fbajbchbsacjhsabj').click() - for testing purposes
-    cy.contains('.card-name', 'Academy and Learning').scrollIntoView()
-  })
   it('Manage site permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-3663
     task_id='DASHCU-3663'
     cy.contains('.link__title','Manage Sites Permissions').click()
@@ -64,8 +58,6 @@ describe("DASH smoke tests/Admin",
     cy.get('.main-title').click()
     cy.contains('.btn','Cancel').click() //cancel the changes
     cy.contains('.btn','Save').should('have.attr', 'disabled') //verify Save disabled without changes
-    // SetTaskParameter(states['passed'],test_tasks[0])
-  //  cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
   })
   context("Users", ()=>{
     beforeEach(() => {
@@ -95,7 +87,6 @@ describe("DASH smoke tests/Admin",
         }
         cy.log("The number of users came from BE after search- "+user_count)
       })
-     // cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
     })
     it('Users=> Filter tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3665
       task_id='DASHCU-3665'
@@ -127,9 +118,7 @@ describe("DASH smoke tests/Admin",
             cy.log("The number of users came from BE after search- "+user_count)
           })
         })      
-      })
-     // cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage'))
+      }) 
     })
   })
 })
-    //export{}

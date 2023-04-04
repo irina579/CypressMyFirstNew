@@ -52,15 +52,6 @@ describe("DASH smoke tests/Ones",
         cy.log('Test failed',task_id)
       }
   })
-  it.skip("Sample of Intercept in  Notification request", () => {
-    cy.intercept('/api/NotificationApi/GetNotifications').as('status');
-    cy.get(".link__title").contains("Notification Center").click()
-    cy.wait('@status').then(({response}) => {
-      expect(response.statusCode).to.eq(200)
-      let category_count=response.body.reference.categories.length
-      cy.log(category_count)
-    });
-  });
   it.skip("User can log in", () => {
     cy.url().should('include', '/Home/Homepage')
     cy.contains('Welcome back').should('be.visible')
@@ -101,7 +92,6 @@ describe("DASH smoke tests/Ones",
         cy.log("The number of artist came from BE - "+artist_count)
       })
       cy.contains(".btn__overflow","File").should("exist") //checks if File button available
-      //cy.SetClickUpParameter((myObject.passed),test_tasks[0],Cypress.env('clickup_usage'))
     })
     it("Can open IDL Teams", () => { //https://app.clickup.com/t/4534343/DASHCU-3676
       task_id='DASHCU-3676'
@@ -142,7 +132,6 @@ describe("DASH smoke tests/Ones",
           cy.log('The number of existing teams - '+teams_count)
         } 
       }) 
-     // cy.SetClickUpParameter((myObject.passed),test_tasks[1],Cypress.env('clickup_usage'))
     })
     it("Can open IDL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3677
       task_id='DASHCU-3677'
@@ -189,7 +178,6 @@ describe("DASH smoke tests/Ones",
           })     
         }
       })
-    //  cy.SetClickUpParameter((myObject.passed),test_tasks[2],Cypress.env('clickup_usage'))
     })
     it("Can open IDL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3678
       task_id='DASHCU-3678'
@@ -214,7 +202,6 @@ describe("DASH smoke tests/Ones",
           cy.log('The number of converted artists - '+converted_count)
         } 
       }) 
-      //cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))
     })      
   })
   context("Ones Unit - DL grid", ()=>{  
@@ -526,7 +513,6 @@ describe("DASH smoke tests/Ones",
           })
         })     
       })
-      //cy.SetClickUpParameter((myObject.passed),test_tasks[10],Cypress.env('clickup_usage'))
     })
     it("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
       task_id='DASHCU-3686'
@@ -576,7 +562,6 @@ describe("DASH smoke tests/Ones",
           })  
         }
       })           
-      //cy.SetClickUpParameter((myObject.passed),test_tasks[11],Cypress.env('clickup_usage'))
     })    
     it("Can open Show Ones => Bid weeks tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3687
       task_id='DASHCU-3687'
@@ -620,7 +605,6 @@ describe("DASH smoke tests/Ones",
           cy.contains('.unit-btn','Total').click()
           cy.get('[placeholder="Enter name..."]').type(Cypress.env('discipline')).type('{enter}')
           cy.contains('div>.total-disciplines',Cypress.env('discipline')).should('exist')
-          //expect(n).to.be.gte(1).and.be.lte(10)
           cy.get('div>.total-disciplines').last().should('include.text',Cypress.env('discipline'))
           cy.get('.unit-btn').last().click()
           cy.contains('.discipline-name',Cypress.env('discipline')).scrollIntoView()           
@@ -629,4 +613,3 @@ describe("DASH smoke tests/Ones",
     })
   })
 })  
-//export{}

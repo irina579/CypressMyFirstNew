@@ -1,4 +1,4 @@
-describe("DASH smoke tests/Admin", 
+describe("DASH smoke tests/Bid weeks upload", 
 //set enviroment variables for test suite
 {
   env: {
