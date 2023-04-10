@@ -61,7 +61,8 @@ describe("DASH smoke tests/Ones",
       cy.contains('.link__title','IDL Dept. Ones').click()
       cy.url().should('include', '/idlones/new')
       cy.contains('.Vheader-text',"Site").next().click()
-      cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
+      cy.get('div>.v-select-grouped__list').scrollIntoView().find("[value="+Cypress.env("site_id")+"]").click()
+      //cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
     }) 
     it("Can open IDL Ones => Planning grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3675
       task_id='DASHCU-3675'
@@ -209,7 +210,7 @@ describe("DASH smoke tests/Ones",
       cy.xpath("//div[normalize-space(text()) = 'DL Dept. Ones']").click()
       cy.url().should('include', '/ones/new')
       cy.contains('.Vheader-text',"Site").next().click()
-      cy.contains('.option-group__label',Cypress.env("bu")).next().find("[value="+Cypress.env("site_id")+"]").click()
+      cy.get('div>.v-select-grouped__list').scrollIntoView().find("[value="+Cypress.env("site_id")+"]").click()
     }) 
     it("Can open DL Ones => Planning grid",  () => { //https://app.clickup.com/t/4534343/DASHCU-3679
       task_id='DASHCU-3679'
