@@ -546,7 +546,8 @@ describe("DASH smoke tests/Ones",
             } 
             cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt($Filter.find('li').length-1)+1).click() //select random Show within 10 first
           })  
-          cy.contains('.VButton__text','Sync Show Ones').click()
+          cy.contains('.btn__overflow','Sync').click()
+          cy.contains('a','Sync Show Ones').click()
           cy.contains('.VButton__text','Cancel').click()
           cy.get('div>.show-ones-quota__header__settings__disciplines').find('span').first().then(($text) => { 
             cy.log($text.text())  
