@@ -14,7 +14,7 @@ describe("DASH smoke tests/Admin",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665']
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
