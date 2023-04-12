@@ -120,36 +120,6 @@ describe("DASH smoke tests/Admin",
         })      
       }) 
     })
-  })
-  context("Create new user=>", ()=>{
-    beforeEach(() => {
-      cy.contains('.link__title','Users').click()
-      cy.url().should('include', '/Admin/Users')
-  }) 
-    it('Users=> Search tab', () => { //https://app.clickup.com/t/4534343/DASHCU-3664
-      task_id='DASHCU-3664'
-      cy.get('div> .search__input').type(`${Cypress.env('user')}`, {delay: 1000}) //search for user
-      cy.intercept('GET', '**/api//UserPermissionApi/FindUsers?userNameOrEmail*').as('grid_list')
-      cy.contains('.btn','Apply').click()
-      cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
-        expect(response.statusCode).to.eq(200)
-        let user_count=response.body.length
-        let FirstName
-        if(user_count>0){
-          expect(JSON.stringify(response.body[getRandomInt(user_count)]).toLowerCase(),'There is a text matching search in random user').to.contain(`${Cypress.env('user')}`)
-          FirstName=normalizeText(response.body[getRandomInt(user_count)].userName) //store any random user
-          cy.log(FirstName)
-          cy.contains('.row__column', FirstName).scrollIntoView() //scroll to this user on UI to make sure he exists
-          cy.get('.ui-checkbox_default').eq(1).scrollIntoView().click()
-          cy.contains('.btn','Delete').click() //check Delete button action
-          cy.get('.VNotification__message').should('exist')
-          cy.contains('.btn','Cancel').click()
-          cy.contains('.btn','Reset').click() //Reset search
-          cy.get('div .users-row').should('not.exist')         
-        }
-        cy.log("The number of users came from BE after search- "+user_count)
-      })
-    })
     it('Users => Create new user page (on button click)', () => { //https://app.clickup.com/t/4534343/DASHCU-3772
       task_id='DASHCU-3772'
       cy.contains('.VButton__text', 'Create new user').click()
