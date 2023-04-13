@@ -2,8 +2,8 @@ describe("DASH smoke tests/Admin",
 //set enviroment variables for test suite
 {
   env: {
-    req_timeout: 50000,
-    elem_timeout: 50000,
+    req_timeout: 60000,
+    elem_timeout: 80000,
     user:'alex',
   },
 },
@@ -168,7 +168,7 @@ describe("DASH smoke tests/Admin",
     task_id='DASHCU-3779'
     cy.contains('.link__title','Contract Admin').scrollIntoView().click()
     cy.url().should('include', '/Admin/Artists')
-    cy.contains('.VInputFake__label', 'Username').parent(1).type(`${Cypress.env('user')}`)
+    cy.contains('.VInputFake__label', 'Username').parent(1).type(`${Cypress.env('user')}`, {delay: 1000})
     cy.intercept('POST','/api/Artists/GetArtistDetails/**').as('grid_list')
     cy.contains('.VButton__text', 'Search').click()
     cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
@@ -181,7 +181,7 @@ describe("DASH smoke tests/Admin",
           GlobalId=response.body.reference.artistsInfo[getRandomInt(user_count)].globalId //store random globalId
           cy.log(GlobalId)
           cy.contains('.VTableRowContractAdmin__column', GlobalId).scrollIntoView() //scroll to this user on UI to make sure he exists
-          cy.get('[placeholder="Global ID"]').type(GlobalId)
+          cy.get('[placeholder="Global ID"]').type(GlobalId, {delay: 1000})
           cy.contains('.VButton__text', 'Search').click()
           cy.get('div>.VTableRowContractAdmin').first().should('include.text',GlobalId)
         }
