@@ -164,7 +164,7 @@ describe("DASH smoke tests/Admin",
     cy.contains('.VButton__text','Cancel').click()
     cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('not.exist')
   })
-  it.only('Contract admin page', () => { //https://app.clickup.com/t/4534343/DASHCU-3779
+  it('Contract admin page', () => { //https://app.clickup.com/t/4534343/DASHCU-3779
     task_id='DASHCU-3779'
     cy.contains('.link__title','Contract Admin').scrollIntoView().click()
     cy.url().should('include', '/Admin/Artists')
@@ -187,39 +187,5 @@ describe("DASH smoke tests/Admin",
         }
         cy.log("The number of users came from BE after search- "+user_count)
       })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // cy.contains('.user-info__item__text','Username').next('div').first().type('test_user')
-    // cy.contains('.user-info__item__text','Email Address').next('div').first().type('test_user@gmail.com')
-    // cy.contains('.user-info__item__text','First Name').next('div').first().type('Bred')
-    // cy.contains('.user-info__item__text','Last Name').next('div').first().type('Pitt')
-    // cy.contains('.user-info__item__text','Global ID').next('div').first().type('1111111111')
-    // cy.contains('.user-info__item__text','Comment').next('div').first().type('This is test user')
-    // cy.get('.user-info__item>.ui-checkbox').find('input').first().should('be.checked')
-    // cy.contains('.table-content__column__item__title', 'Site').parent(1).find('label','Select all').first().click()
-    // cy.contains('.table-content__column__item__title', 'Department').parent(1).find('label','Select all').first().click()
-    // cy.contains('.table-content__column__item__title', 'Indirect Department').parent(1).find('label','Select all').first().click()
-    // cy.get('.table-row-group__btns>div>label').first().click({force:true})
-    // cy.contains('label', Cypress.env('DL_dept')).prev('input').should('be.checked')
-    // cy.contains('label', Cypress.env('IDL_dept')).prev('input').should('be.checked')
-    // cy.contains('label', Cypress.env('DL_dept')).prev('input').should('be.checked')
-    // cy.get('.table-row-group__btns>div>input').first().should('be.checked')
-    // cy.contains('.VButton__text', 'Create').click()
-    // cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('exist')
-    // cy.contains('.VButton__text','Cancel').click()
-    // cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('not.exist')
   })
 })
