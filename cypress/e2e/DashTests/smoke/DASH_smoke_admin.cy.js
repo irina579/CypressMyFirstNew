@@ -14,7 +14,7 @@ describe("DASH smoke tests/Admin",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773']
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -163,5 +163,63 @@ describe("DASH smoke tests/Admin",
     cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('exist')
     cy.contains('.VButton__text','Cancel').click()
     cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('not.exist')
+  })
+  it.only('Contract admin page', () => { //https://app.clickup.com/t/4534343/DASHCU-3779
+    task_id='DASHCU-3779'
+    cy.contains('.link__title','Contract Admin').scrollIntoView().click()
+    cy.url().should('include', '/Admin/Artists')
+    cy.contains('.VInputFake__label', 'Username').parent(1).type(`${Cypress.env('user')}`)
+    cy.intercept('POST','/api/Artists/GetArtistDetails/**').as('grid_list')
+    cy.contains('.VButton__text', 'Search').click()
+    cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+      expect(response.statusCode).to.eq(200)
+      let user_count=response.body.reference.artistsInfo.length
+        let GlobalId
+        if(user_count>0){
+          cy.contains('.ContractAdmin__response-table-header', 'Artist Username').should('exist') //verify the table header is visible
+          expect(JSON.stringify(response.body.reference.artistsInfo[getRandomInt(user_count)]).toLowerCase(),'There is a text matching search in random user').to.contain(`${Cypress.env('user')}`)
+          GlobalId=response.body.reference.artistsInfo[getRandomInt(user_count)].globalId //store random globalId
+          cy.log(GlobalId)
+          cy.contains('.VTableRowContractAdmin__column', GlobalId).scrollIntoView() //scroll to this user on UI to make sure he exists
+          cy.get('[placeholder="Global ID"]').type(GlobalId)
+          cy.contains('.VButton__text', 'Search').click()
+          cy.get('div>.VTableRowContractAdmin').first().should('include.text',GlobalId)
+        }
+        cy.log("The number of users came from BE after search- "+user_count)
+      })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // cy.contains('.user-info__item__text','Username').next('div').first().type('test_user')
+    // cy.contains('.user-info__item__text','Email Address').next('div').first().type('test_user@gmail.com')
+    // cy.contains('.user-info__item__text','First Name').next('div').first().type('Bred')
+    // cy.contains('.user-info__item__text','Last Name').next('div').first().type('Pitt')
+    // cy.contains('.user-info__item__text','Global ID').next('div').first().type('1111111111')
+    // cy.contains('.user-info__item__text','Comment').next('div').first().type('This is test user')
+    // cy.get('.user-info__item>.ui-checkbox').find('input').first().should('be.checked')
+    // cy.contains('.table-content__column__item__title', 'Site').parent(1).find('label','Select all').first().click()
+    // cy.contains('.table-content__column__item__title', 'Department').parent(1).find('label','Select all').first().click()
+    // cy.contains('.table-content__column__item__title', 'Indirect Department').parent(1).find('label','Select all').first().click()
+    // cy.get('.table-row-group__btns>div>label').first().click({force:true})
+    // cy.contains('label', Cypress.env('DL_dept')).prev('input').should('be.checked')
+    // cy.contains('label', Cypress.env('IDL_dept')).prev('input').should('be.checked')
+    // cy.contains('label', Cypress.env('DL_dept')).prev('input').should('be.checked')
+    // cy.get('.table-row-group__btns>div>input').first().should('be.checked')
+    // cy.contains('.VButton__text', 'Create').click()
+    // cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('exist')
+    // cy.contains('.VButton__text','Cancel').click()
+    // cy.contains('div', "This global ID doesn't exist. Are you sure you want to proceed?").should('not.exist')
   })
 })
