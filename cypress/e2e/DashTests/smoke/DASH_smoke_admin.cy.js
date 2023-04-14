@@ -194,7 +194,7 @@ describe("DASH smoke tests/Admin",
       cy.contains('.link__title','Logs').scrollIntoView().click()
       cy.url().should('include', '/upload/uploadlog')
     }) 
-    it.only('Logs page => Upload Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3783
+    it('Logs page => Upload Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3783
       task_id='DASHCU-3783'
       cy.contains('div>.table-header__value', 'Extract').should('exist') //verify the table header is visible
       cy.get('div>.reportrange-text').click()
@@ -217,7 +217,7 @@ describe("DASH smoke tests/Admin",
         }
       })
     })
-    it.only('Logs page => Application Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3784
+    it('Logs page => Application Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3784
       task_id='DASHCU-3784'
       cy.contains('.btn__overflow', 'Upload Logs').click()
       cy.get('[value="Application Logs"]').click()
