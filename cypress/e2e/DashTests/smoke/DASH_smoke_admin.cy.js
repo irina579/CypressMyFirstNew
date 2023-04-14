@@ -226,9 +226,9 @@ describe("DASH smoke tests/Admin",
       cy.get('tr>td').first().click()
       cy.get('tr>td').last().click()
       cy.contains('.applyBtn','Confirm').click()
-      cy.contains('div>.table-header__value', 'Event Name').should('exist') //verify the table header is visible
       cy.intercept('GET','/api/ExtractUploadLog/**').as('grid_list')
       cy.contains('.btn','Apply').click()
+      cy.contains('div>.table-header__value', 'Event Name').should('exist') //verify the table header is visible
       cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
         expect(response.statusCode).to.eq(200)
         let logs_count=response.body.reference.length
