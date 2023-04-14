@@ -18,27 +18,13 @@ describe("DASH smoke tests/Bid weeks upload",
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   beforeEach(() => { 
-    cy.session('Login',()=>{
-       cy.visit(Cypress.env('url_g'))
-       cy.get('#UserName').type(Cypress.env('login_g'))
-       cy.get('#Password').type(Cypress.env('password_g'))
-       cy.contains('Log in').click()
-       cy.get(".header-banner__close-button",{timeout: 60000}).click()}, 
-       {cacheAcrossSpecs: true}
-     ) 
-    cy.visit(Cypress.env('url_g'))
-     //regular login
-       // cy.visit(Cypress.env('url_g'))
-       // cy.get('#UserName').type(Cypress.env('login_g'))
-       // cy.get('#Password').type(Cypress.env('password_g'))
-       // cy.contains('Log in').click()
-       // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
- 
+    cy.Login()
   })
   
   it('Upload test', () => { //Hardcoded for Mikros Animation and ASTX show
     cy.contains('.link__title','Show Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
-    cy.get('#app').then(($body) => {   
+    cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+      cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
           cy.contains("to see Ones content").should("not.exist")
           cy.get('.item__info__department-name').should('exist')

@@ -14,7 +14,7 @@ describe("DASH smoke tests/Admin",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779']
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -187,5 +187,62 @@ describe("DASH smoke tests/Admin",
         }
         cy.log("The number of users came from BE after search- "+user_count)
       })
+  })
+  context("Logs", ()=>{
+    beforeEach(() => {
+      cy.viewport(1680, 1050)
+      cy.contains('.link__title','Logs').scrollIntoView().click()
+      cy.url().should('include', '/upload/uploadlog')
+    }) 
+    it('Logs page => Upload Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3783
+      task_id='DASHCU-3783'
+      cy.get('div>.reportrange-text').click()
+      cy.get('div>.prev').first().click().click().click()
+      cy.get('tr>td').first().click()
+      cy.get('tr>td').last().click()
+      cy.contains('.applyBtn','Confirm').click()
+      cy.intercept('GET','/api/ExtractUploadLog/**').as('grid_list')
+      cy.contains('.btn','Apply').click()
+      cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+        let logs_count=response.body.reference.length
+        let random_log_index=getRandomInt(logs_count)
+        let file_name
+        let uploaded_by
+        if(logs_count>0){
+          cy.contains('div>.table-header__value', 'Extract').should('exist') //verify the table header is visible
+          file_name=response.body.reference[random_log_index].file //store random record's file title
+          uploaded_by=response.body.reference[random_log_index].uploadedByName //store random record's uploaded by info
+          cy.contains('.table-column', file_name).first().scrollIntoView() //scroll to this log on UI to make sure it exists
+          cy.contains('.table-column', uploaded_by).first().should('exist')
+        }
+      })
+    })
+    it('Logs page => Application Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3784
+      task_id='DASHCU-3784'
+      cy.contains('.btn__overflow', 'Upload Logs').click()
+      cy.get('[value="Application Logs"]').click()
+      cy.get('div>.reportrange-text').click()
+      cy.get('div>.prev').first().click()
+      cy.get('tr>td').first().click()
+      cy.get('tr>td').last().click()
+      cy.contains('.applyBtn','Confirm').click()
+      cy.intercept('GET','/api/ExtractUploadLog/**').as('grid_list')
+      cy.contains('.btn','Apply').click()
+      cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+        let logs_count=response.body.reference.length
+        let random_log_index=getRandomInt(logs_count)
+        let event_name
+        let username
+        if(logs_count>0){
+          cy.contains('div>.table-header__value', 'Event Name').should('exist') //verify the table header is visible
+          event_name=response.body.reference[random_log_index].eventName //store random record's event name
+          username=response.body.reference[random_log_index].username //store random record's uploaded by info
+          cy.contains('.table-column', event_name).first().scrollIntoView() //scroll to this log on UI to make sure it exists
+          cy.contains('.table-column', username).first().should('exist')
+        }
+      })
+    })
   })
 })
