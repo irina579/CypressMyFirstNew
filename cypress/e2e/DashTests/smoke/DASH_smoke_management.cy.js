@@ -486,7 +486,6 @@ describe("DASH smoke tests/Managements",
       cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
         expect(response.statusCode).to.eq(200)
         let actual_notifications_count=response.body.reference.notifications.actual.length
-        let processed_notifications_count=response.body.reference.notifications.processed.length
         let RandomIndex=getRandomInt(actual_notifications_count)
         cy.log(RandomIndex)
         cy.log(actual_notifications_count)
@@ -494,13 +493,10 @@ describe("DASH smoke tests/Managements",
         if(actual_notifications_count>0){
           cy.get('.notification__title').eq(0).should('have.text',response.body.reference.notifications.actual[0].title) //1-st notification's title corresponds to BE
           RandomTitle=response.body.reference.notifications.actual[RandomIndex].title //store random title came in BE response
-          //counter displays correct value, similar to response count
+          //Actual counter displays correct value, similar to response count
           cy.contains('span','Actual').next(".tabTitle__counter").should(($counter) => {
             expect(parseInt(normalizeText($counter.text())),'Actual counter corresponds to BE response').to.equal(actual_notifications_count)
-          }) 
-          cy.contains('span','Processed').next(".tabTitle__counter").should(($counter) => {
-            expect(parseInt(normalizeText($counter.text())),'Processed counter corresponds to BE response').to.equal(processed_notifications_count)
-          })         
+          })   
           cy.get('[placeholder="Search"]').type(RandomTitle).type('{enter}') //initiate searching of this title on UI
           cy.get('.notification__title').then(($body)=> {
           cy.get('.notification__title').eq(getRandomInt($body.length)).should('include.text',RandomTitle)
@@ -509,8 +505,16 @@ describe("DASH smoke tests/Managements",
           cy.log("The Title is - "+RandomTitle)     
         }
         cy.log("The number of Actual notifications - "+actual_notifications_count)
-        cy.contains('span','Processed').should('exist').click()
-        cy.contains('.toggle__label','Show only awaiting approvals').should('not.exist')
       })
+      cy.contains('span','Processed').should('exist').click()
+      cy.contains('.toggle__label','Show only awaiting approvals').should('not.exist')
+      cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+        let processed_notifications_count=response.body.reference.notifications.processed.length
+        //Processed counter displays correct value, similar to response count
+        cy.contains('span','Processed').next(".tabTitle__counter").should(($counter) => {
+            expect(parseInt(normalizeText($counter.text())),'Processed counter corresponds to BE response').to.equal(processed_notifications_count)
+        })
+      })      
     })
 })
