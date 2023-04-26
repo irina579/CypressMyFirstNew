@@ -14,7 +14,7 @@ describe("DASH smoke tests/Admin",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784']
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784', 'DASHCU-3831']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -218,6 +218,73 @@ describe("DASH smoke tests/Admin",
       })
     })
     it('Logs page => Application Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3784
+      task_id='DASHCU-3784'
+      cy.contains('.btn__overflow', 'Upload Logs').click()
+      cy.get('[value="Application Logs"]').click()
+      cy.get('div>.reportrange-text').click()
+      cy.get('div>.prev').first().click()
+      cy.get('tr>td').first().click()
+      cy.get('tr>td').last().click()
+      cy.contains('.applyBtn','Confirm').click()
+      cy.intercept('GET','/api/ExtractUploadLog/**').as('grid_list')
+      cy.contains('.btn','Apply').click()
+      cy.contains('div>.table-header__value', 'Event Name').should('exist') //verify the table header is visible
+      cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+        let logs_count=response.body.reference.length
+        let event_name
+        let username
+        if(logs_count>0){
+          event_name=response.body.reference[0].eventName //store 1-st record's event name
+          username=response.body.reference[0].username //store 1-st record's uploaded by info
+          cy.contains('.table-column', event_name).first().scrollIntoView() //scroll to this log on UI to make sure it exists
+          cy.contains('.table-column', username).first().should('exist')
+        }
+      })
+    })
+  })
+  context("Settings", ()=>{
+    beforeEach(() => {
+      cy.contains('.link__title','Settings').scrollIntoView().click()
+      cy.url().should('include', '/settings')
+    }) 
+    it('Settings page => Manage Multiple DM', () => { //https://app.clickup.com/t/4534343/DASHCU-3831
+      task_id='DASHCU-3831'
+      cy.contains('.tab-title', 'Manage Multiple DM').should('exist')
+      cy.get('#VTab-btn-manage').should('have.class','VTab__btn_active') //verify Manage multiple DM is active by default
+      cy.contains('.header__item','Sites').should('exist')
+      cy.contains('.header__item','Departments').should('exist')
+      cy.get('div>.body__row').first().should('exist')
+      cy.contains('.VButton__text', 'Save').click()
+      cy.contains('.toast-message','No changes made').should('exist') //save is not allowed without changes
+      cy.get('div>.body__row').then(($table) => {
+        let sites_count=$table.length
+        let random_site_order=getRandomInt(sites_count)
+        cy.log(random_site_order)
+        cy.get('div>.item__arrow').eq(random_site_order).click()
+        cy.get('div>.body__row').eq(random_site_order).then(($site) => {
+          if ($site.find('span','(Generalist)').length>0){//generalist
+            cy.log('Site is generalist')
+            let depts_selected=$site.find('.item__departments').text()
+            cy.log(depts_selected)
+            cy.get("li>.ui-checkbox").last().should("have.class","disabled") //check last checkbox (as random) to be disabled
+            cy.get('div>.VComboSearch__toggle').should("have.attr","disabled") //search is disabled
+            cy.get("ul>.select-all").find('label').first().click()
+            cy.get('div>.item__departments').eq(random_site_order).should('not.have.text',depts_selected) //the text is changed          
+          }
+          else {//not generalist
+            cy.log('Site is not generalist')
+            let depts_selected=$site.find('.item__departments').text()
+            cy.log(depts_selected)
+            cy.get("li>.ui-checkbox").last().scrollIntoView().click() //change the state of the last checkbox
+            cy.get('div>.item__departments').eq(random_site_order).should('not.have.text',depts_selected) //the text is changed
+            cy.get('div>.VComboSearch__toggle').type(Cypress.env('DL_dept')) //search for DL dept
+            cy.get("li>.ui-checkbox").last().should('include.text',Cypress.env('DL_dept'))
+          }
+        })
+      })
+    })  
+    it.skip('Settings page => Manage Publish days (not ready)', () => { //https://app.clickup.com/t/4534343/DASHCU-3784
       task_id='DASHCU-3784'
       cy.contains('.btn__overflow', 'Upload Logs').click()
       cy.get('[value="Application Logs"]').click()
