@@ -14,7 +14,7 @@ describe("DASH smoke tests/Admin",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784', 'DASHCU-3831']
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784', 'DASHCU-3831','DASHCU-3862']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -284,30 +284,44 @@ describe("DASH smoke tests/Admin",
         })
       })
     })  
-    it.skip('Settings page => Manage Publish days (not ready)', () => { //https://app.clickup.com/t/4534343/DASHCU-3784
-      task_id='DASHCU-3784'
-      cy.contains('.btn__overflow', 'Upload Logs').click()
-      cy.get('[value="Application Logs"]').click()
-      cy.get('div>.reportrange-text').click()
-      cy.get('div>.prev').first().click()
-      cy.get('tr>td').first().click()
-      cy.get('tr>td').last().click()
-      cy.contains('.applyBtn','Confirm').click()
-      cy.intercept('GET','/api/ExtractUploadLog/**').as('grid_list')
-      cy.contains('.btn','Apply').click()
-      cy.contains('div>.table-header__value', 'Event Name').should('exist') //verify the table header is visible
-      cy.wait('@grid_list',{requestTimeout:`${Cypress.env('req_timeout')}`}).then(({response}) => {
-        expect(response.statusCode).to.eq(200)
-        let logs_count=response.body.reference.length
-        let event_name
-        let username
-        if(logs_count>0){
-          event_name=response.body.reference[0].eventName //store 1-st record's event name
-          username=response.body.reference[0].username //store 1-st record's uploaded by info
-          cy.contains('.table-column', event_name).first().scrollIntoView() //scroll to this log on UI to make sure it exists
-          cy.contains('.table-column', username).first().should('exist')
+    it('Settings page => Manage Publish Days', () => { //https://app.clickup.com/t/4534343/DASHCU-3862
+      task_id='DASHCU-3862'
+      cy.contains('.tab-title', 'Manage Publish Days').click()
+      cy.get('#VTab-btn-manage-days').should('have.class','VTab__btn_active') //verify Manage Publish Days gets active
+      cy.contains('.VButton__text', 'Save').click()
+      cy.contains('.toast-message','No changes made').should('exist') //save is not allowed without changes
+      cy.contains('.VButton__text','Edit').click()
+      cy.get('div>.select__label').next('div').click()
+      const myFirstArray = []
+      const mySecondArray= []   
+      cy.get('div>.table__body').then(($default)=>{
+        let default_count=$default.find('.day_disabled').length
+        if (default_count>0){
+          // store the elements with default days in the main page in array
+          cy.get('div>.day_disabled').each(($el) => {
+            myFirstArray.push($el.text().trim())                  
+          })
+          //store the checked days in 'edit pop default publish days' pop up
+          cy.get('[value]').filter(':checked').next('label').each(($el) => {
+            mySecondArray.push($el.text().trim())
+          })
+          .then(()=>{
+                expect(myFirstArray).to.have.members(mySecondArray)  // compare the two arrays
+          })
+        }
+        else{
+          cy.get('[placeholder="Select days"]').should('exist')
         }
       })
-    })
+      cy.contains('label','Select All').click()
+      cy.get('[placeholder="Select days"]').should('not.exist')
+      cy.get('div>.header__close').click()
+      cy.get('label>.vueSlider').click()
+      //cy.get('label>.vueSlider').prev('[type="checkbox"]').should('be.checked')
+      cy.contains('.VButton__text', 'Save').click()
+      cy.contains('div','Are you sure you want to save changes?').should('exist') //warning
+      cy.contains('.VButton__text', 'Cancel').click()
+      cy.contains('div','Are you sure you want to save changes?').should('not.exist') //warning
+    })  
   })
 })
