@@ -290,6 +290,11 @@ describe("DASH smoke tests/Admin",
       cy.get('#VTab-btn-manage-days').should('have.class','VTab__btn_active') //verify Manage Publish Days gets active
       cy.contains('.VButton__text', 'Save').click()
       cy.contains('.toast-message','No changes made').should('exist') //save is not allowed without changes
+      cy.get('label>.vueSlider').click()
+      cy.contains('.VButton__text', 'Save').click()
+      cy.contains('div','Are you sure you want to save changes?').should('exist') //warning
+      cy.contains('.VButton__text', 'Cancel').click()
+      cy.contains('div','Are you sure you want to save changes?').should('not.exist') //warning
       cy.contains('.VButton__text','Edit').click()
       cy.get('div>.select__label').next('div').click()
       const myFirstArray = []
@@ -301,7 +306,7 @@ describe("DASH smoke tests/Admin",
           cy.get('div>.day_disabled').each(($el) => {
             myFirstArray.push($el.text().trim())                  
           })
-          //store the checked days in 'edit pop default publish days' pop up
+          //store the checked days in 'edit default publish days' pop up
           cy.get('[value]').filter(':checked').next('label').each(($el) => {
             mySecondArray.push($el.text().trim())
           })
@@ -316,12 +321,6 @@ describe("DASH smoke tests/Admin",
       cy.contains('label','Select All').click()
       cy.get('[placeholder="Select days"]').should('not.exist')
       cy.get('div>.header__close').click()
-      cy.get('label>.vueSlider').click()
-      //cy.get('label>.vueSlider').prev('[type="checkbox"]').should('be.checked')
-      cy.contains('.VButton__text', 'Save').click()
-      cy.contains('div','Are you sure you want to save changes?').should('exist') //warning
-      cy.contains('.VButton__text', 'Cancel').click()
-      cy.contains('div','Are you sure you want to save changes?').should('not.exist') //warning
     })  
   })
 })
