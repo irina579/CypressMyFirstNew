@@ -1,13 +1,10 @@
-describe("DASH tests", () => {
+describe("DASH E2E tests/show_creation", () => {
     
     beforeEach(() => {
-      cy.visit(Cypress.env('url_g'))
-      cy.get('#UserName').type(Cypress.env('login_g'))
-      cy.get('#Password').type(Cypress.env('password_g'))
-      cy.contains('Log in').click()
+      cy.Login()
     })
   
-    context.skip("Show creation", ()=>{
+    context("Show creation", ()=>{
       it("User can log in", () => {
         cy.url().should('include', '/Home/Homepage')
         cy.contains('Welcome back').should('be.visible')
@@ -131,7 +128,7 @@ describe("DASH tests", () => {
         it("Show is visible in Manage Shows", () => {
           cy.get(".link__title").contains("Manage Shows").click()
           cy.location("pathname").should("eq", "/ones/new/shows")
-          cy.get(".header-banner__close-button").click()
+          //cy.get(".header-banner__close-button").click()
           //cy.xpath("//a[contains(text(), 'Financials')]").should('have.length',6)
           cy.xpath("//a[contains(text(), 'Financials')]").eq(5).click()
         })
