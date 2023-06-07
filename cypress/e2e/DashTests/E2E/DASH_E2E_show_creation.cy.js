@@ -162,6 +162,7 @@ describe("DASH E2E tests/show_creation", () => {
         cy.location("pathname").should("eq", "/ones/new/shows")
         cy.get(".search__input").type(code)
         cy.contains("Apply").click()
+        cy.contains('.counters__item', 'Active').should('include.text','1') //to wait until page loads
         cy.contains(code).should("exist")
         //check of filled data
         let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'

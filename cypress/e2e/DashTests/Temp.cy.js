@@ -5,8 +5,26 @@ describe("DASH E2E tests/show_creation", () => {
     context("Show creation", ()=>{
       it("User can create Show", () => {
         cy.viewport(1680, 1050)
-        cy.visit('http://10.94.6.100/ones/shows/add-edit/I7_6_49')
-        
+        let code='I8_6_30'
+
+
+
+
+        cy.visit('http://10.94.6.100:105/ones/new/shows')
+        cy.get(".search__input").type(code)
+        cy.contains("Apply").click()
+        cy.contains('.counters__item', 'Active').should('include.text','1')
+
+        cy.contains(code).should("exist")
+        //check of filled data
+        let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
+        cy.log(locator_id)
+        cy.get('#'+locator_id+'>.actions__item').eq(0).click()
+        cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code)
+
+
+
+
         cy.readFile('cypress/fixtures/show_elements.json').then((data) => {
           const { StartDateText, EndDateText, ReleaseDateText, SecondaryLocationText,TPSLocationText,SecondaryProducerText } = data;
           // Use the stored element texts in assertions
