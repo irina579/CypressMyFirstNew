@@ -4,6 +4,7 @@ describe('DASH login', () => {
   it.only('Random value test', () => {
     let random_search=Math.random().toString(36).substring(2,4)
     cy.log(random_search)
+
     expect(5).to.be.gte(1)
   }) 
   it('Test new options', () => {

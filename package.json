@@ -18,7 +18,7 @@
     "quick_check": "cypress run --headless --browser chrome --spec cypress/e2e/DashTests/quick_check.cy.js",
     "stage_enviroment_admin": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_admin.cy.js",
     "stage_enviroment_ones": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_ones.cy.js",
-    "stage_enviroment_management": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_management.cy.js"
-    
+    "stage_enviroment_management": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/DASH_smoke_management.cy.js",
+    "stage_enviroment_E2E": "cypress run --browser chrome --spec cypress/e2e/DashTests/E2E"
   }
 }

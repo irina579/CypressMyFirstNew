@@ -74,3 +74,18 @@ Cypress.Commands.add('Login', () => {
       // cy.contains('Log in').click()
       // cy.get(".header-banner__close-button",{timeout: `${Cypress.env('elem_timeout')}`}).click()
 })
+// commands.js
+Cypress.Commands.add('writeVariablesToFile', (variable1, variable2) => {
+  const data = { variable1, variable2 };
+  const jsonData = JSON.stringify(data);
+  cy.writeFile('cypress/fixtures/variables.json', jsonData);
+});
+
+
+Cypress.Commands.add('readVariablesFromFile', () => {
+  cy.readFile('cypress/fixtures/variables.json').then(data => {
+    return data;
+  });
+});
+
+
