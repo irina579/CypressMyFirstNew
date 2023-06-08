@@ -1,14 +1,14 @@
 describe("DASH E2E tests/show_creation", () => {
+    //set up show code variable
+    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     beforeEach(() => {
       cy.Login()
+      cy.viewport(1680, 1050)
     })
     context("Show creation", ()=>{
-      it("User can create Show", () => {
-        cy.viewport(1680, 1050)
+        it("User can create Show", () => {
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
-        //set up show code variable
-        let code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
         cy.log("code="+code)   
         //Show Stats tab
         //show code
@@ -238,7 +238,38 @@ describe("DASH E2E tests/show_creation", () => {
           //Secondary producer
           cy.contains('.input-group__title','Secondary Producer').next('div').should('have.text', SecondaryProducerText);
         });
-      })    
+      })  
+      it('Creating Positions & Ones on a new Show and Save', () => {
+        cy.contains('.link__title','Show Ones').click()
+        cy.url().should('include', '/ones/show')
+        cy.contains('.btn__overflow','Select show').click()
+        cy.get('.search__wrapper>input').eq(0).type(code)
+        cy.contains('a',code).click()
+        cy.contains('.item__info__department-name',Cypress.env('discipline')).prev('div').click()
+        let N=0
+        cy.get('.levels__item>.col-lg-5').its('length').then((n) => {
+            N = n
+            cy.log("length="+N)
+            for (let i = 0; i < N; i++) {
+              cy.get('.levels__item>.col-lg-5').find('label').eq(i).click()
+              cy.get('div>.amount__input').eq(i).clear().type(i+1)        
+            }  
+            cy.contains('.VButton__text','Add').click()          
+        })
+        let Ones=0
+        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+        //cy.contains('APPROVAL NOTIFICATION')
+        cy.contains('.VButton__text','OK').click()  //add condition
+        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
+            Ones = n
+            cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+            cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(Ones-1).click({shiftKey: true,})                   
+        })
+        cy.contains('.VButton__text','Confirm').click()
+        cy.contains('.btn__overflow','File').click()
+        cy.contains('a','Save').click()
+        cy.contains('Save operation completed')
+      })   
     })
 })
 //export{}
