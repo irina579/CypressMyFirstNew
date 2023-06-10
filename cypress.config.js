@@ -46,19 +46,28 @@ env: {
     site_id: 20002, //London
     IDL_dept_id: 20032, //Production Management
     DL_dept_id: 20008, //Assets
+    EP_approval: true,
     
-/*     bu: 'Mikros Animation',
-    url_g: 'http://10.94.6.100:105',
-    site_id: 21051, //21003-Paris //21003  - Montreal//21050 - New York// 21051 - Bangalore (MA)
-    IDL_dept_id: 21031, //Production Management
-    DL_dept_id: 21007, //Assets */
+    // bu: 'Mikros Animation',
+    // url_g: 'http://10.94.6.100:105',
+    // site_id: 21051, //21003-Paris //21003  - Montreal//21050 - New York// 21051 - Bangalore (MA)
+    // IDL_dept_id: 21031, //Production Management
+    // DL_dept_id: 21007, //Assets 
+    // EP_approval: false,
     
     // bu: 'TCI',
     // url_g: 'http://10.94.6.100:105',
     // site_id: 1002, //TCI
     // IDL_dept_id: 1030, //Production Management
     // DL_dept_id: 1006 //Assets
+    // EP_approval: true
 
+    // bu: 'Technicolor Games',
+    // url_g: 'http://10.94.6.100:105',
+    // site_id: 11002, //TCI
+    // IDL_dept_id: 1030, //Production Management
+    // DL_dept_id: 11006, //Assets
+    // EP_approval: false,
 
 
 

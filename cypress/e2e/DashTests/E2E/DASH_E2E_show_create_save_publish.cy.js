@@ -1,6 +1,14 @@
 describe("DASH E2E tests/show_creation", () => {
     //set up show code variable
+    //const code='I8_6_8'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    const SelectCreatedShow = ()=>{
+      cy.contains('.link__title','Show Ones').click()
+      cy.url().should('include', '/ones/show')
+      cy.contains('.btn__overflow','Select show').click()
+      cy.get('.search__wrapper>input').eq(0).type(code)
+      cy.contains('a',code).click()
+    }
     beforeEach(() => {
       cy.Login()
       cy.viewport(1680, 1050)
@@ -21,12 +29,15 @@ describe("DASH E2E tests/show_creation", () => {
         //show status
         cy.contains('.input-group__title', 'Status').next('div').click()
         cy.contains('a','Active').click()
-        //show Planning Category
-        cy.contains('.input-group__title', 'Planning Category').next('div').click()
-        cy.contains('a','Theatrical').click()
-        //show Actual Category
-        cy.contains('.input-group__title', 'Actual Category').next('div').click()
-        cy.contains('a','Theatrical').click()
+        //!!! For none- A&G BUs
+        if (Cypress.env("bu")!='Technicolor Games'){
+          //show Planning Category
+          cy.contains('.input-group__title', 'Planning Category').next('div').click()
+          cy.contains('a','Theatrical').click()
+          //show Actual Category
+          cy.contains('.input-group__title', 'Actual Category').next('div').click()
+          cy.contains('a','Theatrical').click()
+        }
         //show color 
         cy.contains('.input-group__title', 'Show Color').next('div').click()
         cy.get('.tab__field .cp-input__input').clear()
@@ -178,10 +189,13 @@ describe("DASH E2E tests/show_creation", () => {
         cy.contains('.input-group__title', 'Type').next('div').should('include.text','Awarded')
         //show status
         cy.contains('.input-group__title', 'Status').next('div').should('include.text','Active')
-        //show Planning Category
-        cy.contains('.input-group__title', 'Planning Category').next('div').should('include.text','Theatrical')
-        //show Actual Category
-        cy.contains('.input-group__title', 'Actual Category').next('div').should('include.text','Theatrical')
+        //For Non A-G BUs only
+        if (!Cypress.env("bu")=='Technicolor Games'){
+          //show Planning Category
+          cy.contains('.input-group__title', 'Planning Category').next('div').should('include.text','Theatrical')
+          //show Actual Category
+          cy.contains('.input-group__title', 'Actual Category').next('div').should('include.text','Theatrical')
+        }
         //assets amount
         cy.contains('.input-group__title', 'Amount of Assets').next('div').should('include.text','10')
         //shots amount
@@ -240,11 +254,7 @@ describe("DASH E2E tests/show_creation", () => {
         });
       })  
       it('Creating Positions & Ones on a new Show and Save', () => {
-        cy.contains('.link__title','Show Ones').click()
-        cy.url().should('include', '/ones/show')
-        cy.contains('.btn__overflow','Select show').click()
-        cy.get('.search__wrapper>input').eq(0).type(code)
-        cy.contains('a',code).click()
+        SelectCreatedShow()
         cy.contains('.item__info__department-name',Cypress.env('discipline')).prev('div').click()
         let N=0
         cy.get('.levels__item>.col-lg-5').its('length').then((n) => {
@@ -258,18 +268,40 @@ describe("DASH E2E tests/show_creation", () => {
         })
         let Ones=0
         cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
-        //cy.contains('APPROVAL NOTIFICATION')
-        cy.contains('.VButton__text','OK').click()  //add condition
+        if(Cypress.env("EP_approval")){
+          cy.contains('.VButton__text','OK').click()  //only for BUs with EP approval=ON
+        }      
         cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
             Ones = n
             cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
-            cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(Ones-1).click({shiftKey: true,})                   
+            cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq((Ones-1)-20).click({shiftKey: true,}) //(Ones-1)-20 - this is to selact only half of grid weeks/visible area                  
         })
         cy.contains('.VButton__text','Confirm').click()
         cy.contains('.btn__overflow','File').click()
         cy.contains('a','Save').click()
         cy.contains('Save operation completed')
-      })   
+        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId1')
+      })
+      it('Show Ones Publish', () => {
+        SelectCreatedShow()
+        cy.contains('.btn__overflow','File').click()
+        cy.contains('a','Publish').click()
+        cy.contains('.tab-title', 'MPC').click()
+        cy.contains('label', 'London').click()
+        //cy.get('div>.publishPopup__body__tabs-item').eq(3).find('label').contains(Cypress.env('discipline')).click()
+        cy.get('.VPopup__content .VTab__tab:not([style="display: none;"])').find('label').contains(Cypress.env('discipline')).click()
+        cy.contains('.VButton__text','Send').click()
+        cy.contains('.header__title', 'Seniority split distribution').should('exist')
+        cy.contains('.VButton__text','Confirm').click()
+        if(Cypress.env("EP_approval")){
+          cy.contains('.VNotification__title','Publish Request').should('exist')
+          cy.contains('.VButton__text','Yes').click()  //only for BUs with EP approval=ON
+          cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId8')
+        }
+        else{           
+        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
+        }
+      })      
     })
 })
 //export{}

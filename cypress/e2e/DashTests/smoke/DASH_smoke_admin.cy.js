@@ -317,9 +317,13 @@ describe("DASH smoke tests/Admin",
         else{
           cy.get('[placeholder="Select days"]').should('exist')
         }
+        cy.contains('label','Select All').click()
+        if(default_count=6) {//all days are publish days  
+         cy.get('[placeholder="Select days"]').should('exist')}
+        else{
+         cy.get('[placeholder="Select days"]').should('not.exist')
+        }
       })
-      cy.contains('label','Select All').click()
-      cy.get('[placeholder="Select days"]').should('not.exist')
       cy.get('div>.header__close').click()
     })  
   })
