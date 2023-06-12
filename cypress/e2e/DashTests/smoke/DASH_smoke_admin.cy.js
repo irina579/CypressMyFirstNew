@@ -284,7 +284,7 @@ describe("DASH smoke tests/Admin",
         })
       })
     })  
-    it('Settings page => Manage Publish Days', () => { //https://app.clickup.com/t/4534343/DASHCU-3862
+    it.only('Settings page => Manage Publish Days', () => { //https://app.clickup.com/t/4534343/DASHCU-3862
       task_id='DASHCU-3862'
       cy.contains('.tab-title', 'Manage Publish Days').click()
       cy.get('#VTab-btn-manage-days').should('have.class','VTab__btn_active') //verify Manage Publish Days gets active
@@ -301,6 +301,7 @@ describe("DASH smoke tests/Admin",
       const mySecondArray= []   
       cy.get('div>.table__body').then(($default)=>{
         let default_count=$default.find('.day_disabled').length
+        cy.log(default_count)
         if (default_count>0){
           // store the elements with default days in the main page in array
           cy.get('div>.day_disabled').each(($el) => {
@@ -318,7 +319,8 @@ describe("DASH smoke tests/Admin",
           cy.get('[placeholder="Select days"]').should('exist')
         }
         cy.contains('label','Select All').click()
-        if(default_count=6) {//all days are publish days  
+        cy.log(default_count)
+        if(default_count==6) {//all days are publish days  
          cy.get('[placeholder="Select days"]').should('exist')}
         else{
          cy.get('[placeholder="Select days"]').should('not.exist')
