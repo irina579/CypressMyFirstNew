@@ -284,7 +284,7 @@ describe("DASH smoke tests/Admin",
         })
       })
     })  
-    it.only('Settings page => Manage Publish Days', () => { //https://app.clickup.com/t/4534343/DASHCU-3862
+    it('Settings page => Manage Publish Days', () => { //https://app.clickup.com/t/4534343/DASHCU-3862
       task_id='DASHCU-3862'
       cy.contains('.tab-title', 'Manage Publish Days').click()
       cy.get('#VTab-btn-manage-days').should('have.class','VTab__btn_active') //verify Manage Publish Days gets active
