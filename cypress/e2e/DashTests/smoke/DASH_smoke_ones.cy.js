@@ -378,7 +378,7 @@ describe("DASH smoke tests/Ones",
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage'))
     })
-    it("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
+    it.only("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
       task_id='DASHCU-3683'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
