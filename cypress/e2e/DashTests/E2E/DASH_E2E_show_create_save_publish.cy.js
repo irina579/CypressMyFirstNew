@@ -1,19 +1,39 @@
 describe("DASH E2E tests/show_creation", () => {
     //set up show code variable
-    //const code='I8_6_8'// for debugging
+    //const code='I10_6_0'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
+      cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click()
+      cy.get('#app').then(($body) => {
+        cy.log($body.find('div>.filter-view-current').length)
+        if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
+          cy.contains("to see Ones content").should("not.exist")
+          cy.get('.item__info__department-name').should('exist')
+          cy.contains('.btn__overflow', 'MASTER').should('exist')
+          cy.get('div>.filter-view-current__delete').click()
+          cy.log('Clear default filter')
+        }
+      })
       cy.contains('.btn__overflow','Select show').click()
       cy.get('.search__wrapper>input').eq(0).type(code)
       cy.contains('a',code).click()
+    }
+    const SelectCreateShowInManageShows=()=>{
+      cy.get(".search__input").type(code)
+      cy.contains("Apply").click()
+      cy.contains('.counters__item', 'Active').should('include.text','1') //to wait until page loads
+      cy.contains(code).should("exist")
+      let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
+      cy.get('#'+locator_id+'>.actions__item').eq(0).click()
+      cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code)
     }
     beforeEach(() => {
       cy.Login()
       cy.viewport(1680, 1050)
     })
-    context("Show creation", ()=>{
+    context("Show full cycle ", ()=>{
         it("User can create Show", () => {
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
@@ -171,15 +191,7 @@ describe("DASH E2E tests/show_creation", () => {
         //check creation
         cy.contains('span', 'Create show').click()
         cy.location("pathname").should("eq", "/ones/new/shows")
-        cy.get(".search__input").type(code)
-        cy.contains("Apply").click()
-        cy.contains('.counters__item', 'Active').should('include.text','1') //to wait until page loads
-        cy.contains(code).should("exist")
-        //check of filled data
-        let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
-        cy.log(locator_id)
-        cy.get('#'+locator_id+'>.actions__item').eq(0).click()
-        cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code)
+        SelectCreateShowInManageShows()
         //Show Stats tab
         //show code
         cy.contains('.input-group__title', 'Code').next('div').should('include.text',code)
@@ -284,6 +296,7 @@ describe("DASH E2E tests/show_creation", () => {
       })
       it('Show Ones Publish', () => {
         SelectCreatedShow()
+        cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
         cy.contains('.btn__overflow','File').click()
         cy.contains('a','Publish').click()
         cy.contains('.tab-title', 'MPC').click()
@@ -302,6 +315,52 @@ describe("DASH E2E tests/show_creation", () => {
         cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
       })      
+      it('Approve Show Ones EP requests', () => {
+        if(Cypress.env("EP_approval")){
+          cy.contains('.link__title','Notification Center').click()
+          cy.url().should('include', '/notification-center/')
+          //cy.get('.select-all.VCheckboxSimple>span').click()
+          cy.get('[placeholder="Search"]').type(code).type('{enter}') //initiate searching of this title on UI
+          cy.get('div>.notification__title').first().should('include.text',code) //verify the search gives result
+          cy.get('span.vueSlider').click() //show only awaiting approval
+          cy.get('.select-all.VCheckboxSimple>span').click()
+          cy.contains('.VButton__text', 'Approve').click()
+          cy.contains('.VButton__text', 'Yes, Continue').click()
+          cy.contains('div>.notification__title', code).should('not.exist') //verify there are no more pending notifications      
+        }
+        else{           
+        cy.log('No approval is required')
+        }
+      }) 
+      it('Delete created Show', () => {
+        cy.contains('.link__title','Manage Shows').click()
+        cy.url().should('include', '/ones/new/shows')
+        SelectCreateShowInManageShows()
+        /* cy.get(".search__input").type(code)
+        cy.contains("Apply").click()
+        cy.contains('.counters__item', 'Active').should('include.text','1') //to wait until page loads
+        cy.contains(code).should("exist")
+        //check of filled data
+        let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
+        cy.log(locator_id)
+        cy.get('#'+locator_id+'>.actions__item').eq(0).click()
+        cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code) */
+        cy.contains('.VButton__text', 'Delete').parent().should("have.attr","disabled")
+        cy.contains('.input-group__title', 'Status').next('div').click()
+        cy.contains('a','Inactive').click() //Make show Inactive to be able to delete
+        cy.contains('.VButton__text', 'Save').click()
+        cy.contains('.v-filter__placeholder','Active').scrollIntoView().click()
+        cy.contains('label','Inactive').click() //add inactive Shows in filter
+        cy.contains('.VButton__text',"Apply").click()
+        SelectCreateShowInManageShows() 
+        cy.contains('.VButton__text', 'Delete').click()
+        cy.contains('.VButton__text', 'Yes, Delete').click()
+        cy.contains('.v-filter__placeholder','Active').scrollIntoView().click()
+        cy.contains('label','Inactive').click() //add inactive Shows in filter
+        cy.get(".search__input").type(code)
+        cy.contains('.VButton__text',"Apply").click()
+        cy.contains(code).should("not.exist")
+      }) 
     })
 })
 //export{}
