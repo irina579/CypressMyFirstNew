@@ -23,7 +23,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     const SelectCreateShowInManageShows=()=>{
       cy.get(".search__input").type(code)
       cy.contains("Apply").click()
-      cy.contains('.counters__item', 'Active').should('include.text','1') //to wait until page loads
+      cy.contains('.counters__item', 'Delivered').should('include.text','0') //to wait until page loads
       cy.contains(code).should("exist")
       let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
       cy.get('#'+locator_id+'>.actions__item').eq(0).click()
