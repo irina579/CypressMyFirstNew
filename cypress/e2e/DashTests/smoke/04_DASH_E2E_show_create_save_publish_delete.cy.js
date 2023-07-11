@@ -1,4 +1,4 @@
-describe("DASH E2E tests/show_creation", () => {
+describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
     //const code='I10_6_0'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
