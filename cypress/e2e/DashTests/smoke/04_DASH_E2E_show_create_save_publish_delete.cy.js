@@ -279,20 +279,21 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
             cy.contains('.VButton__text','Add').click()          
         })
         let Ones=0
-        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(0).click()
         if(Cypress.env("EP_approval")){
           cy.contains('.VButton__text','OK').click()  //only for BUs with EP approval=ON
         }      
-        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
             Ones = n
-            cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
-            cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq((Ones-1)-20).click({shiftKey: true,}) //(Ones-1)-20 - this is to selact only half of grid weeks/visible area                  
+            //cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+            cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+            cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq((Ones-1)-20).click({shiftKey: true,}) //(Ones-1)-20 - this is to selact only half of grid weeks/visible area                  
         })
         cy.contains('.VButton__text','Confirm').click()
         cy.contains('.btn__overflow','File').click()
         cy.contains('a','Save').click()
         cy.contains('Save operation completed')
-        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId1')
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId1')
       })
       it('Show Ones Publish', () => {
         SelectCreatedShow()
@@ -309,10 +310,10 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         if(Cypress.env("EP_approval")){
           cy.contains('.VNotification__title','Publish Request').should('exist')
           cy.contains('.VButton__text','Yes').click()  //only for BUs with EP approval=ON
-          cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId8')
+          cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId8')
         }
         else{           
-        cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
       })      
       it('Approve Show Ones EP requests', () => {
