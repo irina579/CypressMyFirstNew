@@ -1,7 +1,7 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    const code='I12_7_5'// for debugging
-    //const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    //const code='I12_7_5'// for debugging
+    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
