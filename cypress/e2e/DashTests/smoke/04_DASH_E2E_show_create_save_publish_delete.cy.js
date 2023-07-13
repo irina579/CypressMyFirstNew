@@ -1,7 +1,7 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    //const code='I10_6_0'// for debugging
-    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    const code='I12_7_5'// for debugging
+    //const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
@@ -28,6 +28,9 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
       cy.get('#'+locator_id+'>.actions__item').eq(0).click()
       cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code)
+    }
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
     }
     beforeEach(() => {
       cy.Login()
@@ -110,8 +113,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.contains('.input-group__title', 'Awards Est').next('div').type(99)
         //primary location
         cy.contains('.input-group__title','Primary').next('div').click()
-        cy.get('ul>.VSelect__search').find('input').type('London')
-        cy.contains('a','London (MPC)').click()
+        cy.get("[value="+Cypress.env("site_id")+"]").click()
         //secondary location
         cy.contains('.input-group__title','Secondary').next('div').click()
         cy.get('ul').find('label').eq(0).click()
@@ -333,19 +335,49 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.log('No approval is required')
         }
       }) 
+      it('Assign published Ones from Shopping cart and Save', () => {
+        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
+        cy.contains('.VButton__text', "Shows").click()
+        if (Cypress.env("bu")=='Technicolor Games'){ //for TC Games we'll check Episodic tab
+          cy.contains('.card__title', "Episodic")
+        }
+        cy.contains('.show__title',code).parent().find('span').first().click()
+        cy.contains('.discipline__name',Cypress.env('discipline')).prev('span').click()
+        let N=0
+        cy.get('div>.one__title').its('length').then((n) => { //verify the positions counter corresponds to that was set in Show Ones
+          cy.get('div>.one__count')
+            N = n
+            cy.log("length="+N)
+            for (let i = 0; i < N; i++) {
+              cy.contains('div>.one__count',i+1).should('exist')   
+            }  
+            let pos_count=getRandomInt(N-1)+1
+            cy.contains('div>.one__count',pos_count).click()
+            cy.get('.item_artist').its('length').then((n) => {
+              if (n<pos_count){
+                cy.contains('.modal-footer>.btn-cancel','Close').click()
+                cy.get('.header__shows__seniority').click()
+              }
+            })
+            for (let i = 0; i < pos_count; i++) {
+              cy.get('.header__shows__items .header__month').first().children('div').eq(1).find('div').first().click()
+              cy.get('.header__shows__items .header__month').last().children('div').eq(1).find('div').first().click({shiftKey: true,})
+              cy.get('.item_artist').eq(i).find('.row__cell').first().click()
+              cy.get('body').then(($body) => {   
+                if ($body.find('div.VNotification__title').length>0){ //check if Add pop up appears
+                  cy.contains('.VButton__text','Add').click()
+                }
+              })
+            }   
+        })
+        cy.contains('.btn__overflow','File').scrollIntoView().click()
+        cy.contains('a','Save').click()
+        cy.contains('Save operation completed').should('exist')
+      }) 
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
         SelectCreateShowInManageShows()
-        /* cy.get(".search__input").type(code)
-        cy.contains("Apply").click()
-        cy.contains('.counters__item', 'Active').should('include.text','1') //to wait until page loads
-        cy.contains(code).should("exist")
-        //check of filled data
-        let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
-        cy.log(locator_id)
-        cy.get('#'+locator_id+'>.actions__item').eq(0).click()
-        cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code) */
         cy.contains('.VButton__text', 'Delete').parent().should("have.attr","disabled")
         cy.contains('.input-group__title', 'Status').next('div').click()
         cy.contains('a','Inactive').click() //Make show Inactive to be able to delete
