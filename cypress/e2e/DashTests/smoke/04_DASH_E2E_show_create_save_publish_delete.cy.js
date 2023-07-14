@@ -20,6 +20,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       cy.get('.search__wrapper>input').eq(0).type(code)
       cy.contains('a',code).click()
     }
+    const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
     const SelectCreateShowInManageShows=()=>{
       cy.get(".search__input").type(code)
       cy.contains("Apply").click()
@@ -287,7 +288,6 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         }      
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
             Ones = n
-            //cy.get('.item_artist_collapsed>.item__months>.item__month>.row__cell').eq(0).click()
             cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(0).click()
             cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq((Ones-1)-20).click({shiftKey: true,}) //(Ones-1)-20 - this is to selact only half of grid weeks/visible area                  
         })
@@ -336,47 +336,156 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.log('No approval is required')
         }
       }) 
-      it.only('Assign published Ones from Shopping cart and Save', () => {
-        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
-        //cy.visit('http://10.94.6.100/ones/new?siteId=20004&departmentIds=20054')      
+      it('Assign published Ones from Shopping cart and Save', () => {
+        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
         cy.get('#ShowPopupButton').should('not.have.attr','disabled')
         cy.get('#ShowPopupButton').click()
         if (Cypress.env("bu")=='Technicolor Games'){ //for TC Games we'll check Episodic tab
           cy.contains('.card__title', "Episodic")
         }
-        cy.contains('.show__title',code).parent().find('span').first().click()
-        cy.contains('.discipline__name',Cypress.env('discipline')).prev('span').click()
-        let N=0
-        cy.get('div>.one__title').its('length').then((n) => { //verify the positions counter corresponds to that was set in Show Ones
-          cy.get('div>.one__count')
+        cy.get('.item_artist').its('length').then((n) => {
+          let grid_artist_count=n
+          cy.contains('.show__title',code).parent().find('span').first().click()
+          cy.contains('.discipline__name',Cypress.env('discipline')).prev('span').click()
+          //cy.contains('.discipline__name','Design').prev('span').click() //for debug
+          let N=0
+          cy.get('div>.one__title').its('length').then((n) => { //verify the positions counter corresponds to that was set in Show Ones
             N = n
             cy.log("length="+N)
             for (let i = 0; i < N; i++) {
               cy.contains('div>.one__count',i+1).should('exist')   
             }  
-            let pos_count=getRandomInt(N-1)+1
-            cy.contains('div>.one__count',pos_count).click()
-            cy.get('.item_artist').its('length').then((n) => {
-              if (n<pos_count){
-                cy.contains('.modal-footer>.btn-cancel','Close').click()
+            let cart_pos_count=getRandomInt(N-1)+1
+            cy.contains('div>.one__count',cart_pos_count).click()
+            cy.contains('.modal-footer>.btn-cancel','Close').click()
+            cy.get('body').then(($body) => {   //clear seniority filter if artists in grid < then requested in cart
+              let artist_count=$body.find('.item_artist').length
+              cy.log(artist_count)
+              if (artist_count<cart_pos_count){
                 cy.get('.header__shows__seniority').click()
+                cart_pos_count=grid_artist_count  //set cart positions to be assigned=artists in grid
+                cy.log('New_count='+cart_pos_count)
               }
-            })
-            for (let i = 0; i < pos_count; i++) {
-              cy.get('.header__shows__items .header__month').first().children('div').eq(1).find('div').first().click()
-              cy.get('.header__shows__items .header__month').last().children('div').eq(1).find('div').first().click({shiftKey: true,})
-              cy.get('.item_artist').eq(i).find('.row__cell').first().click()
-              cy.get('body').then(($body) => {   
-                if ($body.find('div.VNotification__title').length>0){ //check if Add pop up appears
-                  cy.contains('.VButton__text','Add').click()
-                }
+              let artist_name
+              let artist_name_full=""
+              for (let i = 0; i < cart_pos_count; i++) {
+                cy.get('.header__shows__items .header__month').first().children('div').eq(1).find('div').first().click()
+                cy.get('.header__shows__items .header__month').last().children('div').eq(1).find('div').first().click({shiftKey: true,})
+                cy.get('.item_artist').eq(i).find('.row__cell').first().click()
+                cy.get('.item__info__name').eq(i).invoke('text').then((text) => {
+                  artist_name = normalizeText(text)
+                  cy.get('body').then(($body) => {   
+                    if ($body.find('div.VNotification__title').length>0){ //check if Add pop up appears
+                      cy.contains('.VButton__text','Add').click()
+                    }
+                  })
+                  artist_name_full=artist_name_full+artist_name
+                })
+              } 
+              // Write the assigned artist to a file
+              cy.then(() => {
+                const data = {
+                  artist_name_full
+                };
+                const jsonData = JSON.stringify(data);
+                cy.writeFile('cypress/fixtures/assigned_artists.json', jsonData);
               })
-            }   
+            }) 
+          })
         })
         cy.contains('.btn__overflow','File').scrollIntoView().click()
         cy.contains('a','Save').click()
         cy.contains('Save operation completed').should('exist')
       }) 
+      it.only('Publish DL Ones', () => {
+        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
+        //cy.visit('http://10.94.6.100/ones/new?siteId=20002&departmentIds=20016')
+        let popup_count=0
+        cy.intercept('/api/departmentonesnew/publishdepartmentones').as('grid_list')
+        cy.request('POST', Cypress.env('url_g')+"/api/DepartmentOnesNewApi/CheckIsExistArtistsWithOnesOutOfContract", {siteId:Cypress.env('site_id'),departmentIds:[Cypress.env('DL_dept_id')]}).then((response) => {
+          expect(response.status).to.eq(200) //status 200
+          if (response.body.reference.length>0){ //if there are teams
+            popup_count=popup_count+1
+            cy.log('OnesOnArtists='+ popup_count)
+          }
+          cy.request('POST', Cypress.env('url_g')+"/api/departmentonesnew/checkonespriorities/?siteId="+Cypress.env('site_id'), [Cypress.env('DL_dept_id')]).then((response) => {
+            expect(response.status).to.eq(200) //status 200
+            if (response.body==true){ //if
+              popup_count=popup_count+1
+              cy.log('Priority='+popup_count)
+            }
+            cy.contains('.btn__overflow','File').scrollIntoView().click()
+            cy.contains('a','Publish').click()
+            cy.log("Pop up count="+popup_count)
+            for (let i = 0; i <= popup_count; i++) {
+            cy.get('div>.btn_submit').click()
+            }
+            if (popup_count>0){
+              cy.wait('@grid_list').then(({response}) => {
+                expect(response.statusCode).to.eq(200)
+              })
+            }
+            cy.contains('Publish operation completed').should('exist')
+          }) 
+        })
+      }) 
+/* 
+
+
+
+
+
+
+
+        cy.contains('.btn__overflow','File').scrollIntoView().click()
+        cy.contains('a','Publish').click()
+        cy.intercept('api/DepartmentOnesNewApi/CheckIsExistArtistsWithOnesOutOfContract').as('grid_list') 
+        cy.get('div>.btn_submit').click() //click to agree to publish
+        cy.wait('@grid_list').then(({response}) => { //wait for Ones check result
+          expect(response.statusCode).to.eq(200)
+          if (response.body.reference.sites.length>0){
+            cy.get('div>.btn_submit').click()
+          }
+          else{
+            cy.intercept('/api/departmentonesnew/checkonespriorities/*').as('grid_list')
+
+          }
+        })
+
+
+
+
+
+
+        cy.get('body').then(($body) => {   
+          if ($body.find('div>.VNotification').length>0){ //check if Ones in a cart pop up
+            cy.get('div>.btn_submit').click()
+            cy.wait('@grid_list').then(({response}) => {
+              expect(response.statusCode).to.eq(200)
+            })
+            cy.intercept('/api/departmentonesnew/checkonespriorities/*').as('grid_list')
+            cy.get('body').then(($body) => {   
+              cy.log($body.find('div>.VNotification').length)
+              if ($body.find('div>.VNotification').length>0){ //check if Add pop up appears
+                cy.get('div>.btn_submit').click()
+                cy.wait('@grid_list').then(({response}) => {
+                  expect(response.statusCode).to.eq(200)
+                })
+                cy.intercept('/api/departmentonesnew/publishdepartmentones').as('grid_list')
+                cy.get('body').then(($body) => {   
+                  cy.log($body.find('div>.VNotification').length)
+                  if ($body.find('div>.VNotification').length>0){ //check if Add pop up appears
+                    cy.get('div>.btn_submit').click()
+                    cy.wait('@grid_list').then(({response}) => {
+                      expect(response.statusCode).to.eq(200)
+                    })
+                  }
+                })
+              }
+            })
+          }
+        })  
+      }) */
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
