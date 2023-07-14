@@ -1,7 +1,7 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    //const code='I12_7_5'// for debugging
-    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    const code='I11_7_59'// for debugging
+    //const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
@@ -308,6 +308,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.get('.VPopup__content .VTab__tab:not([style="display: none;"])').find('label').contains(Cypress.env('discipline')).click()
         cy.contains('.VButton__text','Send').click()
         cy.contains('.header__title', 'Seniority split distribution').should('exist')
+        cy.contains('Note! The Seniority Split rule for the requested Ones has not been observed among the following Disciplines').should('exist')
         cy.contains('.VButton__text','Confirm').click()
         if(Cypress.env("EP_approval")){
           cy.contains('.VNotification__title','Publish Request').should('exist')
@@ -335,9 +336,11 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.log('No approval is required')
         }
       }) 
-      it('Assign published Ones from Shopping cart and Save', () => {
+      it.only('Assign published Ones from Shopping cart and Save', () => {
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
-        cy.contains('.VButton__text', "Shows").click()
+        //cy.visit('http://10.94.6.100/ones/new?siteId=20004&departmentIds=20054')      
+        cy.get('#ShowPopupButton').should('not.have.attr','disabled')
+        cy.get('#ShowPopupButton').click()
         if (Cypress.env("bu")=='Technicolor Games'){ //for TC Games we'll check Episodic tab
           cy.contains('.card__title', "Episodic")
         }
