@@ -37,7 +37,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       cy.Login()
       cy.viewport(1680, 1050)
     })
-    context("Show full cycle ", ()=>{
+    context("Show create, create positions and Ones, Save and Publish", ()=>{
         it("User can create Show", () => {
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
@@ -336,6 +336,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.log('No approval is required')
         }
       }) 
+    })
+    context("Assign published Ones in DL, Save and Publish", ()=>{
       it('Assign published Ones from Shopping cart and Save', () => {
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
         cy.get('#ShowPopupButton').should('not.have.attr','disabled')
@@ -429,63 +431,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
           }) 
         })
       }) 
-/* 
-
-
-
-
-
-
-
-        cy.contains('.btn__overflow','File').scrollIntoView().click()
-        cy.contains('a','Publish').click()
-        cy.intercept('api/DepartmentOnesNewApi/CheckIsExistArtistsWithOnesOutOfContract').as('grid_list') 
-        cy.get('div>.btn_submit').click() //click to agree to publish
-        cy.wait('@grid_list').then(({response}) => { //wait for Ones check result
-          expect(response.statusCode).to.eq(200)
-          if (response.body.reference.sites.length>0){
-            cy.get('div>.btn_submit').click()
-          }
-          else{
-            cy.intercept('/api/departmentonesnew/checkonespriorities/*').as('grid_list')
-
-          }
-        })
-
-
-
-
-
-
-        cy.get('body').then(($body) => {   
-          if ($body.find('div>.VNotification').length>0){ //check if Ones in a cart pop up
-            cy.get('div>.btn_submit').click()
-            cy.wait('@grid_list').then(({response}) => {
-              expect(response.statusCode).to.eq(200)
-            })
-            cy.intercept('/api/departmentonesnew/checkonespriorities/*').as('grid_list')
-            cy.get('body').then(($body) => {   
-              cy.log($body.find('div>.VNotification').length)
-              if ($body.find('div>.VNotification').length>0){ //check if Add pop up appears
-                cy.get('div>.btn_submit').click()
-                cy.wait('@grid_list').then(({response}) => {
-                  expect(response.statusCode).to.eq(200)
-                })
-                cy.intercept('/api/departmentonesnew/publishdepartmentones').as('grid_list')
-                cy.get('body').then(($body) => {   
-                  cy.log($body.find('div>.VNotification').length)
-                  if ($body.find('div>.VNotification').length>0){ //check if Add pop up appears
-                    cy.get('div>.btn_submit').click()
-                    cy.wait('@grid_list').then(({response}) => {
-                      expect(response.statusCode).to.eq(200)
-                    })
-                  }
-                })
-              }
-            })
-          }
-        })  
-      }) */
+    })
+    context("Check Publosh results, Delete created Ones in Show Ones grid (in progress), Publish and Delete Show", ()=>{
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')

@@ -15,7 +15,7 @@ module.exports = {
     retries:1,
     defaultCommandTimeout: 90000,
     pageLoadTimeout: 100000,
-    //requestTimeout:20000,
+    requestTimeout:80000,
     responseTimeout:80000,
     video:false, 
     // numTestsKeptInMemory: 1,
