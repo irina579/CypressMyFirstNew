@@ -1,7 +1,7 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    const code='I11_7_59'// for debugging
-    //const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    //const code='I11_7_59'// for debugging
+    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
@@ -399,7 +399,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.contains('a','Save').click()
         cy.contains('Save operation completed').should('exist')
       }) 
-      it.only('Publish DL Ones', () => {
+      it('Publish DL Ones', () => {
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
         //cy.visit('http://10.94.6.100/ones/new?siteId=20002&departmentIds=20016')
         let popup_count=0
