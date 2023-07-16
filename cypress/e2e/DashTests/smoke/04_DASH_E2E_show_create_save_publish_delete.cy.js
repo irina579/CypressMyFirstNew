@@ -1,6 +1,6 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    //const code='I11_7_59'// for debugging
+    //const code='I16_7_7'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
@@ -282,13 +282,13 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
             cy.contains('.VButton__text','Add').click()          
         })
         let Ones=0
-        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(1).click()
         if(Cypress.env("EP_approval")){
           cy.contains('.VButton__text','OK').click()  //only for BUs with EP approval=ON
         }      
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
             Ones = n
-            cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(0).click()
+            cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(1).click()
             cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq((Ones-1)-20).click({shiftKey: true,}) //(Ones-1)-20 - this is to selact only half of grid weeks/visible area                  
         })
         cy.contains('.VButton__text','Confirm').click()
