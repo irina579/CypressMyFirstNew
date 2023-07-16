@@ -432,7 +432,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         })
       }) 
     })
-    context("Check Publosh results, Delete created Ones in Show Ones grid (in progress), Publish and Delete Show", ()=>{
+    context("Check Publish results, Delete created Ones in Show Ones grid (in progress), Publish and Delete Show", ()=>{
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')

@@ -233,7 +233,7 @@ describe("DASH smoke tests/Ones",
       //checks if any artist comes from BE
       cy.intercept('/api/departmentonesnew/getdepartmentones').as('grid_list')
       cy.contains("Apply").click()
-      cy.wait('@grid_list').then(({response}) => {
+      cy.wait('@grid_list',{timeout: `${Cypress.env('elem_timeout')}`}).then(({response}) => {
         expect(response.statusCode).to.eq(200)
         let artist_count=response.body.reference.artistPositions.items.length
         let FirstName
