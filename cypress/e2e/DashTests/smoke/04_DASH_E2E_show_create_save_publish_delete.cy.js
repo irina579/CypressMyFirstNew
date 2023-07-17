@@ -1,7 +1,7 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    const code='I8_6_17'// for debugging
-    //const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    //const code='I8_6_17'// for debugging
+    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
@@ -433,7 +433,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       }) 
     })
     context("Check Publish results, Delete created Ones in Show Ones grid (in progress), Publish and Delete Show", ()=>{
-      it.only('Delete created Show', () => {
+      it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
         SelectCreateShowInManageShows()
