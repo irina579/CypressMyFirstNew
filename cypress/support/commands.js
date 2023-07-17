@@ -87,5 +87,16 @@ Cypress.Commands.add('readVariablesFromFile', () => {
     return data;
   });
 });
-
-
+Cypress.Commands.add('ShowPublish', (BU, Discipline, Site, SeniotitySplit) => { 
+  cy.contains('.btn__overflow','File').click()
+  cy.contains('a','Publish').click()
+  cy.contains('.tab-title', BU).click()
+  cy.contains('label', Site).click()
+  cy.get('.VPopup__content .VTab__tab:not([style="display: none;"])').find('label').contains(Discipline).click()
+  cy.contains('.VButton__text','Send').click()
+  if(SeniotitySplit){
+    cy.contains('.header__title', 'Seniority split distribution').should('exist')
+    cy.contains('Note! The Seniority Split rule for the requested Ones has not been observed among the following Disciplines').should('exist')
+    cy.contains('.VButton__text','Confirm').click()
+  }
+})

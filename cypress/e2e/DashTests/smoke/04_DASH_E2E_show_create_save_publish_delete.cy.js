@@ -1,6 +1,6 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    //const code='I8_6_17'// for debugging
+    //const code='I12_7_5'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
@@ -20,7 +20,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       cy.get('.search__wrapper>input').eq(0).type(code)
       cy.contains('a',code).click()
     }
-    const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
+    const normalizeText = (s) => s.replace(/\s/g, '')
     const SelectCreateShowInManageShows=()=>{
       cy.get(".search__input").type(code)
       cy.contains("Apply").click()
@@ -300,16 +300,14 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       it('Show Ones Publish', () => {
         SelectCreatedShow()
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
-        cy.contains('.btn__overflow','File').click()
-        cy.contains('a','Publish').click()
-        cy.contains('.tab-title', 'MPC').click()
-        cy.contains('label', 'London').click()
-        //cy.get('div>.publishPopup__body__tabs-item').eq(3).find('label').contains(Cypress.env('discipline')).click()
-        cy.get('.VPopup__content .VTab__tab:not([style="display: none;"])').find('label').contains(Cypress.env('discipline')).click()
-        cy.contains('.VButton__text','Send').click()
-        cy.contains('.header__title', 'Seniority split distribution').should('exist')
-        cy.contains('Note! The Seniority Split rule for the requested Ones has not been observed among the following Disciplines').should('exist')
-        cy.contains('.VButton__text','Confirm').click()
+        cy.get('.v-select-grouped__toggle').invoke('text').then((text) => {
+          let site_name_long = normalizeText(text)
+          cy.log(site_name_long)
+          const re = /[(]/
+          let site_name=site_name_long.substring(0,site_name_long.search(re)).trim()
+          cy.log('Show Ones, Site trimmed= '+site_name)
+          cy.ShowPublish(Cypress.env('bu'), Cypress.env('discipline'), site_name, true)
+        })       
         if(Cypress.env("EP_approval")){
           cy.contains('.VNotification__title','Publish Request').should('exist')
           cy.contains('.VButton__text','Yes').click()  //only for BUs with EP approval=ON
@@ -433,6 +431,35 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       }) 
     })
     context("Check Publish results, Delete created Ones in Show Ones grid (in progress), Publish and Delete Show", ()=>{
+      it('Delete created Ones in Show Ones and Publish', () => {
+        SelectCreatedShow()
+        cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
+        let Ones=0
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(1).click()
+        if(Cypress.env("EP_approval")){
+          cy.contains('.VButton__text','OK').click()  //only for BUs with EP approval=ON
+        }   
+        cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').its('length').then((n) => {
+          Ones = n
+          cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(1).click()
+          cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq((Ones-1)-20).click({shiftKey: true,}) //(Ones-1)-20 - this is to selact only half of grid weeks/visible area                  
+        })
+        cy.contains('.VButton__text','Remove Ones').click()
+        cy.contains('.VButton__text','Confirm').click()
+        cy.contains('.btn__overflow','File').scrollIntoView().click()
+        cy.contains('a','Save').click()
+        cy.contains('Save operation completed').should('exist')
+        cy.get('.v-select-grouped__toggle').invoke('text').then((text) => {
+          let site_name_long = normalizeText(text)
+          cy.log(site_name_long)
+          const re = /[(]/
+          let site_name=site_name_long.substring(0,site_name_long.search(re)).trim()
+          cy.log('Show Ones, Site trimmed= '+site_name)
+          cy.ShowPublish(Cypress.env('bu'), Cypress.env('discipline'), site_name, false)
+        })    
+        cy.contains('.btn__overflow','Export').click()
+        cy.get('.item_artist.collapsed').should('not.exist')
+      })      
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
