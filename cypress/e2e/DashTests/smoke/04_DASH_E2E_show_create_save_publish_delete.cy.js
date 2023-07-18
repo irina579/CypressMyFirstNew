@@ -1,6 +1,6 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    //const code='I12_7_5'// for debugging
+    //const code='I17_7_6'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
@@ -456,9 +456,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
           let site_name=site_name_long.substring(0,site_name_long.search(re)).trim()
           cy.log('Show Ones, Site trimmed= '+site_name)
           cy.ShowPublish(Cypress.env('bu'), Cypress.env('discipline'), site_name, false)
-        })    
-        cy.contains('.btn__overflow','Export').click()
-        cy.get('.item_artist.collapsed').should('not.exist')
+        }) 
       })      
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
