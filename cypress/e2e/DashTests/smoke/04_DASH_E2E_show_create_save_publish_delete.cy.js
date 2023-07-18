@@ -1,6 +1,6 @@
 describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     //set up show code variable
-    //const code='I12_7_5'// for debugging
+    //const code='I11_7_47'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
@@ -363,8 +363,11 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
               cy.log(artist_count)
               if (artist_count<cart_pos_count){
                 cy.get('.header__shows__seniority').click()
-                cart_pos_count=grid_artist_count  //set cart positions to be assigned=artists in grid
-                cy.log('New_count='+cart_pos_count)
+                cy.get('.item_artist').should('not.have.length',artist_count) //to wait the grid is loaded
+                if (cart_pos_count>grid_artist_count){
+                 cart_pos_count=grid_artist_count  //set cart positions to be assigned=artists in grid
+                 cy.log('New_count='+cart_pos_count)
+                }
               }
               let artist_name
               let artist_name_full=""
@@ -434,6 +437,14 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       it('Delete created Ones in Show Ones and Publish', () => {
         SelectCreatedShow()
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
+/*         //read assigned artist info from file
+        cy.readFile('cypress/fixtures/assigned_artists.json').then((data) => {
+        const {artist_name_full} = data;
+        // Use the stored element texts in assertions
+  
+        cy.contains('.input-group__title','Start Date').next('div').should('have.text', StartDateText); */
+        
+        
         let Ones=0
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(1).click()
         if(Cypress.env("EP_approval")){
