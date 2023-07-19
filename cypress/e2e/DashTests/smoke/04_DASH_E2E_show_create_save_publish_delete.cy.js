@@ -316,6 +316,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         else{           
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
+        cy.contains('Publish operation completed').should('exist')
       })      
       it('Approve Show Ones EP requests', () => {
         if(Cypress.env("EP_approval")){
@@ -468,6 +469,7 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
           cy.log('Show Ones, Site trimmed= '+site_name)
           cy.ShowPublish(Cypress.env('bu'), Cypress.env('discipline'), site_name, false)
         }) 
+        cy.contains('Publish operation completed').should('exist')
       })      
       it('Delete created Show', () => {
         cy.contains('.link__title','Manage Shows').click()
