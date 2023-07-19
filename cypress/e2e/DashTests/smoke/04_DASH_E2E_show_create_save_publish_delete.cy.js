@@ -311,12 +311,13 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         if(Cypress.env("EP_approval")){
           cy.contains('.VNotification__title','Publish Request').should('exist')
           cy.contains('.VButton__text','Yes').click()  //only for BUs with EP approval=ON
+          cy.contains('Publish operation completed').should('exist')
           cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId8')
         }
-        else{           
+        else{     
+        cy.contains('Publish operation completed').should('exist')      
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
-        cy.contains('Publish operation completed').should('exist')
       })      
       it('Approve Show Ones EP requests', () => {
         if(Cypress.env("EP_approval")){
