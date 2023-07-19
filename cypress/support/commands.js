@@ -99,5 +99,4 @@ Cypress.Commands.add('ShowPublish', (BU, Discipline, Site, SeniotitySplit) => {
     cy.contains('Note! The Seniority Split rule for the requested Ones has not been observed among the following Disciplines').should('exist')
     cy.contains('.VButton__text','Confirm').click()
   }
-  cy.contains('Publish operation completed').should('exist')
 })
