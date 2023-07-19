@@ -7,10 +7,20 @@ describe('DASH login', () => {
 
     expect(5).to.be.gte(1)
   }) 
-  it('Test new options', () => {
-    cy.visit('https://belitsoft.com/')
-    cy.scrollTo('bottom')
-    cy.get('#quoteTextarea').focus()  
+  it('Read/write test', () => {
+    // Write the array to a file
+    const dataArray = ["John", "Jane", "Alice", "Bob"];
+    const dataString = dataArray.join(','); // Convert the array to a comma-separated string
+    cy.writeFile('cypress/fixtures/data.txt', dataString);
+    // Later in the test...
+    cy.readFile('cypress/fixtures/data.txt').then((data) => {
+      const dataArrayFromFile = data.split(','); // Split the string into an array using comma as the delimiter
+      // Use the array as needed
+      dataArrayFromFile.forEach((item) => {
+        // Perform checks or assertions on each value in the array
+        cy.log(item);
+      });
+    });
   })
   it('Scroll into view', () => {
      cy.visit('https://belitsoft.com/')

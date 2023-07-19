@@ -372,28 +372,25 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
                 }
               }
               let artist_name
-              let artist_name_full=""
+              const myArray = [];
               for (let i = 0; i < cart_pos_count; i++) {
                 cy.get('.header__shows__items .header__month').first().children('div').eq(1).find('div').first().click()
                 cy.get('.header__shows__items .header__month').last().children('div').eq(1).find('div').first().click({shiftKey: true,})
                 cy.get('.item_artist').eq(i).find('.row__cell').first().click()
                 cy.get('.item__info__name').eq(i).invoke('text').then((text) => {
-                  artist_name = normalizeText(text)
+                  artist_name = text.trim().split('\n')[0].trim()
                   cy.get('body').then(($body) => {   
                     if ($body.find('div.VNotification__title').length>0){ //check if Add pop up appears
                       cy.contains('.VButton__text','Add').click()
                     }
                   })
-                  artist_name_full=artist_name_full+artist_name
+                  myArray.push(artist_name);
                 })
               } 
-              // Write the assigned artist to a file
               cy.then(() => {
-                const data = {
-                  artist_name_full
-                };
-                const jsonData = JSON.stringify(data);
-                cy.writeFile('cypress/fixtures/assigned_artists.json', jsonData);
+              //Write the assigned artist to a file
+              const dataString = myArray.join(','); // Convert the array to a comma-separated string
+              cy.writeFile('cypress/fixtures/assigned_artists.txt', dataString);
               })
             }) 
           })
@@ -435,18 +432,20 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         })
       }) 
     })
-    context("Check Publish results, Delete created Ones in Show Ones grid (in progress), Publish and Delete Show", ()=>{
-      it('Delete created Ones in Show Ones and Publish', () => {
+    context("Check Show Ones artists with assigned Ones, Delete created Ones, Publish and Delete Show", ()=>{
+      it('Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish', () => {
         SelectCreatedShow()
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
-/*         //read assigned artist info from file
-        cy.readFile('cypress/fixtures/assigned_artists.json').then((data) => {
-        const {artist_name_full} = data;
-        // Use the stored element texts in assertions
-  
-        cy.contains('.input-group__title','Start Date').next('div').should('have.text', StartDateText); */
-        
-        
+        cy.get('div.header__discipline-changes__sidebar').eq(1).click()
+        //read assigned artists from file
+        cy.readFile('cypress/fixtures/assigned_artists.txt').then((data) => {
+          const dataArrayFromFile = data.split(','); // Split the string into an array using comma as the delimiter   
+          // Use the array as needed
+          dataArrayFromFile.forEach((item) => {
+            cy.contains('.item__info__name',item).should('exist') //verify assigned artist is visible in grid
+          });
+        });
+        cy.get('div.header__discipline-changes__sidebar').eq(2).click()      
         let Ones=0
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell').eq(1).click()
         if(Cypress.env("EP_approval")){

@@ -2,5 +2,5 @@ node_modules
 cypress/videos
 cypress/screenshots
 cypress/reports
-cypress/fixtures/assigned_artists.json
+cypress/fixtures/assigned_artists.txt
 cypress/fixtures/show_elements.json
