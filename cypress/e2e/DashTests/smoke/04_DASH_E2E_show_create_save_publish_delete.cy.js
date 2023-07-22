@@ -33,12 +33,35 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
+    let test_tasks=['DASHCU-4084','DASHCU-4085','DASHCU-4086','DASHCU-4087','DASHCU-4088','DASHCU-4089','DASHCU-4090','DASHCU-4091']
+    let task_id=''
+    const myObject = JSON.parse(Cypress.env('states'));
+    before(() => {
+      Cypress.session.clearAllSavedSessions()  
+      for (let i=0;i<test_tasks.length;i++){
+        cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
+      }
+    })
     beforeEach(() => {
       cy.Login()
       cy.viewport(1680, 1050)
     })
+    afterEach(function() { 
+      // Check if the test failed
+        cy.log(this.currentTest.state)
+        cy.log(Cypress.currentTest.title)
+        if (this.currentTest.state === 'passed') {
+          cy.SetClickUpParameter((myObject.passed),task_id,Cypress.env('clickup_usage'))       // Mark the ClickUp task as failed
+          cy.log('Test passed',task_id)
+        }
+        else {
+          cy.SetClickUpParameter((myObject.failed),task_id,Cypress.env('clickup_usage'))
+          cy.log('Test failed',task_id)
+        }
+    })
     context("Show create, create positions and Ones, Save and Publish", ()=>{
-        it("User can create Show", () => {
+      it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+        task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
         cy.log("code="+code)   
@@ -268,7 +291,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
           cy.contains('.input-group__title','Secondary Producer').next('div').should('have.text', SecondaryProducerText);
         });
       })  
-      it('Creating Positions & Ones on a new Show and Save', () => {
+      it('Creating Positions & Ones on a new Show and Save', () => { //https://app.clickup.com/t/4534343/DASHCU-4085
+        task_id='DASHCU-4085'
         SelectCreatedShow()
         cy.contains('.item__info__department-name',Cypress.env('discipline')).prev('div').click()
         let N=0
@@ -297,7 +321,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.contains('Save operation completed')
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId1')
       })
-      it('Show Ones Publish', () => {
+      it('Show Ones Publish', () => { //https://app.clickup.com/t/4534343/DASHCU-4086
+        task_id='DASHCU-4086'
         SelectCreatedShow()
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
         cy.get('.v-select-grouped__toggle').invoke('text').then((text) => {
@@ -319,7 +344,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
       })      
-      it('Approve Show Ones EP requests', () => {
+      it('Approve Show Ones EP requests', () => {//https://app.clickup.com/t/4534343/DASHCU-4087
+        task_id='DASHCU-4087'
         if(Cypress.env("EP_approval")){
           cy.contains('.link__title','Notification Center').click()
           cy.url().should('include', '/notification-center/')
@@ -338,7 +364,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       }) 
     })
     context("Assign published Ones in DL, Save and Publish", ()=>{
-      it('Assign published Ones from Shopping cart and Save', () => {
+      it('Assign published Ones from Shopping cart and Save', () => { //https://app.clickup.com/t/4534343/DASHCU-4088
+        task_id='DASHCU-4088'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
         cy.get('#ShowPopupButton').should('not.have.attr','disabled')
         cy.get('#ShowPopupButton').click()
@@ -399,7 +426,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         cy.contains('a','Save').click()
         cy.contains('Save operation completed').should('exist')
       }) 
-      it('Publish DL Ones', () => {
+      it('Publish DL Ones', () => { //https://app.clickup.com/t/4534343/DASHCU-4089
+        task_id='DASHCU-4089'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
         //cy.visit('http://10.94.6.100/ones/new?siteId=20002&departmentIds=20016')
         let popup_count=0
@@ -433,7 +461,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
       }) 
     })
     context("Check Show Ones artists with assigned Ones, Delete created Ones, Publish and Delete Show", ()=>{
-      it('Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish', () => {
+      it('Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish', () => { //https://app.clickup.com/t/4534343/DASHCU-4090
+        task_id='DASHCU-4090'
         SelectCreatedShow()
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
         cy.get('div.header__discipline-changes__sidebar').eq(1).click()
@@ -471,7 +500,8 @@ describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
         }) 
         cy.contains('Publish operation completed').should('exist')
       })      
-      it('Delete created Show', () => {
+      it('Delete created Show', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
+        task_id='DASHCU-4091'
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
         SelectCreateShowInManageShows()
