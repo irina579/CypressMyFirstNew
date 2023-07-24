@@ -1,4 +1,4 @@
-describe("DASH E2E - Show Create/Save/Publish/Delete", () => {
+describe("DASH E2E Publish Cycle", () => {
     //set up show code variable
     //const code='I12_7_5'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
