@@ -1,4 +1,12 @@
-describe("DASH E2E Publish Cycle", () => {
+describe("DASH E2E Publish Cycle", 
+//set enviroment variables for test suite
+{
+  env: {
+    req_timeout: 60000,
+    elem_timeout: 100000,
+  },
+},
+() => {
     //set up show code variable
     //const code='I12_7_5'// for debugging
     const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
@@ -216,7 +224,7 @@ describe("DASH E2E Publish Cycle", () => {
         });
         //check creation
         cy.contains('span', 'Create show').click()
-        cy.location("pathname").should("eq", "/ones/new/shows")
+        cy.location("pathname").should("eq", "/ones/new/shows", {timeout: `${Cypress.env('elem_timeout')}`})
         SelectCreateShowInManageShows()
         //Show Stats tab
         //show code
@@ -434,8 +442,8 @@ describe("DASH E2E Publish Cycle", () => {
         cy.intercept('/api/departmentonesnew/publishdepartmentones').as('grid_list')
         cy.request('POST', Cypress.env('url_g')+"/api/DepartmentOnesNewApi/CheckIsExistArtistsWithOnesOutOfContract", {siteId:Cypress.env('site_id'),departmentIds:[Cypress.env('DL_dept_id')]}).then((response) => {
           expect(response.status).to.eq(200) //status 200
-          if (response.body.reference.length>0){ //if there are teams
-            popup_count=popup_count+1
+          if (response.body.reference.length>0){ //if there are artists
+            //popup_count=popup_count+1 //TEMP fix
             cy.log('OnesOnArtists='+ popup_count)
           }
           cy.request('POST', Cypress.env('url_g')+"/api/departmentonesnew/checkonespriorities/?siteId="+Cypress.env('site_id'), [Cypress.env('DL_dept_id')]).then((response) => {

@@ -35,7 +35,7 @@ env: {
 
     login_g: 'global',
     password_g: 'global',
-    IDL_dept: 'Production Management',
+    IDL_dept: 'Studio Operations',
     DL_dept: 'Assets',
     discipline: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
@@ -44,7 +44,7 @@ env: {
     bu: 'MPC',
     url_g: 'http://10.94.6.100', 
     site_id: 20002, //London
-    IDL_dept_id: 20032, //Production Management
+    IDL_dept_id: 20063, //Studio Operations
     DL_dept_id: 20008, //Assets
     EP_approval: true,
     

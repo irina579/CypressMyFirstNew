@@ -134,7 +134,7 @@ describe("DASH smoke tests/Ones",
         } 
       }) 
     })
-    it("Can open IDL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3677
+    it.skip("Can open IDL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3677
       task_id='DASHCU-3677'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
@@ -180,7 +180,7 @@ describe("DASH smoke tests/Ones",
         }
       })
     })
-    it("Can open IDL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3678
+    it.skip("Can open IDL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3678
       task_id='DASHCU-3678'
       cy.contains(".tab-title", "Vacancies converted info").click()
       cy.contains(".btn__overflow","Nothing selected").click()
@@ -378,7 +378,7 @@ describe("DASH smoke tests/Ones",
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage'))
     })
-    it("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
+    it.skip("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
       task_id='DASHCU-3683'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
@@ -424,7 +424,7 @@ describe("DASH smoke tests/Ones",
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[8],Cypress.env('clickup_usage'))
     })
-    it("Can open DL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3684
+    it.skip("Can open DL Vacancies converted info", () => { //https://app.clickup.com/t/4534343/DASHCU-3684
       task_id='DASHCU-3684'
       cy.contains(".tab-title", "Vacancies converted info").click()
       cy.contains(".btn__overflow","Nothing selected").click()

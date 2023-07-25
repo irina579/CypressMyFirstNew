@@ -245,6 +245,7 @@ describe("DASH smoke tests/Admin",
   })
   context("Settings", ()=>{
     beforeEach(() => {
+      cy.viewport(1680, 1050)
       cy.contains('.link__title','Settings').scrollIntoView().click()
       cy.url().should('include', '/settings')
     }) 
@@ -276,7 +277,7 @@ describe("DASH smoke tests/Admin",
             cy.log('Site is not generalist')
             let depts_selected=$site.find('.item__departments').text()
             cy.log(depts_selected)
-            cy.get("li>.ui-checkbox").last().scrollIntoView().click() //change the state of the last checkbox
+            cy.get("li>.ui-checkbox").last().find('label').scrollIntoView().click() //change the state of the last checkbox
             cy.get('div>.item__departments').eq(random_site_order).should('not.have.text',depts_selected) //the text is changed
             cy.get('div>.VComboSearch__toggle').type(Cypress.env('DL_dept')) //search for DL dept
             cy.get("li>.ui-checkbox").last().should('include.text',Cypress.env('DL_dept'))
