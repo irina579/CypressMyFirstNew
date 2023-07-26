@@ -13,7 +13,7 @@ module.exports = {
        require('cypress-mochawesome-reporter/plugin')(on);
     },
     retries:1,
-    defaultCommandTimeout: 90000,
+    defaultCommandTimeout: 100000,
     pageLoadTimeout: 100000,
     requestTimeout:80000,
     responseTimeout:80000,

@@ -224,7 +224,7 @@ describe("DASH E2E Publish Cycle",
         });
         //check creation
         cy.contains('span', 'Create show').click()
-        cy.location("pathname").should("eq", "/ones/new/shows", {timeout: `${Cypress.env('elem_timeout')}`})
+        cy.location("pathname").should("eq", "/ones/new/shows")
         SelectCreateShowInManageShows()
         //Show Stats tab
         //show code
@@ -443,7 +443,7 @@ describe("DASH E2E Publish Cycle",
         cy.request('POST', Cypress.env('url_g')+"/api/DepartmentOnesNewApi/CheckIsExistArtistsWithOnesOutOfContract", {siteId:Cypress.env('site_id'),departmentIds:[Cypress.env('DL_dept_id')]}).then((response) => {
           expect(response.status).to.eq(200) //status 200
           if (response.body.reference.length>0){ //if there are artists
-            //popup_count=popup_count+1 //TEMP fix
+            popup_count=popup_count+1
             cy.log('OnesOnArtists='+ popup_count)
           }
           cy.request('POST', Cypress.env('url_g')+"/api/departmentonesnew/checkonespriorities/?siteId="+Cypress.env('site_id'), [Cypress.env('DL_dept_id')]).then((response) => {
