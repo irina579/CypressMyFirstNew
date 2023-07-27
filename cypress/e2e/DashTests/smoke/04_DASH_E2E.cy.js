@@ -68,7 +68,7 @@ describe("DASH E2E Publish Cycle",
         }
     })
     context("Show create, create positions and Ones, Save and Publish", ()=>{
-      it.only("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
