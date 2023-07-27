@@ -9,7 +9,10 @@ describe("DASH E2E Publish Cycle",
 () => {
     //set up show code variable
     //const code='I12_7_5'// for debugging
-    const code='I'+new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+new Date().getUTCMinutes()
+    function getRandomInt(max) {
+      return Math.floor(Math.random() * max);
+    }
+    const code=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
