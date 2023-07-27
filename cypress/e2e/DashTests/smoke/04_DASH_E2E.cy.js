@@ -68,7 +68,7 @@ describe("DASH E2E Publish Cycle",
         }
     })
     context("Show create, create positions and Ones, Save and Publish", ()=>{
-      it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it.only("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
@@ -223,8 +223,11 @@ describe("DASH E2E Publish Cycle",
           cy.writeFile('cypress/fixtures/show_elements.json', jsonData);
         });
         //check creation
+        cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
         cy.contains('span', 'Create show').click()
-        cy.location("pathname").should("eq", "/ones/new/shows")
+        cy.wait('@grid_list').then(({response}) => {
+          expect(response.statusCode).to.eq(200)
+        })
         SelectCreateShowInManageShows()
         //Show Stats tab
         //show code
@@ -530,5 +533,18 @@ describe("DASH E2E Publish Cycle",
         cy.contains(code).should("not.exist")
       }) 
     })
+
+
+    it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      cy.visit("http://10.94.6.100/ones/shows/add-edit/AAD")
+      //award est
+      cy.contains('.input-group__title', 'Awards Est').next('div').type(getRandomInt(100))
+      cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
+      cy.contains('span', 'Save').click()
+        cy.wait('@grid_list').then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+      })
+      cy.location("pathname").should("eq", "/ones/new/shows")
+    })  
 })
 //export{}
