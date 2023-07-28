@@ -73,7 +73,7 @@ describe("DASH E2E Publish Cycle",
         }
     })
     context("Show create, create positions and Ones, Save and Publish", ()=>{
-      it.only("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
@@ -532,7 +532,7 @@ describe("DASH E2E Publish Cycle",
         }) 
         cy.contains('Publish operation completed').should('exist')
       })      
-      it.only('Delete created Show', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
+      it('Delete created Show', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
         task_id='DASHCU-4091'
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
