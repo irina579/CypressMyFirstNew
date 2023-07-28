@@ -12,7 +12,7 @@ describe("DASH E2E Publish Cycle",
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
-    const code=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
+    let code=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
@@ -32,13 +32,13 @@ describe("DASH E2E Publish Cycle",
       cy.contains('a',code).click()
     }
     const normalizeText = (s) => s.replace(/\s/g, '')
-    const SelectCreateShowInManageShows=()=>{
+    const SelectCreateShowInManageShows=(code)=>{
       cy.get(".search__input").type(code)
       cy.contains("Apply").click()
       cy.contains('.counters__item', 'Delivered').should('include.text','0') //to wait until page loads
       cy.contains(code).should("exist")
       let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
-      cy.get('#'+locator_id+'>.actions__item').eq(0).click()
+      cy.get('[style="transform: translateY(0px);"]').find('#'+locator_id+'>.actions__item').eq(0).click()
       cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code)
     }
     function getRandomInt(max) {
@@ -52,6 +52,8 @@ describe("DASH E2E Publish Cycle",
       for (let i=0;i<test_tasks.length;i++){
         cy.SetClickUpParameter((myObject.onhold),test_tasks[i],Cypress.env('clickup_usage'))
       }
+      // Define your global variable for ShowCode
+      Cypress.env("code", code);
     })
     beforeEach(() => {
       cy.Login()
@@ -71,16 +73,11 @@ describe("DASH E2E Publish Cycle",
         }
     })
     context("Show create, create positions and Ones, Save and Publish", ()=>{
-      it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it.only("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
-        cy.log("code="+code)   
         //Show Stats tab
-        //show code
-        cy.contains('.input-group__title', 'Code').next('div').type(code)
-        //show name
-        cy.contains('.input-group__title', 'Name').next('div').type(code)
         //show type category
         cy.contains('.input-group__title', 'Type').next('div').click()
         cy.contains('a','Awarded').click()
@@ -225,18 +222,39 @@ describe("DASH E2E Publish Cycle",
           const jsonData = JSON.stringify(data);
           cy.writeFile('cypress/fixtures/show_elements.json', jsonData);
         });
-        //check creation
-        cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
-        cy.contains('span', 'Create show').click()
+        //back to Show Stats
+        cy.contains('.tabTitle', 'Show Stats').click() 
+        //this is to locate duplicate Show Validation as late as possible to decrease wait() block. 
+        //Otherwise the "code" updated variable is not visible for verifications
+        cy.intercept('/api/ManageShowsApi/IsShowCodeAlreadyExist?showCode*').as('grid_list')
+        //show code
+        cy.contains('.input-group__title', 'Code').next('div').type(code)
+        //show name
+        cy.contains('.input-group__title', 'Name').next('div').type(code)
+        //check if code unique    
         cy.wait('@grid_list').then(({response}) => {
           expect(response.statusCode).to.eq(200)
+          if (response.body==true){
+            code=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
+            cy.updateGlobalVar("code",code)
+            cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type(code)
+            cy.contains('.input-group__title', 'Name').next('div').type('{selectall}{del}').type(code)
+          }
+          cy.log(code)
+          cy.screenshot()
+          //check creation
+          cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
+          cy.contains('span', 'Create show').click()
+          cy.wait('@grid_list').then(({response}) => {
+            expect(response.statusCode).to.eq(200)
+          })
+          SelectCreateShowInManageShows(code)
+          //Show Stats tab
+          //show code
+          cy.contains('.input-group__title', 'Code').next('div').should('include.text',code)
+          //show name
+          cy.contains('.input-group__title', 'Name').next('div').should('include.text',code)
         })
-        SelectCreateShowInManageShows()
-        //Show Stats tab
-        //show code
-        cy.contains('.input-group__title', 'Code').next('div').should('include.text',code)
-        //show name
-        cy.contains('.input-group__title', 'Name').next('div').should('include.text',code)
         //show type category
         cy.contains('.input-group__title', 'Type').next('div').should('include.text','Awarded')
         //show status
@@ -307,7 +325,7 @@ describe("DASH E2E Publish Cycle",
       })  
       it('Creating Positions & Ones on a new Show and Save', () => { //https://app.clickup.com/t/4534343/DASHCU-4085
         task_id='DASHCU-4085'
-        SelectCreatedShow()
+        SelectCreatedShow(Cypress.env("code"))
         cy.contains('.item__info__department-name',Cypress.env('discipline')).prev('div').click()
         let N=0
         cy.get('.levels__item>.col-lg-5').its('length').then((n) => {
@@ -337,7 +355,7 @@ describe("DASH E2E Publish Cycle",
       })
       it('Show Ones Publish', () => { //https://app.clickup.com/t/4534343/DASHCU-4086
         task_id='DASHCU-4086'
-        SelectCreatedShow()
+        SelectCreatedShow(Cypress.env("code"))
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
         cy.get('.v-select-grouped__toggle').invoke('text').then((text) => {
           let site_name_long = normalizeText(text)
@@ -364,13 +382,13 @@ describe("DASH E2E Publish Cycle",
           cy.contains('.link__title','Notification Center').click()
           cy.url().should('include', '/notification-center/')
           //cy.get('.select-all.VCheckboxSimple>span').click()
-          cy.get('[placeholder="Search"]').type(code).type('{enter}') //initiate searching of this title on UI
-          cy.get('div>.notification__title').first().should('include.text',code) //verify the search gives result
+          cy.get('[placeholder="Search"]').type(Cypress.env("code")).type('{enter}') //initiate searching of this title on UI
+          cy.get('div>.notification__title').first().should('include.text',Cypress.env("code")) //verify the search gives result
           cy.get('span.vueSlider').click() //show only awaiting approval
           cy.get('.select-all.VCheckboxSimple>span').click()
           cy.contains('.VButton__text', 'Approve').click()
           cy.contains('.VButton__text', 'Yes, Continue').click()
-          cy.contains('div>.notification__title', code).should('not.exist') //verify there are no more pending notifications      
+          cy.contains('div>.notification__title', Cypress.env("code")).should('not.exist') //verify there are no more pending notifications      
         }
         else{           
         cy.log('No approval is required')
@@ -388,7 +406,7 @@ describe("DASH E2E Publish Cycle",
         }
         cy.get('.item_artist').its('length').then((n) => {
           let grid_artist_count=n
-          cy.contains('.show__title',code).parent().find('span').first().click()
+          cy.contains('.show__title',Cypress.env("code")).parent().find('span').first().click()
           cy.contains('.discipline__name',Cypress.env('discipline')).prev('span').click()
           //cy.contains('.discipline__name','Design').prev('span').click() //for debug
           let N=0
@@ -514,11 +532,11 @@ describe("DASH E2E Publish Cycle",
         }) 
         cy.contains('Publish operation completed').should('exist')
       })      
-      it('Delete created Show', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
+      it.only('Delete created Show', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
         task_id='DASHCU-4091'
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
-        SelectCreateShowInManageShows()
+        SelectCreateShowInManageShows(Cypress.env("code"))
         cy.contains('.VButton__text', 'Delete').parent().should("have.attr","disabled")
         cy.contains('.input-group__title', 'Status').next('div').click()
         cy.contains('a','Inactive').click() //Make show Inactive to be able to delete
@@ -526,28 +544,43 @@ describe("DASH E2E Publish Cycle",
         cy.contains('.v-filter__placeholder','Active').scrollIntoView().click()
         cy.contains('label','Inactive').click() //add inactive Shows in filter
         cy.contains('.VButton__text',"Apply").click()
-        SelectCreateShowInManageShows() 
+        SelectCreateShowInManageShows(Cypress.env("code")) 
         cy.contains('.VButton__text', 'Delete').click()
         cy.contains('.VButton__text', 'Yes, Delete').click()
         cy.contains('.v-filter__placeholder','Active').scrollIntoView().click()
         cy.contains('label','Inactive').click() //add inactive Shows in filter
-        cy.get(".search__input").type(code)
+        cy.get(".search__input").type(Cypress.env("code"))
         cy.contains('.VButton__text',"Apply").click()
-        cy.contains(code).should("not.exist")
+        cy.contains(Cypress.env("code")).should("not.exist")
       }) 
     })
 
 
     it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
-      cy.visit("http://10.94.6.100/ones/shows/add-edit/AAD")
-      //award est
-      cy.contains('.input-group__title', 'Awards Est').next('div').type(getRandomInt(100))
+      cy.visit("http://10.94.6.100/ones/shows/add-edit/27_7_36")   
+      cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type(code)
+      cy.contains('.input-group__title', 'Name').next('div').type('{selectall}{del}').type(code)
+      cy.contains('.toast-message')
+/*       //award est
+      //cy.contains('.input-group__title', 'Awards Est').next('div').type(getRandomInt(100))
       cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
       cy.contains('span', 'Save').click()
         cy.wait('@grid_list').then(({response}) => {
         expect(response.statusCode).to.eq(200)
       })
-      cy.location("pathname").should("eq", "/ones/new/shows")
+      cy.location("pathname").should("eq", "/ones/new/shows") */
+      // let code1='SLV'
+      // cy.get(".search__input").type(code1)
+      // cy.contains("Apply").click()
+      // cy.contains('.counters__item', 'Delivered').should('include.text','0') //to wait until page loads
+      // cy.contains(code1).should("exist")
+      // let locator_id='training-courses-manage-shows-'+code1.toLowerCase()+'-actions'
+      // //cy.get('#'+locator_id+'>.actions__item').eq(0).click()
+      // cy.get('[style="transform: translateY(0px);"]').find('#'+locator_id+'>.actions__item').eq(0).click()
+      // //cy.get('[style="transform: translateY(0px);"]'.'#'+locator_id+'>.actions__item').find('#'+locator_id+'>.actions__item').eq(0).click()
+      // cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code1)
+
+
     })  
 })
 //export{}
