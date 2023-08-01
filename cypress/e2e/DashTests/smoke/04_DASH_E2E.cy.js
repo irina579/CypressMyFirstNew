@@ -433,8 +433,20 @@ describe("DASH E2E Publish Cycle",
               let artist_name
               const myArray = [];
               for (let i = 0; i < cart_pos_count; i++) {
-                cy.get('.header__shows__items .header__month').first().children('div').eq(1).find('div').first().click()
-                cy.get('.header__shows__items .header__month').last().children('div').eq(1).find('div').first().click({shiftKey: true,})
+              // Click the 1-st cell in tray
+                cy.get('[class*="cart-cell"]').filter((index, element) => {
+                  return !Cypress.$(element).parents().eq(1).is('[style="display: none;"]');
+                })
+                .then((filteredElements) => {
+                  cy.wrap(filteredElements).eq(1).click();
+                })
+                // Click the last cell in tray
+                cy.get('[class*="cart-cell"]').filter((index, element) => {
+                  return !Cypress.$(element).parents().eq(1).is('[style="display: none;"]');
+                })
+                .then((filteredElements) => {
+                  cy.wrap(filteredElements).last().click({shiftKey: true,});
+                })
                 cy.get('.item_artist').eq(i).find('.row__cell').first().click()
                 cy.get('.item__info__name').eq(i).invoke('text').then((text) => {
                   artist_name = text.trim().split('\n')[0].trim()
