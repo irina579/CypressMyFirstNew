@@ -73,7 +73,7 @@ describe("E2E/Publish Cycle",
         }
     })
     context("Producer", ()=>{ //Show create, create positions and Ones, Save and Publish
-      it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it("Show creation", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
@@ -354,7 +354,7 @@ describe("E2E/Publish Cycle",
         cy.contains('Save operation completed')
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId1')
       })
-      it('Show Ones Publish', () => { //https://app.clickup.com/t/4534343/DASHCU-4086
+      it('Publishing', () => { //https://app.clickup.com/t/4534343/DASHCU-4086
         task_id='DASHCU-4086'
         SelectCreatedShow(Cypress.env("code"))
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
@@ -377,7 +377,7 @@ describe("E2E/Publish Cycle",
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
       })      
-      it('EP Ones approvals', () => {//https://app.clickup.com/t/4534343/DASHCU-4087
+      it('EP approval', () => {//https://app.clickup.com/t/4534343/DASHCU-4087
         task_id='DASHCU-4087'
         if(Cypress.env("EP_approval")){
           cy.contains('.link__title','Notification Center').click()
@@ -471,7 +471,7 @@ describe("E2E/Publish Cycle",
         cy.contains('a','Save').click()
         cy.contains('Save operation completed').should('exist')
       }) 
-      it('Publish DL Ones', () => { //https://app.clickup.com/t/4534343/DASHCU-4089
+      it('Publishing', () => { //https://app.clickup.com/t/4534343/DASHCU-4089
         task_id='DASHCU-4089'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
         //cy.visit('http://10.94.6.100/ones/new?siteId=20002&departmentIds=20016')
@@ -505,8 +505,8 @@ describe("E2E/Publish Cycle",
         })
       }) 
     })
-    context("Show check, clearing", ()=>{//Check Show Ones artists with assigned Ones, Delete created Ones, Publish and Delete Show
-      it('Check ass. artists, delete Ones', () => {//Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish
+    context("Show checking, clearing", ()=>{//Check Show Ones artists with assigned Ones, Delete created Ones, Publish and Delete Show
+      it('Artists checking, Ones deleting', () => {//Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish
          //https://app.clickup.com/t/4534343/DASHCU-4090
         task_id='DASHCU-4090'
         SelectCreatedShow()
@@ -546,7 +546,7 @@ describe("E2E/Publish Cycle",
         }) 
         cy.contains('Publish operation completed').should('exist')
       })      
-      it('Delete created Show', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
+      it('Show deleting', () => { //https://app.clickup.com/t/4534343/DASHCU-4091
         task_id='DASHCU-4091'
         cy.contains('.link__title','Manage Shows').click()
         cy.url().should('include', '/ones/new/shows')
