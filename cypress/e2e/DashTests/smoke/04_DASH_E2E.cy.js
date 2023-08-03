@@ -1,4 +1,4 @@
-describe("DASH E2E Publish Cycle", 
+describe("Publish Cycle", 
 //set enviroment variables for test suite
 {
   env: {
@@ -72,7 +72,7 @@ describe("DASH E2E Publish Cycle",
           cy.log('Test failed',task_id)
         }
     })
-    context("Show create, create positions and Ones, Save and Publish", ()=>{
+    context("Producer", ()=>{ //Show create, create positions and Ones, Save and Publish
       it("Create new Show", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
@@ -323,7 +323,8 @@ describe("DASH E2E Publish Cycle",
           cy.contains('.input-group__title','Secondary Producer').next('div').should('have.text', SecondaryProducerText);
         });
       })  
-      it('Creating Positions & Ones on a new Show and Save', () => { //https://app.clickup.com/t/4534343/DASHCU-4085
+      it('Ones creation', () => { //Creating Positions & Ones on a new Show and Save
+        //https://app.clickup.com/t/4534343/DASHCU-4085
         task_id='DASHCU-4085'
         SelectCreatedShow(Cypress.env("code"))
         cy.contains('.item__info__department-name',Cypress.env('discipline')).prev('div').click()
@@ -376,7 +377,7 @@ describe("DASH E2E Publish Cycle",
         cy.get('.item_artist.collapsed>.item__months>.item__month>.row__cell>div').eq(0).should('have.class', 'statusId2')
         }
       })      
-      it('Approve Show Ones EP requests', () => {//https://app.clickup.com/t/4534343/DASHCU-4087
+      it('EP Ones approvals', () => {//https://app.clickup.com/t/4534343/DASHCU-4087
         task_id='DASHCU-4087'
         if(Cypress.env("EP_approval")){
           cy.contains('.link__title','Notification Center').click()
@@ -395,8 +396,8 @@ describe("DASH E2E Publish Cycle",
         }
       }) 
     })
-    context("Assign published Ones in DL, Save and Publish", ()=>{
-      it('Assign published Ones from Shopping cart and Save', () => { //https://app.clickup.com/t/4534343/DASHCU-4088
+    context("Manager", ()=>{//Assign published Ones in DL, Save and Publish
+      it('Ones assignment', () => { //https://app.clickup.com/t/4534343/DASHCU-4088
         task_id='DASHCU-4088'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
         cy.get('#ShowPopupButton').should('not.have.attr','disabled')
@@ -504,8 +505,9 @@ describe("DASH E2E Publish Cycle",
         })
       }) 
     })
-    context("Check Show Ones artists with assigned Ones, Delete created Ones, Publish and Delete Show", ()=>{
-      it('Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish', () => { //https://app.clickup.com/t/4534343/DASHCU-4090
+    context("Show check, clearing", ()=>{//Check Show Ones artists with assigned Ones, Delete created Ones, Publish and Delete Show
+      it('Check ass. artists, delete Ones', () => {//Check Show Ones artists with assigned Ones, Delete created Ones in Show Ones and Publish
+         //https://app.clickup.com/t/4534343/DASHCU-4090
         task_id='DASHCU-4090'
         SelectCreatedShow()
         cy.contains('.item__info__department-name', Cypress.env('discipline')).should('exist')
