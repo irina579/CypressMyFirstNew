@@ -1,4 +1,4 @@
-describe("Publish Cycle", 
+describe("E2E/Publish Cycle", 
 //set enviroment variables for test suite
 {
   env: {

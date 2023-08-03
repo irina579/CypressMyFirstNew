@@ -1,4 +1,4 @@
-describe("DASH smoke tests/Managements", 
+describe("Smoke/Managements", 
 //set enviroment variables for test suite
 {
   env: {
