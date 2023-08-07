@@ -122,19 +122,19 @@ describe("E2E/Publish Cycle",
         cy.contains('button', 'Confirm').click()
         //seniority split
         //checks if regular BU or BU with specific seniorities
-        cy.get("div>.section__groups_seniority-split .input-group__title_required").eq(0).then(($text1)=>{
-        if ($text1.text().trim()=='Artist %'){ //regular BU
-          cy.contains('.input-group__title', 'Artist %').next('div').type(10)
-          cy.contains('.input-group__title', 'Key Artist %').next('div').type(20)
-          cy.contains('.input-group__title', 'Lead %').next('div').type(30)
-          cy.contains('.input-group__title', 'Supervisor %').next('div').type(40)
-        }
-        else if ($text1.text().trim()=='Lead %') { //with spesific seniorities
-          cy.contains('.input-group__title', 'Lead %').next('div').type(10)
-          cy.contains('.input-group__title', 'Senior %').next('div').type(20)
-          cy.contains('.input-group__title', 'Mid %').next('div').type(30)
-          cy.contains('.input-group__title', 'Junior %').next('div').type(40)
-        }
+        cy.get("div>.section__groups_seniority-split").then(($text1)=>{
+          if ($text1.find('.input-group__title_required','Key Artist').length>0){       //regular seniorities
+            cy.contains('.input-group__title', 'Supervisor %').next('div').type(40)
+            cy.contains('.input-group__title', 'Lead %').next('div').type(30)
+            cy.contains('.input-group__title', 'Key Artist %').next('div').type(20)
+            cy.contains('.input-group__title:not(:contains("Key Artist"))', 'Artist').next('div').type(10)
+          }
+          else if ($text1.find('.input-group__title_required','Senior').length>0){ //with specific seniorities
+            cy.contains('.input-group__title', 'Lead %').next('div').type(10)
+            cy.contains('.input-group__title', 'Senior %').next('div').type(20)
+            cy.contains('.input-group__title', 'Mid %').next('div').type(30)
+            cy.contains('.input-group__title', 'Junior %').next('div').type(40)
+          }
         })  
         //DL %
         cy.contains('.input-group__title', 'DL %').next('div').click().type('{backspace}').type('{backspace}').type(99)
@@ -272,19 +272,19 @@ describe("E2E/Publish Cycle",
         cy.contains('.input-group__title', 'Amount of Shots').next('div').should('include.text','20')
         //seniority split
         //checks if regular BU or BU with specific seniorities
-        cy.get("div>.section__groups_seniority-split .input-group__title_required").eq(0).then(($text1)=>{
-        if ($text1.text().trim()=='Artist %'){ //regular BU
-          cy.contains('.input-group__title', 'Artist %').next('div').should('include.text','10')
-          cy.contains('.input-group__title', 'Key Artist %').next('div').should('include.text','20')
-          cy.contains('.input-group__title', 'Lead %').next('div').should('include.text','30')
-          cy.contains('.input-group__title', 'Supervisor %').next('div').should('include.text','40')
-        }
-        else if ($text1.text().trim()=='Lead %') { //with spesific seniorities
+        cy.get("div>.section__groups_seniority-split").then(($text1)=>{
+          if ($text1.find('.input-group__title_required','Key Artist').length>0){ //regular BU
+            cy.contains('.input-group__title', 'Supervisor %').next('div').should('include.text','40')
+            cy.contains('.input-group__title', 'Lead %').next('div').should('include.text','30')
+            cy.contains('.input-group__title', 'Key Artist %').next('div').should('include.text','20')         
+            cy.contains('.input-group__title:not(:contains("Key Artist"))', 'Artist').next('div').should('include.text','10')  
+          }
+         else if ($text1.find('.input-group__title_required','Senior').length>0){//with specific seniorities
           cy.contains('.input-group__title', 'Lead %').next('div').should('include.text','10')
           cy.contains('.input-group__title', 'Senior %').next('div').should('include.text','20')
           cy.contains('.input-group__title', 'Mid %').next('div').should('include.text','30')
           cy.contains('.input-group__title', 'Junior %').next('div').should('include.text','40')
-        }
+          }
         })  
         //DL %
         cy.contains('.input-group__title', 'DL %').next('div').should('include.text','99')
