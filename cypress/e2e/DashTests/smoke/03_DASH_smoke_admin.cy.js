@@ -321,7 +321,7 @@ describe("Smoke/Admin",
         }
         cy.contains('label','Select All').click()
         cy.log(default_count)
-        if(default_count==6) {//all days are publish days  
+        if(default_count==7) {//all days are publish days  
          cy.get('[placeholder="Select days"]').should('exist')}
         else{
          cy.get('[placeholder="Select days"]').should('not.exist')

@@ -425,6 +425,7 @@ describe("E2E/Publish Cycle",
               cy.log(artist_count)
               if (artist_count<cart_pos_count){
                 cy.get('.header__shows__seniority').click()
+                cy.get('.header__shows__discipline').click()
                 cy.get('.item_artist').should('not.have.length',artist_count) //to wait the grid is loaded
                 if (cart_pos_count>grid_artist_count){
                  cart_pos_count=grid_artist_count  //set cart positions to be assigned=artists in grid
