@@ -201,7 +201,8 @@ describe("E2E/Publish Cycle",
             cy.log("length="+N)
             for (let i = 0; i < N; i++) {
               cy.get('.input-group__input_date-picker').eq(i).click()
-              cy.get('.mx-date-row>.cell').not('.not-current-month').not('.disabled').eq(0).click()
+              //cy.get('.mx-date-row>.cell').not('.not-current-month').not('.disabled').eq(0).click()
+              cy.get('.mx-date-row>.cell').not('.disabled').eq(0).click()
               cy.contains("Confirm").click()
             }
         })
