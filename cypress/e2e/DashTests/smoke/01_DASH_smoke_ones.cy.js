@@ -555,7 +555,7 @@ describe("Smoke/Ones",
               cy.contains('div','Scheduled Q').should('exist')
               cy.contains('div','Show Ones').should('exist')
               cy.contains('.toggle__text','Select Site').click()
-              cy.get('div>.VCheckboxSimple').first().click()
+              cy.get('div>.VCheckboxSimple').first().find('span').click()
               cy.get('div>.VCheckboxSimple').first().find('span').then(($text) => {
                 let site=$text.text()
                 cy.get('div>.p-10').first().should('include.text',site.trim())

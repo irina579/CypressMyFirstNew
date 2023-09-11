@@ -251,7 +251,7 @@ describe("Smoke/Managements",
       cy.contains('.section__block_title','Locations').should('exist') //etc.
       //primary location
       cy.contains("Primary").next(".input-group__input").should("exist").click()
-      cy.xpath("//a[contains(text(), 'London')]").eq(0).click()
+      cy.get('a:contains("London"):not(:contains("London (CEN)"))').first().click()//this is to exclude site of spesific Central BU with no rates
       //secondary location
       cy.contains("Secondary").next(".input-group__input").should("exist").click()
       cy.get('ul').find('label').eq(0).click()
