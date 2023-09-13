@@ -9,7 +9,7 @@
     "mysql": "^2.18.1"
   },
   "scripts": {
-    "stage_enviroment": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke --record --key 90e0b677-b552-4050-b5fd-7236691b801c" ,
+    "stage_enviroment": "cypress run --browser firefox --spec cypress/e2e/DashTests/smoke --record --key 90e0b677-b552-4050-b5fd-7236691b801c" ,
     "stage_enviroment_105_port": "cypress run --browser chrome --env url_g=http://10.94.6.100:105 --spec cypress/e2e/DashTests/smoke",
     "future_production_enviroment": "cypress run --browser chrome --env url_g=http://10.94.6.100:250 --spec cypress/e2e/DashTests/smoke",
     "local_production_enviroment": "cypress run --browser chrome --env url_g=http://10.94.6.100:200 --spec cypress/e2e/DashTests/smoke",
