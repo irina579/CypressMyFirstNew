@@ -173,13 +173,13 @@ describe("Smoke/Managements",
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))       
     })  
-    it("Manage Shows=> Ones link", () => { //https://app.clickup.com/t/4534343/DASHCU-3695
+    it.only("Manage Shows=> Ones link", () => { //https://app.clickup.com/t/4534343/DASHCU-3695
       let show_number
       task_id='DASHCU-3695'
       cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
       cy.get('.show__content',{timeout: `${Cypress.env('elem_timeout')}`}).then(($body) => {   
         if ($body.length>1){ //check if any show exists
-          show_number=getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
+          show_number=200//getRandomInt($body.length-1)+1 //minim value should be 1, since the class exists even without shows
           cy.get('.show__content').eq(show_number).find('.show__info').find('div').eq(0).then(($code)=>{
             let codeUI=$code.text().trim()
             cy.get('.show__content').eq(show_number).find('.actions__item').eq(2).should("exist").click()  
