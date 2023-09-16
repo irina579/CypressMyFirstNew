@@ -173,7 +173,7 @@ describe("Smoke/Managements",
       })
       cy.SetClickUpParameter((myObject.passed),test_tasks[3],Cypress.env('clickup_usage'))       
     })  
-    it.only("Manage Shows=> Ones link", () => { //https://app.clickup.com/t/4534343/DASHCU-3695
+    it("Manage Shows=> Ones link", () => { //https://app.clickup.com/t/4534343/DASHCU-3695
       let show_number
       task_id='DASHCU-3695'
       cy.contains('.actions__item','Ones').eq(0).should("exist") //waits the grid is loaded
