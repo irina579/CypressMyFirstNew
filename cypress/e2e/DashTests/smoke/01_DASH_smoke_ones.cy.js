@@ -27,7 +27,7 @@ describe("Smoke/Ones",
     }
     return result;
   } 
-  let test_tasks=['DASHCU-3675','DASHCU-3676','DASHCU-3677','DASHCU-3678','DASHCU-3679','DASHCU-3680','DASHCU-3681','DASHCU-3682','DASHCU-3683','DASHCU-3684','DASHCU-3685','DASHCU-3686','DASHCU-3687']
+  let test_tasks=['DASHCU-3675','DASHCU-3676','DASHCU-3679','DASHCU-3680','DASHCU-3681','DASHCU-3682','DASHCU-3685','DASHCU-3686','DASHCU-3687']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
