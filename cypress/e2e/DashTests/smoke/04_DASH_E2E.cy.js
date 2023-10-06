@@ -570,6 +570,74 @@ describe("E2E/Publish Cycle",
         cy.contains(Cypress.env("code")).should("not.exist")
       }) 
     })
+    context("Positions management", ()=>{//Create/Edit/Delete positions
+      it.only('Create position', () => { //https://app.clickup.com/t/4534343/DASHCU-4088 ???
+        //task_id='DASHCU-4088' ???
+        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
+        cy.get('[data-content="Add positions"]').click()
+        cy.url().should('include', '/addnewpositions')
+        cy.contains('.item__label','Type').next('.item__input').click()
+        const arr = ['Outsource', 'Overhead', 'Open Promo', 'Transfer','Rollover']
+        const dl_seniority_reg = ['Supervisor', 'Lead', 'Key Artist', 'Technical Artist','Artist']
+        const dl_seniority_irreg = ['Supervisor', 'Lead', 'Senior', 'Mid','Junior']
+        for (let i = 0; i < arr.length; i++){
+          cy.get('[value="'+arr[i]+'"]').should('exist')
+        }
+        let vacancy_index=getRandomInt(arr.length-1)
+        cy.get('[value="'+arr[vacancy_index]+'"]').click()       
+        //check common fields
+        cy.contains('.item_required>.item__label','Type')
+        cy.contains('.item_required>.item__label','4th level')
+        cy.contains('.item_required>.item__label','5th level')
+        cy.contains('.item_required>.item__label','Quantity').next('.item__input').type('{selectall}{del}').type(2)
+        cy.contains('.item__label','Project Type').parent().should('not.have.class','.item_required')
+        cy.contains('.item__label','Notes').next('.item__input').type(code).parent().should('not.have.class','.item_required')
+        //checks if regular BU or BU with specific seniorities
+        cy.contains('.item_required>.item__label','Seniority Level').next('.item__input').click()
+        cy.contains('.item_required>.item__label','Seniority Level').next('.item__input').find('li').last().then(($text1)=>{
+          if (dl_seniority_reg.includes($text1.text().trim())){ //checking "Artist" seniority in dropdown
+            cy.log('Regular')
+            for (let i = 0; i < dl_seniority_reg.length; i++){
+              cy.contains('li',dl_seniority_reg[i]).should('exist')
+            }
+            cy.contains('li',dl_seniority_reg[getRandomInt(dl_seniority_reg.length-1)]).click()
+          }
+          else if (dl_seniority_irreg.includes($text1.text().trim())){ //checking "Junior" seniority in dropdown
+            cy.log('Irregular')
+            for (let i = 0; i < dl_seniority_irreg.length; i++){
+              cy.contains('li',dl_seniority_irreg[i]).should('exist')
+            }
+            cy.contains('li',dl_seniority_irreg[getRandomInt(dl_seniority_irreg.length-1)]).click()
+          }
+          })  
+        //cheking spesific fields
+        if (arr[vacancy_index]=='Open Promo'||arr[vacancy_index]=='Transfer')  {
+          cy.contains('.item_required>.item__label','DASH Contract Date').next('.item__input').click()
+          cy.get('.today').click()
+          cy.contains('.item_required>.item__label','End Date').next('.item__input').type('31/Dec/2025')
+          cy.contains('.item_required>.item__label','Rate (Annual Salary)').next('.item__input').type(1000)
+        }
+          //for India Sites
+          if (Cypress.env('India_site')){
+            cy.contains('.item_required>.item__label','Work location').next('.item__input').click()
+            cy.contains('span','Bangalore').click()
+          }
+          cy.contains('.VButton__text','Add').click()
+          cy.url().should('include', '/ones/new')
+
+          //check if artist was created
+          cy.get('[data-content="Expand/collapse artist details"]').click()
+          cy.get('[placeholder="Notes"]').type(code)
+          cy.get('.item__info__name ').should('have.length.above', 2)
+          cy.get('.item__info__name ').first().should('include.text',arr[vacancy_index])
+          cy.get('.item__info__name ').first().should('include.text',arr[vacancy_index])
+          if (arr[vacancy_index]=='Open Promo'||arr[vacancy_index]=='Transfer')  {
+            cy.get('.item__filters__filter_notes__notes').first().click()
+            cy.get('[name="date"]').last().click()
+            cy.get('[title="2025-12-31"]').should('have.class','active')
+          }
+      }) 
+    })
 
 
     it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084

@@ -25,7 +25,7 @@ module.exports = {
   },
 env: {
     //clickup parameters
-    clickup_usage: true,
+    clickup_usage: false,
     key:'pk_54525861_I991M9GR8VQ8GHZ3VH8OVEVIFFWJA5AC',
     states:"{\"onhold\": \"5099b5ec-242e-4f57-8cdc-b604e9e19e91\", \"failed\": \"d06a1041-540d-43e9-a833-e29676b4a12d\", \"passed\": \"b254d03a-cb45-40af-82a3-c28d27c0b11f\"}",
     // states:{
@@ -47,6 +47,7 @@ env: {
     IDL_dept_id: 20063, //Studio Operations
     DL_dept_id: 20008, //Assets
     EP_approval: true,
+    India_site:false,
     
     // bu: 'Mikros Animation',
     // url_g: 'http://10.94.6.100:105',
@@ -54,13 +55,15 @@ env: {
     // IDL_dept_id: 21031, //Production Management
     // DL_dept_id: 21007, //Assets 
     // EP_approval: false,
+    // India_site:true,
     
     // bu: 'TCI',
     // url_g: 'http://10.94.6.100:105',
     // site_id: 1002, //TCI
     // IDL_dept_id: 1030, //Production Management
-    // DL_dept_id: 1006 //Assets
-    // EP_approval: true
+    // DL_dept_id: 1006, //Assets
+    // EP_approval: true,
+    // India_site:true,
 
     // bu: 'Technicolor Games',
     // url_g: 'http://10.94.6.100:105',
@@ -68,6 +71,7 @@ env: {
     // IDL_dept_id: 1030, //Production Management
     // DL_dept_id: 11006, //Assets
     // EP_approval: false,
+    //India_site:true,
 
 
 
