@@ -44,7 +44,7 @@ describe("E2E/Publish Cycle",
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
-    let test_tasks=['DASHCU-4084','DASHCU-4085','DASHCU-4086','DASHCU-4087','DASHCU-4088','DASHCU-4089','DASHCU-4090','DASHCU-4091']
+    let test_tasks=['DASHCU-4084','DASHCU-4085','DASHCU-4086','DASHCU-4087','DASHCU-4088','DASHCU-4089','DASHCU-4090','DASHCU-4091','DASHCU-4243','DASHCU-4244','DASHCU-4245']
     let task_id=''
     const myObject = JSON.parse(Cypress.env('states'));
     before(() => {
@@ -571,27 +571,33 @@ describe("E2E/Publish Cycle",
       }) 
     })
     context("Positions management", ()=>{//Create/Edit/Delete positions
-      it.only('Create position', () => { //https://app.clickup.com/t/4534343/DASHCU-4088 ???
-        //task_id='DASHCU-4088' ???
+      const FindArtistByNote = (note_text)=>{
+        cy.get('[data-content="Expand/collapse artist details"]').click()
+        cy.get('[placeholder="Notes"]').type(note_text)
+      }
+      const arr = ['Outsource', 'Overhead', 'Open Promo', 'Transfer','Rollover']
+      const dl_seniority_reg = ['Supervisor', 'Lead', 'Key Artist', 'Technical Artist','Artist']
+      const dl_seniority_irreg = ['Supervisor', 'Lead', 'Senior', 'Mid','Junior']
+      const qty_artists=2
+      let vacancy_index=getRandomInt(arr.length-1)
+      let note=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
+      it('Create position', () => { //https://app.clickup.com/t/4534343/DASHCU-4243
+        //task_id='DASHCU-4243'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
         cy.get('[data-content="Add positions"]').click()
         cy.url().should('include', '/addnewpositions')
         cy.contains('.item__label','Type').next('.item__input').click()
-        const arr = ['Outsource', 'Overhead', 'Open Promo', 'Transfer','Rollover']
-        const dl_seniority_reg = ['Supervisor', 'Lead', 'Key Artist', 'Technical Artist','Artist']
-        const dl_seniority_irreg = ['Supervisor', 'Lead', 'Senior', 'Mid','Junior']
         for (let i = 0; i < arr.length; i++){
           cy.get('[value="'+arr[i]+'"]').should('exist')
         }
-        let vacancy_index=getRandomInt(arr.length-1)
         cy.get('[value="'+arr[vacancy_index]+'"]').click()       
         //check common fields
         cy.contains('.item_required>.item__label','Type')
         cy.contains('.item_required>.item__label','4th level')
         cy.contains('.item_required>.item__label','5th level')
-        cy.contains('.item_required>.item__label','Quantity').next('.item__input').type('{selectall}{del}').type(2)
+        cy.contains('.item_required>.item__label','Quantity').next('.item__input').type('{selectall}{del}').type(qty_artists)
         cy.contains('.item__label','Project Type').parent().should('not.have.class','.item_required')
-        cy.contains('.item__label','Notes').next('.item__input').type(code).parent().should('not.have.class','.item_required')
+        cy.contains('.item__label','Notes').next('.item__input').type(note).parent().should('not.have.class','.item_required')
         //checks if regular BU or BU with specific seniorities
         cy.contains('.item_required>.item__label','Seniority Level').next('.item__input').click()
         cy.contains('.item_required>.item__label','Seniority Level').next('.item__input').find('li').last().then(($text1)=>{
@@ -626,17 +632,63 @@ describe("E2E/Publish Cycle",
           cy.url().should('include', '/ones/new')
 
           //check if artist was created
-          cy.get('[data-content="Expand/collapse artist details"]').click()
-          cy.get('[placeholder="Notes"]').type(code)
+          FindArtistByNote(note)
           cy.get('.item__info__name ').should('have.length.above', 2)
           cy.get('.item__info__name ').first().should('include.text',arr[vacancy_index])
-          cy.get('.item__info__name ').first().should('include.text',arr[vacancy_index])
+          cy.get('.item__info__name ').last().should('include.text',arr[vacancy_index])
           if (arr[vacancy_index]=='Open Promo'||arr[vacancy_index]=='Transfer')  {
             cy.get('.item__filters__filter_notes__notes').first().click()
-            cy.get('[name="date"]').last().click()
+            cy.get('[name="date"]').last().click() //check end date
             cy.get('[title="2025-12-31"]').should('have.class','active')
+            cy.get('[name="date"]').first().click() //check start date
+            cy.get('.cell.today.active').should('exist')
           }
-      }) 
+      })
+      it('Edit position', () => { //https://app.clickup.com/t/4534343/DASHCU-4244
+        //task_id='DASHCU-4244'
+        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
+          //check if artist was created
+          FindArtistByNote(note)
+          cy.get('.item__filters__filter_notes__notes').first().click()
+          cy.get('[name="date"]').last().clear().type('30/Dec/2025')
+          cy.get('[name="date"]').first().click()
+          cy.get('.cell.today').next('.cell').click()
+          cy.get('div>.mx-datepicker-btn-confirm').click()
+          
+          //cy.wait(1000)
+          //cy.get('div>.mx-datepicker-btn-confirm').click()
+          //cy.get('div>.mx-datepicker-btn-confirm').should('not.exist')
+          cy.intercept('POST','/api/departmentones/AddArtistNotes/**').as('grid_list')
+          cy.contains('.VButton__text','Submit').click()
+          cy.wait('@grid_list').then(({response}) => {
+            expect(response.statusCode).to.eq(200)
+          })    
+          cy.get('.btn-apply').click()
+          //check if artist was edited (dates)
+          cy.get('[placeholder="Notes"]').type(note)
+          cy.get('.item__filters__filter_notes__notes').first().click()
+          cy.get('[name="date"]').first().click() //check start date
+          cy.get('.cell.today').next('.cell').should('have.class','active')
+          cy.get('[name="date"]').last().click() //check end date
+          cy.get('[title="2025-12-30"]').should('have.class','active')
+      })  
+      it('Delete position', () => { //https://app.clickup.com/t/4534343/DASHCU-4245
+        //task_id='DASHCU-4245'
+        cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
+        //check if artist was created
+        FindArtistByNote(note)
+        for (let i = 0; i < qty_artists; i++){
+          cy.get('.item__info__contextButton').first().click()
+          cy.get('.VContextMenu__item.delete').click()
+          cy.contains('Are you sure you want to delete the artist?').should('exist')
+          cy.intercept('/api/PositionsApi/DeleteArtist').as('grid_list')
+          cy.contains('.VButton__text','Yes').click()
+          cy.wait('@grid_list').then(({response}) => {
+            expect(response.statusCode).to.eq(200)
+          })
+        }
+        cy.get('.item__info__contextButton').should('have.length',0)
+      })  
     })
 
 
