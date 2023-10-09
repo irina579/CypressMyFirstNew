@@ -1,4 +1,4 @@
-describe("E2E/Publish Cycle", 
+describe("E2E", //Publish cycle, add/edit/delete positions
 //set enviroment variables for test suite
 {
   env: {
