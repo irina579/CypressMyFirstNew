@@ -582,7 +582,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
       let vacancy_index=getRandomInt(arr.length-1)
       let note=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
       it('Create position', () => { //https://app.clickup.com/t/4534343/DASHCU-4243
-        //task_id='DASHCU-4243'
+        task_id='DASHCU-4243'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
         cy.get('[data-content="Add positions"]').click()
         cy.url().should('include', '/addnewpositions')
@@ -645,35 +645,31 @@ describe("E2E", //Publish cycle, add/edit/delete positions
           }
       })
       it('Edit position', () => { //https://app.clickup.com/t/4534343/DASHCU-4244
-        //task_id='DASHCU-4244'
+        task_id='DASHCU-4244'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
-          //check if artist was created
-          FindArtistByNote(note)
-          cy.get('.item__filters__filter_notes__notes').first().click()
-          cy.get('[name="date"]').last().clear().type('30/Dec/2025')
-          cy.get('[name="date"]').first().click()
-          cy.get('.cell.today').next('.cell').click()
-          cy.get('div>.mx-datepicker-btn-confirm').click()
-          
-          //cy.wait(1000)
-          //cy.get('div>.mx-datepicker-btn-confirm').click()
-          //cy.get('div>.mx-datepicker-btn-confirm').should('not.exist')
-          cy.intercept('POST','/api/departmentones/AddArtistNotes/**').as('grid_list')
-          cy.contains('.VButton__text','Submit').click()
-          cy.wait('@grid_list').then(({response}) => {
-            expect(response.statusCode).to.eq(200)
-          })    
-          cy.get('.btn-apply').click()
-          //check if artist was edited (dates)
-          cy.get('[placeholder="Notes"]').type(note)
-          cy.get('.item__filters__filter_notes__notes').first().click()
-          cy.get('[name="date"]').first().click() //check start date
-          cy.get('.cell.today').next('.cell').should('have.class','active')
-          cy.get('[name="date"]').last().click() //check end date
-          cy.get('[title="2025-12-30"]').should('have.class','active')
+        //check if artist was created
+        FindArtistByNote(note)
+        cy.get('.item__filters__filter_notes__notes').first().click()
+        cy.get('[name="date"]').last().clear().type('30/Dec/2025')
+        cy.get('[name="date"]').first().click()
+        cy.get('.cell.today').next('.cell').click()
+        cy.get('div>.mx-datepicker-btn-confirm').click()
+        cy.intercept('POST','/api/departmentones/AddArtistNotes/**').as('grid_list')
+        cy.contains('.VButton__text','Submit').click()
+        cy.wait('@grid_list').then(({response}) => {
+          expect(response.statusCode).to.eq(200)
+        })    
+        cy.get('.btn-apply').click()
+        //check if artist was edited (dates)
+        cy.get('[placeholder="Notes"]').type(note)
+        cy.get('.item__filters__filter_notes__notes').first().click()
+        cy.get('[name="date"]').first().click() //check start date
+        cy.get('.cell.today').next('.cell').should('have.class','active')
+        cy.get('[name="date"]').last().click() //check end date
+        cy.get('[title="2025-12-30"]').should('have.class','active')
       })  
       it('Delete position', () => { //https://app.clickup.com/t/4534343/DASHCU-4245
-        //task_id='DASHCU-4245'
+        task_id='DASHCU-4245'
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
         //check if artist was created
         FindArtistByNote(note)
@@ -690,8 +686,6 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('.item__info__contextButton').should('have.length',0)
       })  
     })
-
-
     it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
       cy.visit("http://10.94.6.100/ones/shows/add-edit/27_7_36")   
       cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type(code)
