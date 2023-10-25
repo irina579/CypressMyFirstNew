@@ -73,6 +73,14 @@ env: {
     // EP_approval: false,
     //India_site:true,
 
+    // bu: 'MPC',
+    // url_g: 'http://10.94.6.100:600', 
+    // site_id: 23007, //Bangalore
+    // IDL_dept_id: 23043, //Studio Operations
+    // DL_dept_id: 23013, //Assets
+    // EP_approval: false,
+    // India_site:true,
+
 
 
     //useless for now
@@ -98,8 +106,8 @@ env: {
 
 };
 
-//not working all below
-const mssql = require('mssql');
+/* //not working all below
+//const mssql = require('mssql');
 //const syncSql=require('sync-sql');
 function queryTestDb(query, config) {
   // creates a new mysql connection using credentials from cypress.json env's
@@ -118,4 +126,4 @@ function queryTestDb(query, config) {
       }
     })
   })
-}
+} */
