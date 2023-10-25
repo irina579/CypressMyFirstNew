@@ -1,5 +1,5 @@
 describe('DASH login', () => {
-   //cy.get('[data-test=new-todo]') This is test
+   //cy.get('[data-test=new-todo]')
    //cy.get('[data-icon="pencil"]')
    // cy.get('#wave-loader').should('have.attr','style','display:none') Loader
   let random_search=Math.random().toString(36).substring(2,4)
