@@ -245,6 +245,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
           cy.screenshot()
           //check creation
           cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
+          cy.contains('span', 'Create show').parent().should('not.have.attr','disabled')
           cy.contains('span', 'Create show').click()
           cy.wait('@grid_list').then(({response}) => {
             expect(response.statusCode).to.eq(200)
