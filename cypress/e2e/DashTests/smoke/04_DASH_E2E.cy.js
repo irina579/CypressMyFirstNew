@@ -73,7 +73,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         }
     })
     context("Producer", ()=>{ //Show create, create positions and Ones, Save and Publish
-      it.only("Show creation", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it("Show creation", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
