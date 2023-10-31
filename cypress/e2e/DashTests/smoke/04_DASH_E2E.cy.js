@@ -73,7 +73,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         }
     })
     context("Producer", ()=>{ //Show create, create positions and Ones, Save and Publish
-      it("Show creation", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      it.only("Show creation", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
         task_id='DASHCU-4084'
         cy.get(".link__title").contains("Create New Show").click()
         cy.location("pathname").should("eq", "/ones/shows/add-edit")
@@ -201,7 +201,12 @@ describe("E2E", //Publish cycle, add/edit/delete positions
             cy.log("length="+N)
             for (let i = 0; i < N; i++) {
               cy.get('.input-group__input_date-picker').eq(i).click()
-              //cy.get('.mx-date-row>.cell').not('.not-current-month').not('.disabled').eq(0).click()
+              cy.get('.mx-date-row').then(($dates) => {
+                cy.log($dates.find('.cell').not('.disabled').length)
+                if ($dates.find('.cell').not('.disabled').length==0){
+                  cy.get('div>.mx-btn-icon-right').click() //in case of absence of available enabled dates in current month
+                }                
+              })
               cy.get('.mx-date-row>.cell').not('.disabled').eq(0).click()
               cy.contains("Confirm").click()
             }
