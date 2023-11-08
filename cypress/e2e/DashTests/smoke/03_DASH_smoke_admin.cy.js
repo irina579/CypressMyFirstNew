@@ -95,7 +95,11 @@ describe("Smoke/Admin",
       cy.get("[value="+Cypress.env("site_id")+"]").click() //select site mentioned in config
       cy.get("[value="+Cypress.env("site_id")+"]").find('a').invoke('text').then((site) => {
         cy.contains('.header__label', 'Group of permissions').next('div').first().click()
-        let random_permission=getRandomInt(10)+1
+        let random_permission=1
+        do {
+          random_permission=getRandomInt(10)+1;
+        } while (random_permission==4); //4-th permission was deleted
+        cy.log(random_permission)
         cy.get("[value="+random_permission+"]").click() //select random permission
         cy.get("[value="+random_permission+"]").find('a').invoke('text').then((permission) => {
           //expect(text.trim()).to.eq('')
