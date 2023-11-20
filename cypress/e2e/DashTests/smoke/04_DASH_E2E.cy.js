@@ -658,7 +658,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('.item__filters__filter_notes__notes').first().click()
         cy.get('[name="date"]').last().clear().type('30/Dec/2025')
         cy.get('[name="date"]').first().click()
-        cy.get('.cell.today').next('.cell').click()
+        cy.get('.mx-date-row>td.cell').not('.disabled').eq(1).click()
         cy.get('div>.mx-datepicker-btn-confirm').click()
         cy.intercept('POST','/api/departmentones/AddArtistNotes/**').as('grid_list')
         cy.contains('.VButton__text','Submit').click()
