@@ -670,7 +670,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('[placeholder="Notes"]').type(note)
         cy.get('.item__filters__filter_notes__notes').first().click()
         cy.get('[name="date"]').first().click() //check start date
-        cy.get('.cell.today').next('.cell').should('have.class','active')
+        cy.get('.mx-date-row>td.cell').not('.disabled').eq(1).should('have.class','active')
         cy.get('[name="date"]').last().click() //check end date
         cy.get('[title="2025-12-30"]').should('have.class','active')
       })  
