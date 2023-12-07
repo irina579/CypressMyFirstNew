@@ -43,9 +43,9 @@ env: {
     //can be changed for test runs
     bu: 'MPC',
     url_g: 'http://10.94.6.100', 
-    site_id: 20002, //London
-    IDL_dept_id: 20063, //Studio Operations
-    DL_dept_id: 20008, //Assets
+    site_id: 23002, //London
+    IDL_dept_id: 23042, //Studio Operations
+    DL_dept_id: 23012, //Assets
     EP_approval: true,
     India_site:false,
     
