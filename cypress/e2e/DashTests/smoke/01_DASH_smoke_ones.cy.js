@@ -546,17 +546,25 @@ describe("Smoke/Ones",
             } 
             cy.get('li.VSelect__search').first().parent().find('li').eq(getRandomInt($Filter.find('li').length-1)+1).click() //select random Show within 10 first
           })  
-          cy.contains('.btn__overflow','Sync').click()
-          cy.contains('a','Sync Show Ones').click()
-          cy.contains('.VButton__text','Cancel').click()
+          cy.get('.Vheader__show .btn__overflow').invoke('text').then((text) => { 
+            cy.log(text)
+            if (text.includes('(')){
+              cy.log('External Show') //checking is the Show is External
+            }
+            else{
+              cy.contains('.btn__overflow','Sync').click() //check Sync button only for internal Shows
+              cy.contains('a','Sync Show Ones').click()
+              cy.contains('.VButton__text','Cancel').click()
+            }
+          });
           cy.get('div>.show-ones-quota__header__settings__disciplines').find('span').first().then(($text) => { 
             cy.log($text.text())  
             if ($text.text().trim()!=='Select discipline'){ 
               cy.contains('div','Scheduled Q').should('exist')
               cy.contains('div','Show Ones').should('exist')
               cy.contains('.toggle__text','Select Site').click()
-              cy.get('div>.VCheckboxSimple').first().find('span').click()
-              cy.get('div>.VCheckboxSimple').first().find('span').then(($text) => {
+              cy.get('div>.VCheckboxSimple').last().find('span').click()
+              cy.get('div>.VCheckboxSimple').last().find('span').then(($text) => {
                 let site=$text.text()
                 cy.get('div>.p-10').first().should('include.text',site.trim())
               })   
