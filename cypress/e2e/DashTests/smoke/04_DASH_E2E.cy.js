@@ -36,9 +36,10 @@ describe("E2E", //Publish cycle, add/edit/delete positions
       cy.get(".search__input").type(code)
       cy.contains("Apply").click()
       cy.contains('.counters__item', 'Delivered').should('include.text','0') //to wait until page loads
+      cy.get('.v-filter.v-filter-theme_default-new').first().click().click() //to wait until page loads
       cy.contains(code).should("exist")
       let locator_id='training-courses-manage-shows-'+code.toLowerCase()+'-actions'
-      cy.get('[style="transform: translateY(0px);"]').find('#'+locator_id+'>.actions__item').eq(0).click()
+      cy.get('[style*="transform: translateY(0px)"]').find('#'+locator_id+'>.actions__item').eq(0).click()
       cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code)
     }
     function getRandomInt(max) {

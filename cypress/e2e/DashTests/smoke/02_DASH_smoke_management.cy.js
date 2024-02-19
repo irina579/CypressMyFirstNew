@@ -123,6 +123,7 @@ describe("Smoke/Managements",
     beforeEach(() => {
       cy.contains('.link__title','Manage Shows').click()
       cy.url().should('include', '/ones/new/shows')
+      cy.get('.v-filter.v-filter-theme_default-new').first().click().click() //to wait until page loads
     }) 
     it("Manage Shows=> Manage link", () => { //https://app.clickup.com/t/4534343/DASHCU-3693
       task_id='DASHCU-3693'
