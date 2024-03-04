@@ -81,7 +81,7 @@ describe("Smoke/Managements",
           cy.log("The show is - "+FirstName)
         }
         cy.log("The number of shows came from BE - "+show_count)
-        cy.contains(".VButton__text","Create New Show").should("exist") //create button exists
+        cy.get('[data-content="Creare new show"]').should('exist')//create button exists
       })
     })
     it("Manage Shows=> Search and filters work", () => { //https://app.clickup.com/t/4534343/DASHCU-3692
@@ -286,7 +286,7 @@ describe("Smoke/Managements",
       task_id='DASHCU-3699'
       cy.contains('.link__title','Manage Shows').click()
       cy.url().should('include', '/ones/new/shows')
-      cy.contains('.VButton__text','Create New Show').click()
+      cy.get('[data-content="Creare new show"]').click()
       cy.url().should('include', '/ones/shows/add-edit')
       cy.contains('.section__block_title','Show Details').should('exist') //check if Show Details block exists
       //check all tabs exist
