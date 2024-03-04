@@ -582,7 +582,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('[data-content="Expand/collapse artist details"]').click()
         cy.get('[placeholder="Notes"]').type(note_text)
       }
-      const arr = ['Outsource', 'Overhead', 'Open Promo', 'Transfer','Rollover']
+      const arr = ['Outsource', 'Overhead', 'Virtual Position', 'Transfer','Rollover']
       const dl_seniority_reg = ['Supervisor', 'Lead', 'Key Artist', 'Technical Artist','Artist']
       const dl_seniority_irreg = ['Supervisor', 'Lead', 'Senior', 'Mid','Junior']
       const qty_artists=2
@@ -624,7 +624,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
           }
           })  
         //cheking spesific fields
-        if (arr[vacancy_index]=='Open Promo'||arr[vacancy_index]=='Transfer')  {
+        if (arr[vacancy_index]=='Virtual Position'||arr[vacancy_index]=='Transfer')  {
           cy.contains('.item_required>.item__label','DASH Contract Date').next('.item__input').click()
           cy.get('.today').click()
           cy.contains('.item_required>.item__label','End Date').next('.item__input').type('31/Dec/2025')
@@ -643,7 +643,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
           cy.get('.item__info__name ').should('have.length.above', 2)
           cy.get('.item__info__name ').first().should('include.text',arr[vacancy_index])
           cy.get('.item__info__name ').last().should('include.text',arr[vacancy_index])
-          if (arr[vacancy_index]=='Open Promo'||arr[vacancy_index]=='Transfer')  {
+          if (arr[vacancy_index]=='Virtual Position'||arr[vacancy_index]=='Transfer')  {
             cy.get('.item__filters__filter_notes__notes').first().click()
             cy.get('[name="date"]').last().click() //check end date
             cy.get('[title="2025-12-31"]').should('have.class','active')
