@@ -32,6 +32,14 @@ describe("E2E", //Publish cycle, add/edit/delete positions
       cy.contains('a',code).click()
     }
     const normalizeText = (s) => s.replace(/\s/g, '')
+    const temp_fill=(disc,i)=>{
+      cy.contains('.cell_column-first', disc).next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i)
+      cy.contains('.cell_column-first', disc).next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-10)
+      //cy.contains('.cell_column-first', disc).next('div').next('div').next('div').type(i+20)
+      cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-20)
+      cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-30)
+      //cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').next('div').next('div').type('{backspace}').type('{backspace}').type('{backspace}').type(i-40)
+    }
     const SelectCreateShowInManageShows=(code)=>{
       cy.get(".search__input").type(code)
       cy.contains("Apply").click()
@@ -124,13 +132,13 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         //seniority split
         //checks if regular BU or BU with specific seniorities
         cy.get("div>.section__groups_seniority-split").then(($text1)=>{
-          if ($text1.find('.input-group__title_required','Key Artist').length>0){       //regular seniorities
+          if ($text1.find('.input-group__title:contains("Key Artist")').length>0){       //regular seniorities
             cy.contains('.input-group__title', 'Supervisor %').next('div').type(40)
             cy.contains('.input-group__title', 'Lead %').next('div').type(30)
             cy.contains('.input-group__title', 'Key Artist %').next('div').type(20)
             cy.contains('.input-group__title:not(:contains("Key Artist"))', 'Artist').next('div').type(10)
           }
-          else if ($text1.find('.input-group__title_required','Senior').length>0){ //with specific seniorities
+          else if ($text1.find('.input-group__title:contains("Senior")').length>0){ //with specific seniorities
             cy.contains('.input-group__title', 'Lead %').next('div').type(10)
             cy.contains('.input-group__title', 'Senior %').next('div').type(20)
             cy.contains('.input-group__title', 'Mid %').next('div').type(30)
@@ -281,13 +289,13 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         //seniority split
         //checks if regular BU or BU with specific seniorities
         cy.get("div>.section__groups_seniority-split").then(($text1)=>{
-          if ($text1.find('.input-group__title_required','Key Artist').length>0){ //regular BU
+          if ($text1.find('.input-group__title:contains("Key Artist")').length>0){  //regular BU
             cy.contains('.input-group__title', 'Supervisor %').next('div').should('include.text','40')
             cy.contains('.input-group__title', 'Lead %').next('div').should('include.text','30')
             cy.contains('.input-group__title', 'Key Artist %').next('div').should('include.text','20')         
             cy.contains('.input-group__title:not(:contains("Key Artist"))', 'Artist').next('div').should('include.text','10')  
           }
-         else if ($text1.find('.input-group__title_required','Senior').length>0){//with specific seniorities
+         else if ($text1.find('.input-group__title:contains("Senior")').length>0){//with specific seniorities
           cy.contains('.input-group__title', 'Lead %').next('div').should('include.text','10')
           cy.contains('.input-group__title', 'Senior %').next('div').should('include.text','20')
           cy.contains('.input-group__title', 'Mid %').next('div').should('include.text','30')
@@ -693,31 +701,216 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('.item__info__contextButton').should('have.length',0)
       })  
     })
-    it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
-      cy.visit("http://10.94.6.100/ones/shows/add-edit/27_7_36")   
-      cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type(code)
-      cy.contains('.input-group__title', 'Name').next('div').type('{selectall}{del}').type(code)
-      cy.contains('.toast-message')
-/*       //award est
-      //cy.contains('.input-group__title', 'Awards Est').next('div').type(getRandomInt(100))
-      cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
-      cy.contains('span', 'Save').click()
-        cy.wait('@grid_list').then(({response}) => {
-        expect(response.statusCode).to.eq(200)
+    it.skip("Fill in Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      //cy.visit('http://10.94.6.100:1400/ones/shows/add-edit/123_COST')
+      code='123_COST'//temporary show code
+      cy.visit(Cypress.env('url_g')+"/ones/shows/add-edit/"+code) 
+      //Average rates
+      cy.contains('.tabTitle', 'Avg Artist Day Rates').click()
+      cy.get('div>.user-info__collapse-button').click()
+      temp_fill('CL - Modelling',100)
+      temp_fill('CL - Texturing',120)
+      temp_fill('CL - LookDev',140)
+      temp_fill('CL - Groom',160)
+      temp_fill('CL - Rigging',180)
+      //Indirect
+      cy.contains('.tab-title', 'Indirect Costs').click()
+      let ind=20
+      cy.contains('.cell_column-first', "2024 Q1").next('div').type(ind)
+      cy.contains('.cell_column-first', "2024 Q2").next('div').type(ind+20)
+      cy.contains('.cell_column-first', "2024 Q3").next('div').type(ind+40)
+      cy.contains('.cell_column-first', "2024 Q4").next('div').type(ind+60)
+      //Tax
+      cy.contains('.tabTitle', 'Show Inputs').click()
+      cy.contains('div>.input-group__title', "London").eq(0).next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type('{backspace}').type("1.25")
+
+
+      
+  })
+  it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      cy.get(".link__title").contains("Create New Show").click()
+      cy.location("pathname").should("eq", "/ones/shows/add-edit")
+      //Show Stats tab
+      //show type category
+      cy.contains('.input-group__title', 'Type').next('div').click()
+      cy.contains('a','Awarded').click()
+      //show status
+      cy.contains('.input-group__title', 'Status').next('div').click()
+      cy.contains('a','Active').click()
+      //!!! For none- A&G BUs
+      if (Cypress.env("bu")!='Technicolor Games'){
+        //show Planning Category
+        cy.contains('.input-group__title', 'Planning Category').next('div').click()
+        cy.contains('a','Theatrical').click()
+        //show Actual Category
+        cy.contains('.input-group__title', 'Actual Category').next('div').click()
+        cy.contains('a','Theatrical').click()
+      }
+      //show color 
+      cy.contains('.input-group__title', 'Show Color').next('div').click()
+      cy.get('.tab__field .cp-input__input').clear()
+      cy.get('.tab__field .cp-input__input').type("#27973C12")
+      cy.contains('.btn','Ok').click()
+      //assets amount
+      cy.contains('.input-group__title', 'Amount of Assets').next('div').type(10)
+      //shots amount
+      cy.contains('.input-group__title', 'Amount of Shots').next('div').type(20)
+      //start date
+      cy.contains('.input-group__title','Start Date').next('div').click()
+      cy.get('.today').click()
+      cy.contains('button', 'Confirm').click()
+      //end date
+      cy.contains('.input-group__title','End Date').next('div').click()
+      cy.get('.mx-btn-current-year').click()
+      cy.contains(new Date().getFullYear()+1).click()
+      cy.contains('td','Dec').click()
+      cy.contains('td','30').click()
+      cy.contains('button', 'Confirm').click()
+      //release date
+      cy.contains('.input-group__title','Release Date').next('div').click()
+      cy.get('.mx-btn-current-year').click()
+      cy.contains(new Date().getFullYear()+1).click()
+      cy.contains('td','Dec').click()
+      cy.contains('td','31').click()
+      cy.contains('button', 'Confirm').click()
+      //seniority split
+      //checks if regular BU or BU with specific seniorities
+      cy.get("div>.section__groups_seniority-split").then(($text1)=>{
+        if ($text1.find('.input-group__title:contains("Key Artist")').length>0){       //regular seniorities
+          cy.contains('.input-group__title', 'Supervisor %').next('div').type(40)
+          cy.contains('.input-group__title', 'Lead %').next('div').type(30)
+          cy.contains('.input-group__title', 'Key Artist %').next('div').type(20)
+          cy.contains('.input-group__title:not(:contains("Key Artist"))', 'Artist').next('div').type(10)
+        }
+        else if ($text1.find('.input-group__title:contains("Senior")').length>0){ //with specific seniorities
+          cy.contains('.input-group__title', 'Lead %').next('div').type(10)
+          cy.contains('.input-group__title', 'Senior %').next('div').type(20)
+          cy.contains('.input-group__title', 'Mid %').next('div').type(30)
+          cy.contains('.input-group__title', 'Junior %').next('div').type(40)
+        }
+      })  
+      //DL %
+      cy.contains('.input-group__title', 'DL %').next('div').click().type('{backspace}').type('{backspace}').type(99)
+      //show currency
+      cy.contains('.input-group__title','Show Currency').next('div').click()
+      cy.contains('a','USD ($)').click()
+      //award est
+      cy.contains('.input-group__title', 'Awards Est').next('div').type(99)
+      //primary location
+      cy.contains('.input-group__title','Primary').next('div').click()
+      cy.get("[value="+Cypress.env("site_id")+"]").click()
+      //secondary location
+      cy.contains('.input-group__title','Secondary').next('div').click()
+      cy.get('ul').find('label').eq(0).click()
+      cy.get('.header__title').click()
+      //TPS location
+      //cy.contains('.input-group__title','TPS').next('div').click()
+     // cy.get('ul').find('label').eq(0).click()
+      //Ones split
+      cy.get('#training-course-show-primary-location>.input-group__input>.VInputFake_default-new').type(10)
+      cy.get('#training-course-show-secondary-location-0>.input-group__input>.VInputFake_default-new').type(20)
+      cy.get('#training-course-show-tps-location-0>.input-group__input>.VInputFake_default-new').type(70)
+      //for writing some values in the file
+      let StartDateText;
+      let EndDateText;
+      let ReleaseDateText;
+      let SecondaryLocationText;
+      let TPSLocationText;
+      let SecondaryProducerText
+      cy.contains('.input-group__title','Start Date').next('div').invoke('text').then((text) => {
+        StartDateText = text;
+      });
+      cy.contains('.input-group__title','End Date').next('div').invoke('text').then((text) => {
+        EndDateText = text;
+      });
+      cy.contains('.input-group__title','Release Date').next('div').invoke('text').then((text) => {
+        ReleaseDateText = text;
+      });
+      cy.contains('.input-group__title','Secondary').next('div').invoke('text').then((text) => {
+        SecondaryLocationText = text;
+      });
+      cy.contains('.input-group__title','TPS').next('div').invoke('text').then((text) => {
+        TPSLocationText = text;
+      });
+      //show inputs tab
+      cy.contains('.tabTitle', 'Show Inputs').click()
+      //Primary producer
+      cy.contains('.input-group__title','Primary Producer').next('div').click()
+      cy.get('input').type("glob")
+      cy.contains('a','glob').click()
+      //Secondary producer
+      cy.contains('.input-group__title','Secondary Producer').next('div').click()
+      cy.get('ul').find('label').eq(0).click()
+      cy.get('.header__title').click()
+      //Executive producer
+      cy.contains('.input-group__title','Executive Producer').next('div').click()
+      cy.get('.search__wrapper>input').type("glob")
+      cy.contains('label','glob').click()
+      //Period start date
+      cy.get('.header__title').click()
+      let N=0
+      cy.get('.input-group__input_date-picker').its('length').then((n) => {
+          N = n
+          cy.log("length="+N)
+          for (let i = 0; i < N; i++) {
+            cy.get('.input-group__input_date-picker').eq(i).click()
+            cy.get('.mx-date-row').then(($dates) => {
+              cy.log($dates.find('.cell').not('.disabled').length)
+              if ($dates.find('.cell').not('.disabled').length==0){
+                cy.get('div>.mx-btn-icon-right').click() //in case of absence of available enabled dates in current month
+              }                
+            })
+            cy.get('.mx-date-row>.cell').not('.disabled').eq(0).click()
+            cy.contains("Confirm").click()
+          }
       })
-      cy.location("pathname").should("eq", "/ones/new/shows") */
-      // let code1='SLV'
-      // cy.get(".search__input").type(code1)
-      // cy.contains("Apply").click()
-      // cy.contains('.counters__item', 'Delivered').should('include.text','0') //to wait until page loads
-      // cy.contains(code1).should("exist")
-      // let locator_id='training-courses-manage-shows-'+code1.toLowerCase()+'-actions'
-      // //cy.get('#'+locator_id+'>.actions__item').eq(0).click()
-      // cy.get('[style="transform: translateY(0px);"]').find('#'+locator_id+'>.actions__item').eq(0).click()
-      // //cy.get('[style="transform: translateY(0px);"]'.'#'+locator_id+'>.actions__item').find('#'+locator_id+'>.actions__item').eq(0).click()
-      // cy.location("pathname").should("eq", '/ones/shows/add-edit/'+code1)
-
-
-    })  
+      //for writing in the file 
+      cy.contains('.input-group__title','Secondary Producer').next('div').invoke('text').then((text) => {
+        SecondaryProducerText = text;
+      });       
+      // Write the variables to a file
+      cy.then(() => {
+        const data = {
+          StartDateText,
+          EndDateText,
+          ReleaseDateText,
+          SecondaryLocationText,
+          TPSLocationText,
+          SecondaryProducerText
+        };
+        const jsonData = JSON.stringify(data);
+        cy.writeFile('cypress/fixtures/show_elements.json', jsonData);
+      });
+      //back to Show Stats
+      cy.contains('.tabTitle', 'Show Stats').click() 
+      //this is to locate duplicate Show Validation as late as possible to decrease wait() block. 
+      //Otherwise the "code" updated variable is not visible for verifications
+      cy.intercept('/api/ManageShowsApi/IsShowCodeAlreadyExist?showCode*').as('grid_list')
+      //show code
+      code='123_COST' //temporary show code
+      cy.contains('.input-group__title', 'Code').next('div').type(code)
+      //cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type("123_COST")
+      //show name
+      cy.contains('.input-group__title', 'Name').next('div').type(code)
+      //check if code unique    
+      cy.wait('@grid_list').then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+        if (response.body==true){
+          code=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
+          cy.updateGlobalVar("code",code)
+          cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type(code)
+          cy.contains('.input-group__title', 'Name').next('div').type('{selectall}{del}').type(code)
+        }
+        cy.log(code)
+        //check creation
+        cy.intercept('/api/ManageShowsApi/SaveShow').as('grid_list')
+        cy.contains('span', 'Create show').parent().should('not.have.attr','disabled')
+        cy.contains('span', 'Create show').click()
+        cy.wait('@grid_list').then(({response}) => {
+          expect(response.statusCode).to.eq(200)
+        })
+     
+  })
+})
 })
 //export{}
