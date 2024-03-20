@@ -35,9 +35,9 @@ describe("E2E", //Publish cycle, add/edit/delete positions
     const temp_fill=(disc,i)=>{
       cy.contains('.cell_column-first', disc).next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i)
       cy.contains('.cell_column-first', disc).next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-10)
-      //cy.contains('.cell_column-first', disc).next('div').next('div').next('div').type(i+20)
-      cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-20)
-      cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-30)
+      cy.contains('.cell_column-first', disc).nextAll('div').eq(2).type('{selectall}{del}').type(i-20)
+      cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-30)
+      cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').next('div').click().type('{backspace}').type('{backspace}').type('{backspace}').type(i-40)
       //cy.contains('.cell_column-first', disc).next('div').next('div').next('div').next('div').next('div').next('div').type('{backspace}').type('{backspace}').type('{backspace}').type(i-40)
     }
     const SelectCreateShowInManageShows=(code)=>{
@@ -808,8 +808,8 @@ describe("E2E", //Publish cycle, add/edit/delete positions
      // cy.get('ul').find('label').eq(0).click()
       //Ones split
       cy.get('#training-course-show-primary-location>.input-group__input>.VInputFake_default-new').type(10)
-      cy.get('#training-course-show-secondary-location-0>.input-group__input>.VInputFake_default-new').type(20)
-      cy.get('#training-course-show-tps-location-0>.input-group__input>.VInputFake_default-new').type(70)
+      cy.get('#training-course-show-secondary-location-0>.input-group__input>.VInputFake_default-new').type(90)
+      //cy.get('#training-course-show-tps-location-0>.input-group__input>.VInputFake_default-new').type(70)
       //for writing some values in the file
       let StartDateText;
       let EndDateText;
