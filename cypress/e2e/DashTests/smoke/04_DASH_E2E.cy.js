@@ -727,7 +727,11 @@ describe("E2E", //Publish cycle, add/edit/delete positions
 
       
   })
-  it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+  it("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+      //let type='Theatrical'
+      //let code='01_T'
+      let type='Episodic'
+      let code='01_E'
       cy.get(".link__title").contains("Create New Show").click()
       cy.location("pathname").should("eq", "/ones/shows/add-edit")
       //Show Stats tab
@@ -741,10 +745,10 @@ describe("E2E", //Publish cycle, add/edit/delete positions
       if (Cypress.env("bu")!='Technicolor Games'){
         //show Planning Category
         cy.contains('.input-group__title', 'Planning Category').next('div').click()
-        cy.contains('a','Theatrical').click()
+        cy.contains('a',type).click()
         //show Actual Category
         cy.contains('.input-group__title', 'Actual Category').next('div').click()
-        cy.contains('a','Theatrical').click()
+        cy.contains('a',type).click()
       }
       //show color 
       cy.contains('.input-group__title', 'Show Color').next('div').click()
@@ -887,7 +891,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
       //Otherwise the "code" updated variable is not visible for verifications
       cy.intercept('/api/ManageShowsApi/IsShowCodeAlreadyExist?showCode*').as('grid_list')
       //show code
-      code='123_COST' //temporary show code
+      //code='123_COST' //temporary show code
       cy.contains('.input-group__title', 'Code').next('div').type(code)
       //cy.contains('.input-group__title', 'Code').next('div').type('{selectall}{del}').type("123_COST")
       //show name
