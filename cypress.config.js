@@ -85,9 +85,9 @@ env: {
 
     //useless for now
       /* db: {
-        host: "10.94.6.100\SQL2017_2,14334",
+        host: "",
         user: "trruUser",
-        password: "oa12Sql17",
+        password: "",
         database: "Dash_Anonymise_stage"
       } */
 
