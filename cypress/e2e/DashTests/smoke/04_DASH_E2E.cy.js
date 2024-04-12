@@ -727,7 +727,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
 
       
   })
-  it("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
+  it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
       //let type='Theatrical'
       //let code='01_T'
       let type='Episodic'

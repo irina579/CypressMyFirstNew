@@ -95,7 +95,7 @@ env: {
         db: {
           server: "",
           user: "trruUser",
-          password: "",
+          password: "*",
           database: "Dash_Anonymise_stage"
         }
       
