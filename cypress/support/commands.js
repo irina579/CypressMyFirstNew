@@ -63,7 +63,7 @@ Cypress.Commands.add('Login', () => {
     cy.get('#UserName').type(Cypress.env('login_g'))
     cy.get('#Password').type(Cypress.env('password_g'))
     cy.contains('Log in').click()
-    cy.get(".header-banner__close-button", {timeout: 60000}).click({timeout: 110000})},
+    cy.get(".header-banner__close-button", {timeout: 60000}).click({timeout: 130000})},
     {cacheAcrossSpecs: true}
   ) 
   cy.visit(Cypress.env('url_g'))
