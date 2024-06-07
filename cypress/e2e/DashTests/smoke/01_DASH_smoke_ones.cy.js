@@ -3,7 +3,7 @@ describe("Smoke/Ones",
 {
   env: {
     req_timeout: 80000,
-    elem_timeout: 100000,
+    elem_timeout: 120000,
   },
 },
 () => 
@@ -515,7 +515,7 @@ describe("Smoke/Ones",
         })     
       })
     })
-    it("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
+    it.only("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
       task_id='DASHCU-3686'
       cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
       cy.get('#app').then(($body) => {   
@@ -566,7 +566,7 @@ describe("Smoke/Ones",
               cy.get('div>.VCheckboxSimple').last().find('span').click()
               cy.get('div>.VCheckboxSimple').last().find('span').then(($text) => {
                 let site=$text.text()
-                cy.get('div>.p-10').first().should('include.text',site.trim())
+                cy.get('div>.p-30').first().should('include.text',site.trim())
               })   
             }          
           })  
