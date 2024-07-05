@@ -14,7 +14,7 @@ describe("Smoke/Admin",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784', 'DASHCU-3831','DASHCU-3862']
+  let test_tasks=['DASHCU-3663','DASHCU-3664','DASHCU-3665', 'DASHCU-3772', 'DASHCU-3773', 'DASHCU-3779', 'DASHCU-3783', 'DASHCU-3784', 'DASHCU-3831','DASHCU-3862', 'DASHCU-4727', 'DASHCU-4764']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -332,6 +332,74 @@ describe("Smoke/Admin",
         }
       })
       cy.get('div>.header__close').click()
+    })  
+    it('Settings page => Manage Parking Ones', () => { //https://app.clickup.com/t/4534343/DASHCU-4727
+      task_id='DASHCU-4727'
+      cy.contains('.tab-title', 'Manage Parking Ones').click()
+      cy.get('#VTab-btn-manage-parking-ones').should('have.class','VTab__btn_active') //verify the tab gets active
+      cy.contains('.header__item','Sites').should('exist')
+      cy.contains('.header__item','Departments').should('exist')
+      cy.get('div>.body__row').first().should('exist')
+      cy.contains('.VButton__text', 'Save').click()
+      cy.contains('.toast-message','No changes made').should('exist') //save is not allowed without changes
+      cy.get('div>.body__row').then(($table) => {
+        let sites_count=$table.length
+        let random_site_order=getRandomInt(sites_count)
+        cy.log(random_site_order)
+        cy.get('div>.item__arrow').eq(random_site_order).click()
+        cy.get('div>.body__row').eq(random_site_order).then(($site) => {
+          if ($site.find('span','(Generalist)').length>0){//generalist
+            cy.log('Site is generalist')
+            let depts_selected=$site.find('.item__departments').text()
+            cy.log(depts_selected)
+            cy.get("li>.ui-checkbox").last().should("have.class","disabled") //check last checkbox (as random) to be disabled
+            cy.get('div>.VComboSearch__toggle').should("have.attr","disabled") //search is disabled
+            cy.get("ul>.select-all").find('label').first().click()
+            cy.get('div>.item__departments').eq(random_site_order).should('not.have.text',depts_selected) //the text is changed          
+          }
+          else {//not generalist
+            cy.log('Site is not generalist')
+            let depts_selected=$site.find('.item__departments').text()
+            cy.log(depts_selected)
+            cy.get("li>.ui-checkbox").last().find('label').scrollIntoView().click() //change the state of the last checkbox
+            cy.get('div>.item__departments').eq(random_site_order).should('not.have.text',depts_selected) //the text is changed
+            cy.get('div>.VComboSearch__toggle').type(Cypress.env('DL_dept')) //search for DL dept
+            cy.get("li>.ui-checkbox").last().should('include.text',Cypress.env('DL_dept'))
+          }
+        })
+      })
+    })  
+    it.only('Settings page => Manage Holiday Import', () => { //https://app.clickup.com/t/4534343/DASHCU-4764
+      task_id='DASHCU-4764'
+      cy.contains('.tab-title', 'Manage Holiday Import').click()
+      cy.get('#VTab-btn-manage-holiday-import').should('have.class','VTab__btn_active') //verify the tab gets active
+      cy.contains('.manage-holiday__row','Sites').should('exist')
+      cy.contains('.VButton__text', 'Save').click()
+      cy.contains('.toast-message','No changes made').should('exist') //save is not allowed without changes
+      cy.get('div>.manage-holiday__row').then(($table) => {
+        let sites_count=$table.length
+        cy.log(sites_count)
+        let random_site_order=getRandomInt(sites_count-1)
+        cy.log(random_site_order)
+        cy.get('span>.vueSwitch').eq(random_site_order).click()
+        cy.get('span>.vueSwitch').eq(random_site_order).click()
+        cy.contains('.VButton__text', 'Save').click()
+        cy.contains('.toast-message','No changes made').should('exist') //save is not allowed without changes
+      })
+      cy.get('body').then(($body) => {   
+        if ($body.find('span>.vueSwitch input:checked').length>0){ //check if there are enabled sites
+          cy.log("The number of enabled sites - "+$body.find('span>.vueSwitch input:checked').length)
+          cy.get('span>.vueSwitch input:checked').parent(1).first().click()
+          cy.contains('.VButton__text', 'Save').click()
+          cy.contains("All future Holidays Ones will be removed for all Department Artists turned off Site(s)").should("exist")
+          cy.contains('.VButton__text', 'Cancel').click()
+        }
+        else{
+          cy.log("There are NO enabled sites")
+        }
+      })
+      cy.get('span>.vueSwitch').last().click()
+      cy.get('span>.vueSwitch').last().find('input').should('be.checked')
     })  
   })
 })

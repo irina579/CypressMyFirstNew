@@ -728,10 +728,10 @@ describe("E2E", //Publish cycle, add/edit/delete positions
       
   })
   it.skip("Create new Show - for debug", () => { //https://app.clickup.com/t/4534343/DASHCU-4084
-      //let type='Theatrical'
-      //let code='01_T'
-      let type='Episodic'
-      let code='01_E'
+      let type='Theatrical'
+      let code='01_T'
+      //let type='Episodic'
+      //let code='01_E'
       cy.get(".link__title").contains("Create New Show").click()
       cy.location("pathname").should("eq", "/ones/shows/add-edit")
       //Show Stats tab
