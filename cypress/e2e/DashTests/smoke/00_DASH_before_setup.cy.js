@@ -90,6 +90,7 @@ describe("Settings to enable for new DB",
           } else {
               cy.log("All permissions are set");
           }
+          cy.log(changes)
           if (changes){
             cy.contains('.VButton__text','Save').click()
             cy.contains('successfully saved').should('exist')

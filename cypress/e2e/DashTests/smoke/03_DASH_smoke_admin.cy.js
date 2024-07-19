@@ -396,10 +396,10 @@ describe("Smoke/Admin",
         }
         else{
           cy.log("There are NO enabled sites")
+          cy.get('span>.vueSwitch').last().click()
+          cy.get('span>.vueSwitch').last().find('input').should('be.checked')
         }
       })
-      cy.get('span>.vueSwitch').last().click()
-      cy.get('span>.vueSwitch').last().find('input').should('be.checked')
     })  
   })
 })
