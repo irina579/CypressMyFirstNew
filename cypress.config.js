@@ -25,7 +25,7 @@ module.exports = {
   },
 env: {
     //clickup parameters
-    clickup_usage: true,
+    clickup_usage: false,
     key:'pk_54525861_I991M9GR8VQ8GHZ3VH8OVEVIFFWJA5AC',
     states:"{\"onhold\": \"5099b5ec-242e-4f57-8cdc-b604e9e19e91\", \"failed\": \"d06a1041-540d-43e9-a833-e29676b4a12d\", \"passed\": \"b254d03a-cb45-40af-82a3-c28d27c0b11f\"}",
     // states:{
@@ -43,6 +43,7 @@ env: {
     //can be changed for test runs
     bu: 'MPC',
     url_g: 'http://10.94.6.100', 
+   // url_g: 'http://5.75.182.20', //cloud stage
     site_id: 23002, //London
     IDL_dept_id: 23042, //Studio Operations
     DL_dept_id: 23012, //Assets
