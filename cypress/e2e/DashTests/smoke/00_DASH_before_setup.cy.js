@@ -13,7 +13,7 @@ describe("Settings to enable for new DB",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-4765','DASHCU-4766']
+  let test_tasks=['DASHCU-4765','DASHCU-4766','DASHCU-4798']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -128,5 +128,52 @@ describe("Settings to enable for new DB",
         }
       })     
     })
+    it("Create new Project if there are no projects", () => { //https://app.clickup.com/t/4534343/DASHCU-4798
+      task_id='DASHCU-4798'
+      cy.contains('.link__title','Manage Projects').click()
+      cy.url().should('include', '/ones/projects/')
+      cy.contains('.btn__overflow', 'Project Name').click() //waits the grid is loaded
+      cy.get('body').then(($body) => {   
+        if ($body.find('.project__content',{timeout: `${Cypress.env('elem_timeout')}`}).length<1){ //if there are no projects
+          let project_name=new Date().getDate()+"_"+(new Date().getMonth()+1)+"_"+getRandomInt(100)
+          cy.log($body.find('.project__content').length)
+          cy.contains('.link__title','Create New Project').click()
+          cy.url().should('include', '/ones/projects/?isCreateMode=true')
+          //Project Details
+          cy.get('[placeholder="Enter name"]').first().type(project_name)
+          cy.contains('.v-filter__placeholder', 'Select department(s)').click()
+          cy.contains('span','Select All').click()
+          cy.contains('.btn__overflow', 'Select type').click()
+          cy.contains('a','Awarded').click()
+          cy.contains('.btn__overflow', 'Select status').click()
+          cy.contains('a','Active').click()
+          cy.contains('.toggle__label', 'Select color').click()
+          cy.get('.tab__field .cp-input__input').clear()
+          cy.get('.tab__field .cp-input__input').type("#27973C12")
+          cy.contains('.btn','Ok').click()
+          //start date
+          cy.contains('.item__label','Start Date').next('div').click()
+          cy.get('.today').click()
+          cy.contains('button', 'Confirm').click()
+          //end date
+          cy.contains('.item__label','End Date').next('div').click()
+          cy.get('.mx-btn-current-year').click()
+          cy.contains(new Date().getFullYear()+1).click()
+          cy.contains('td','Dec').click()
+          cy.contains('td','30').click()
+          cy.contains('button', 'Confirm').click()
+          //Primary Location
+          cy.contains('.item__label','Primary').next('div').click()
+          cy.get("[value="+Cypress.env("site_id")+"]").first().click()
+          cy.contains('.item__label','Add Manager').next('div').click().type('test_manager')
+          cy.get('.input__subject>.VButton-block').click()
+          cy.contains('.VButton__text', 'Save').click()
+          cy.contains('.VButton__text', 'Edit').should('be.visible')
+        }
+        else{
+          cy.log("There are Projects. No actions are required.")
+        }
+      })
+    })  
   })
 })
