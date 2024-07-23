@@ -40,8 +40,8 @@ describe("Settings to enable for new DB",
     }
   })
   context("Enable all required permissions and settings", ()=>{
-    beforeEach(() => {
-    }) 
+   // beforeEach(() => {
+  //  }) 
     it('Enable permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-4765
       task_id='DASHCU-4765'
       cy.contains('.link__title','Users').click()
