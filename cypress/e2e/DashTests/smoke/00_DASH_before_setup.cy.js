@@ -1,4 +1,4 @@
-describe.skip("Settings to enable for new DB", 
+describe("Settings to enable for new DB", 
 {
   env: {
     req_timeout: 60000,
