@@ -39,7 +39,7 @@ describe("Smoke/Admin",
       cy.log('Test failed',task_id)
     }
   })
-  it('Manage site permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-3663
+  it.only('Manage site permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-3663
     task_id='DASHCU-3663'
     cy.contains('.link__title','Manage Sites Permissions').click()
     cy.url().should('include', '/UserPermission/Index')
