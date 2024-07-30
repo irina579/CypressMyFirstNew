@@ -13,7 +13,7 @@ describe("Settings to enable for new DB",
   } 
   const normalizeText = (s) => s.replace(/\s/g, '').toLowerCase()
   //clickup  
-  let test_tasks=['DASHCU-4765','DASHCU-4766','DASHCU-4798']
+  let test_tasks=['DASHCU-4765','DASHCU-4766','DASHCU-4798', 'DASHCU-4813']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -175,5 +175,30 @@ describe("Settings to enable for new DB",
         }
       })
     })  
+    it('Create positions if artists count less than 5', () => { //https://app.clickup.com/t/4534343/DASHCU-4813
+      task_id='DASHCU-4813'
+      cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id')) 
+      //checks if any artist comes from BE
+      cy.intercept('/api/departmentonesnew/getdepartmentones').as('grid_list')
+      cy.contains("Apply").click()
+      cy.wait('@grid_list',{timeout: `${Cypress.env('elem_timeout')}`}).then(({response}) => {
+        expect(response.statusCode).to.eq(200)
+        let artist_count=response.body.reference.artistPositions.items.length
+        if(artist_count<6){
+          cy.get('[data-content="Add positions"]').click()
+          cy.url().should('include', '/addnewpositions')
+          cy.contains('.item_required>.item__label','Quantity').next('.item__input').type('{selectall}{del}').type('5')
+            //for India Sites
+            if (Cypress.env('India_site')){
+              cy.contains('.item_required>.item__label','Work location').next('.item__input').click()
+              cy.contains('span','Bangalore').click()
+            }
+            cy.contains('.VButton__text','Add').click()
+            cy.url().should('include', '/ones/new')
+          artist_count=artist_count-1
+        }
+        cy.log("The number of artist came from BE - "+artist_count)
+      })
+    })
   })
 })
