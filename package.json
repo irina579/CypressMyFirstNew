@@ -9,7 +9,7 @@
     "mysql": "^2.18.1"
   },
   "scripts": {
-    "stage_enviroment": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke --record --key 90e0b677-b552-4050-b5fd-7236691b801c",
+    "stage_enviroment": "cypress run --spec cypress/e2e/DashTests/smoke --record --key 90e0b677-b552-4050-b5fd-7236691b801c",
     "stage_enviroment_105_port": "cypress run --browser chrome --env url_g=http://5.75.182.20:105 --spec cypress/e2e/DashTests/smoke",
     "future_production_enviroment": "cypress run --browser chrome --env url_g=http://5.75.182.20:250 --spec cypress/e2e/DashTests/smoke",
     "local_production_enviroment": "cypress run --browser chrome --env url_g=http://5.75.182.20:200 --spec cypress/e2e/DashTests/smoke",
@@ -20,6 +20,6 @@
     "stage_enviroment_ones": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/01_DASH_smoke_ones.cy.js",
     "stage_enviroment_management": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/02_DASH_smoke_management.cy.js",
     "feature2_E2E": "cypress run --browser chrome --env url_g=http://5.75.182.20:60000 --spec cypress/e2e/DashTests/smoke/04_DASH_E2E.cy.js",
-    "stage_enviroment_E2E": "cypress run --browser chrome --spec cypress/e2e/DashTests/smoke/04_DASH_E2E.cy.js"
+    "stage_enviroment_E2E": "cypress run --spec cypress/e2e/DashTests/smoke/04_DASH_E2E.cy.js"
   }
 }
