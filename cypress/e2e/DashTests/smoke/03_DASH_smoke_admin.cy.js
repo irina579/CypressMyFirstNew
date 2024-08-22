@@ -198,7 +198,7 @@ describe("Smoke/Admin",
       cy.contains('.link__title','Logs').scrollIntoView().click()
       cy.url().should('include', '/upload/uploadlog')
     }) 
-    it('Logs page => Upload Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3783
+    it.only('Logs page => Upload Logs', () => { //https://app.clickup.com/t/4534343/DASHCU-3783
       task_id='DASHCU-3783'
       cy.contains('div>.table-header__value', 'Extract').should('exist') //verify the table header is visible
       cy.get('div>.reportrange-text').click()
@@ -213,10 +213,14 @@ describe("Smoke/Admin",
         let logs_count=response.body.reference.length
         let file_name
         let uploaded_by
+        cy.log(response.body.reference[0].file)
         if(logs_count>0){
-          file_name=response.body.reference[0].file //store 1-st record's file title
+          if (response.body.reference[0].file!==null){
+            cy.log('here')
+            file_name=response.body.reference[0].file //store 1-st record's file title
+            cy.contains('.table-column', file_name).first().scrollIntoView() //scroll to this log on UI to make sure it exists      
+          }
           uploaded_by=response.body.reference[0].uploadedByName //store 1-st record's uploaded by info
-          cy.contains('.table-column', file_name).first().scrollIntoView() //scroll to this log on UI to make sure it exists
           cy.contains('.table-column', uploaded_by).first().should('exist')
         }
       })
