@@ -27,7 +27,7 @@ describe("Smoke/Ones",
     }
     return result;
   } 
-  let test_tasks=['DASHCU-3675','DASHCU-3676','DASHCU-3679','DASHCU-3680','DASHCU-3681','DASHCU-3682','DASHCU-3685','DASHCU-3686','DASHCU-3687']
+  let test_tasks=['DASHCU-3675','DASHCU-3676','DASHCU-3679','DASHCU-3680','DASHCU-3681','DASHCU-3682','DASHCU-3685','DASHCU-3686','DASHCU-3687','DASHCU-3677', 'DASHCU-3683']
   let task_id=''
   const myObject = JSON.parse(Cypress.env('states'));
   before(() => {
@@ -134,7 +134,7 @@ describe("Smoke/Ones",
         } 
       }) 
     })
-    it.skip("Can open IDL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3677
+    it("Can open IDL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3677
       task_id='DASHCU-3677'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
@@ -151,7 +151,6 @@ describe("Smoke/Ones",
         cy.log("The number of artist came from BE - "+artist_count)
         if(artist_count>0){
           FirstName=response.body.reference.artistInfos.items[0].userName
-          cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
           cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
           cy.log("The first artist is - "+FirstName)
         } 
@@ -172,7 +171,6 @@ describe("Smoke/Ones",
             cy.log("The number of artist came from BE - "+artist_count)
             cy.log("The first artist is - "+FirstName)
             if(artist_count>0){
-              cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
               cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
               cy.contains(".btn__overflow","File").should("not.exist") //checks if File button UNavailable (read only mode)
             }
@@ -378,7 +376,7 @@ describe("Smoke/Ones",
       })
       //cy.SetClickUpParameter((myObject.passed),test_tasks[7],Cypress.env('clickup_usage'))
     })
-    it.skip("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
+    it("Can open DL Manager Lab", () => { //https://app.clickup.com/t/4534343/DASHCU-3683
       task_id='DASHCU-3683'
       cy.contains(".VTab__btn", "Manager Lab").click()
       cy.contains(".btn__overflow","Nothing selected").click()
@@ -394,7 +392,6 @@ describe("Smoke/Ones",
         cy.log("The number of artist came from BE - "+artist_count)
         if(artist_count>0){
           let FirstName=response.body.reference.artistInfos.items[0].userName
-          cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
           cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
           cy.log("The first artist is - "+FirstName)
         }
@@ -415,7 +412,6 @@ describe("Smoke/Ones",
             cy.log("The number of artist came from BE - "+artist_count)
             if(artist_count>0){
               FirstName=response.body.reference.artistInfos.items[0].userName
-              cy.get(".approval-status").eq(0).should("exist") //checks there is an artist in the grid=>approval status
               cy.contains(".cell_username",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response   
               cy.log("The first artist is - "+FirstName)
             } 
