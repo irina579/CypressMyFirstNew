@@ -42,8 +42,8 @@ env: {
 
     //can be changed for test runs
     bu: 'MPC',
-   // url_g: 'http://10.94.6.100', 
-    url_g: 'http://5.75.182.20', //cloud stage
+    url_g: 'http://10.94.6.100', 
+   // url_g: 'http://5.75.182.20', //cloud stage
     site_id: 23002, //London
     IDL_dept_id: 23042, //Studio Operations
     DL_dept_id: 23012, //Assets
