@@ -395,7 +395,7 @@ describe("Smoke/Admin",
           cy.log("The number of enabled sites - "+$body.find('span>.vueSwitch input:checked').length)
           cy.get('span>.vueSwitch input:checked').parent(1).first().click()
           cy.contains('.VButton__text', 'Save').click()
-          cy.contains("All future Holidays Ones will be removed for all Department Artists turned off Site(s)").should("exist")
+          cy.contains("All future Holidays Ones will be removed for all Department Artists of the Sites where settings have been changed").should("exist")
           cy.contains('.VButton__text', 'Cancel').click()
         }
         else{

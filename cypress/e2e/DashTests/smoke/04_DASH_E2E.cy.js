@@ -8,7 +8,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
 },
 () => {
     //set up show code variable
-    //const code='I12_7_5'// for debugging
+    //const code='11_6_30'// for debugging
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
@@ -345,6 +345,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         SelectCreatedShow(Cypress.env("code"))
         cy.contains('.item__info__department-name',Cypress.env('discipline')).prev('div').click()
         let N=0
+        cy.get('.col-lg-9 .book__select-all>label').click()
         cy.get('.levels__item>.col-lg-5').its('length').then((n) => {
             N = n
             cy.log("length="+N)
