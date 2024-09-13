@@ -8,7 +8,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
 },
 () => {
     //set up show code variable
-    //const code='11_6_30'// for debugging
+   // const code='13_9_91'// for debugging
     function getRandomInt(max) {
       return Math.floor(Math.random() * max);
     }
@@ -16,7 +16,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
     const SelectCreatedShow = ()=>{
       cy.contains('.link__title','Show Ones').click()
       cy.url().should('include', '/ones/show')
-      cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click()
+      cy.contains('.tab-title','Ones',{timeout: Cypress.env('elem_timeout')}).click()
       cy.get('#app').then(($body) => {
         cy.log($body.find('div>.filter-view-current').length)
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists

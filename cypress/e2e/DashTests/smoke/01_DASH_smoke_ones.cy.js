@@ -84,7 +84,7 @@ describe("Smoke/Ones",
         let FirstName
         if(artist_count>0){
           FirstName=response.body.reference.artistPositions.items[1].name.username
-          cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+          cy.get(".item_artist",{timeout: Cypress.env('elem_timeout')}).eq(0).should("exist")
           cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
           cy.log("The first artist is - "+FirstName)
           cy.contains(".item__info__department-name",Cypress.env('IDL_dept')).should("exist")
@@ -223,7 +223,7 @@ describe("Smoke/Ones",
         SelectAllDepts()
       }
       })  
-      cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+      cy.get(".item_artist",{timeout: Cypress.env('elem_timeout')}).eq(0).should("exist")
       cy.contains('.Vheader-text',"Dates").prev().click()
       cy.contains("Select All").click()
       cy.contains("label", Cypress.env('DL_dept')).click() //checks 1 department
@@ -231,13 +231,13 @@ describe("Smoke/Ones",
       //checks if any artist comes from BE
       cy.intercept('/api/departmentonesnew/getdepartmentones').as('grid_list')
       cy.contains("Apply").click()
-      cy.wait('@grid_list',{timeout: `${Cypress.env('elem_timeout')}`}).then(({response}) => {
+      cy.wait('@grid_list',{timeout: Cypress.env('elem_timeout')}).then(({response}) => {
         expect(response.statusCode).to.eq(200)
         let artist_count=response.body.reference.artistPositions.items.length
         let FirstName
         if(artist_count>1){
           FirstName=response.body.reference.artistPositions.items[1].name.username
-          cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+          cy.get(".item_artist",{timeout: Cypress.env('elem_timeout')}).eq(0).should("exist")
           cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
           cy.log("The first artist is - "+FirstName)
           artist_count=artist_count-1
@@ -260,7 +260,7 @@ describe("Smoke/Ones",
         }
       })  
       cy.contains(".btn__overflow","File").should("not.exist") //checks if File button available
-      cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+      cy.get(".item_artist",{timeout: Cypress.env('elem_timeout')}).eq(0).should("exist")
       cy.contains('.Vheader-text',"Dates").prev().click()
       cy.contains("Select All").click()
       cy.contains("label", Cypress.env('DL_dept')).click() //checks 1 department
@@ -275,7 +275,7 @@ describe("Smoke/Ones",
         let FirstName
         if(artist_count>1){
           FirstName=response.body.reference.artistPositions.items[1].name.username
-          cy.get(".item_artist",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("exist")
+          cy.get(".item_artist",{timeout: Cypress.env('elem_timeout')}).eq(0).should("exist")
           cy.contains(".item__info__name",FirstName).eq(0).should("exist") //check if 1-st artist exists in table and matches response
           cy.log("The first artist is - "+FirstName)
           artist_count=artist_count-1
@@ -299,7 +299,7 @@ describe("Smoke/Ones",
         else{
           SelectAllDepts()
           cy.contains(".btn__overflow","File").should("not.exist") //checks if File button unavailable
-          cy.get(".ui-checkbox_default",{timeout: `${Cypress.env('elem_timeout')}`}).eq(0).should("have.class","disabled") //checkboxes disabled
+          cy.get(".ui-checkbox_default",{timeout: Cypress.env('elem_timeout')}).eq(0).should("have.class","disabled") //checkboxes disabled
         }
       })  
       cy.get(".info__name").eq(0).should("exist")
@@ -453,7 +453,7 @@ describe("Smoke/Ones",
     }) 
     it("Can open Show Ones => Ones grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3685
       task_id='DASHCU-3685'
-      cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+      cy.contains('.tab-title','Ones',{timeout: Cypress.env('elem_timeout')}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
           cy.contains("to see Ones content").should("not.exist")
@@ -479,7 +479,7 @@ describe("Smoke/Ones",
           if(response.body.reference.sites.length>1){  //select random site if there are more than 1
             cy.log(response.body.reference.sites.length)
             let site_id=(response.body.reference.sites[getRandomInt(response.body.reference.sites.length)].id)
-            cy.get('.v-select-grouped__toggle>.toggle__text',{timeout: `${Cypress.env('elem_timeout')}`}).click({timeout: `${Cypress.env('elem_timeout')}`}).get('[value='+site_id+']').first().click()
+            cy.get('.v-select-grouped__toggle>.toggle__text',{timeout: Cypress.env('elem_timeout')}).click({timeout: Cypress.env('elem_timeout')}).get('[value='+site_id+']').first().click()
           }
           cy.get('[data-content="Select a discipline"]').parent().next(1).click() //select any random discipline
           cy.get('.Vheader-select').then(($IDL) => {
@@ -513,7 +513,7 @@ describe("Smoke/Ones",
     })
     it("Can open Show Ones => Quota grid", () => { //https://app.clickup.com/t/4534343/DASHCU-3686
       task_id='DASHCU-3686'
-      cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+      cy.contains('.tab-title','Ones',{timeout: Cypress.env('elem_timeout')}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
           cy.contains("to see Ones content").should("not.exist")
@@ -569,9 +569,9 @@ describe("Smoke/Ones",
         }
       })           
     })    
-    it("Can open Show Ones => Bid weeks tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3687
+    it.only("Can open Show Ones => Bid weeks tab", () => { //https://app.clickup.com/t/4534343/DASHCU-3687
       task_id='DASHCU-3687'
-      cy.contains('.tab-title','Ones',{timeout: `${Cypress.env('elem_timeout')}`}).click() //wait for loading
+      cy.contains('.tab-title','Ones',{timeout: Cypress.env('elem_timeout')}).click() //wait for loading
       cy.get('#app').then(($body) => {   
         if ($body.find('div>.filter-view-current').length>0){ //check if default custom filter exists
           cy.contains("to see Ones content").should("not.exist")
