@@ -671,7 +671,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('.mx-date-row>td.cell').not('.disabled').eq(1).click()
         cy.get('div>.mx-datepicker-btn-confirm').click()
         cy.intercept('POST','/api/departmentones/AddArtistNotes/**').as('grid_list')
-        cy.contains('.VButton__text','Submit',{timeout: Cypress.env('elem_timeout')}).click()
+        cy.contains('.VButton__text','Submit').click()
         cy.wait('@grid_list').then(({response}) => {
           expect(response.statusCode).to.eq(200)
         })    
