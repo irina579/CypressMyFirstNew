@@ -17,7 +17,7 @@ module.exports = {
     pageLoadTimeout: 80000,
     requestTimeout:80000,
     responseTimeout:80000,
-    video:true, 
+    video:false, 
     // numTestsKeptInMemory: 1,
     ///viewportWidth: 1680,
     //viewportHeight: 1050,

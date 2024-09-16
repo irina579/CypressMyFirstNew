@@ -586,7 +586,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.contains(Cypress.env("code")).should("not.exist")
       }) 
     })
-    context.only("Positions management", ()=>{//Create/Edit/Delete positions
+    context("Positions management", ()=>{//Create/Edit/Delete positions
       const FindArtistByNote = (note_text)=>{
         cy.get('[data-content="Expand/collapse artist details"]').click()
         cy.get('[placeholder="Notes"]').type(note_text)
