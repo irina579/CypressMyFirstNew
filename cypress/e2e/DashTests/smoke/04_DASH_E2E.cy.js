@@ -671,7 +671,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('.mx-date-row>td.cell').not('.disabled').eq(1).click()
         cy.get('div>.mx-datepicker-btn-confirm').click()
         cy.intercept('POST','/api/departmentones/AddArtistNotes/**').as('grid_list')
-        cy.contains('.VButton__text','Submit').click()
+        cy.contains('.VButton__text','Submit',{timeout: Cypress.env('elem_timeout')}).click()
         cy.wait('@grid_list').then(({response}) => {
           expect(response.statusCode).to.eq(200)
         })    
@@ -691,7 +691,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         FindArtistByNote(note)
         for (let i = 0; i < qty_artists; i++){
           cy.get('.item__info__contextButton').first().click()
-          cy.get('.VContextMenu__item.delete').click()
+          cy.get('.VContextMenu__item.delete',{timeout: Cypress.env('elem_timeout')}).click()
           cy.contains('Are you sure you want to delete the artist?').should('exist')
           cy.intercept('/api/PositionsApi/DeleteArtist').as('grid_list')
           cy.contains('.VButton__text','Yes').click()
