@@ -690,8 +690,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.visit(Cypress.env('url_g')+"/ones/new?siteId="+Cypress.env('site_id')+"&departmentIds="+Cypress.env('DL_dept_id'))
         //check if artist was created
         FindArtistByNote(note)
-        //cy.contains('.notes__note_dl',note).should('have.length',2)
-        cy.get('.item__info__name').should('have.length',2) //waiting for the grid is filtered
+        cy.get('.item__filters__filter_notes__notes:not(.notes_producer-block)').filter((index, element) => !element.innerText.includes(note)).should('not.exist') //make sur the grid is filtered
         for (let i = 0; i < qty_artists; i++){
           cy.get('.item__info__contextButton').first().click()
           cy.get('.VContextMenu__item.delete').click()
