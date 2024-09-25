@@ -12,6 +12,17 @@ describe('DASH login', () => {
 
     expect(5).to.be.gte(1)
   }) 
+  it.only('should validate a condition and show custom error message', () => {
+    let dynamicValue=1
+    let value=2
+    try {
+      expect(value).to.equal(dynamicValue, `Custom Error: The actual value is ${value} but expected was ${dynamicValue}. The dynamic value was ${dynamicValue}`);
+    } catch (error) {
+      // Logging custom message to console
+      cy.log(`Test failed. Dynamic value: ${dynamicValue}, Actual: ${value}, Expected: ${dynamicValue}`);
+      throw new Error(`Test failed: ${error.message}`);
+  }
+});
   it('Read/write test', () => {
     // Write the array to a file
     const dataArray = ["John", "Jane", "Alice", "Bob"];
