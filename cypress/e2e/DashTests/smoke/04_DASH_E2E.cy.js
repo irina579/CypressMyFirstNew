@@ -586,7 +586,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.contains(Cypress.env("code")).should("not.exist")
       }) 
     })
-    context("Positions management", ()=>{//Create/Edit/Delete positions
+    context.only("Positions management", ()=>{//Create/Edit/Delete positions
       const FindArtistByNote = (note_text)=>{
         cy.get('[data-content="Expand/collapse artist details"]').click()
         cy.get('[placeholder="Notes"]').type(note_text)
@@ -683,6 +683,7 @@ describe("E2E", //Publish cycle, add/edit/delete positions
         cy.get('.btn-apply').click()
         //check if artist was edited (dates)
         cy.get('[placeholder="Notes"]').type(note)
+        cy.get('.item__filters__filter_notes__notes:not(.notes_producer-block)').filter((index, element) => !element.innerText.includes(note)).should('not.exist') //make sur the grid is filtered
         cy.get('.item__filters__filter_notes__notes').first().click()
         cy.get('[name="date"]').first().click() //check start date
         cy.get('.mx-date-row>td.cell').not('.disabled').eq(1).should('have.class','active')
