@@ -213,7 +213,7 @@ describe("Smoke/Admin",
         let logs_count=response.body.reference.length
         let file_name
         let uploaded_by
-        cy.log(response.body.reference[0].file)
+        //cy.log(response.body.reference[0].file)
         if(logs_count>0){
           if (response.body.reference[0].file!==null){
             cy.log('here')
