@@ -15,13 +15,19 @@ describe('DASH login', () => {
   it.only('should validate a condition and show custom error message', () => {
     let dynamicValue=1
     let value=2
+    cy.readFile('cypress/fixtures/assigned_artists.txt').then((data) => {
+      const dataArrayFromFile = data.split(','); // Split the string into an array using comma as the delimiter  
     try {
-      expect(value).to.equal(dynamicValue, `Custom Error: The actual value is ${value} but expected was ${dynamicValue}. The dynamic value was ${dynamicValue}`);
+      expect(value).to.equal(dynamicValue, `Custom Error: The data is incorrect -  ${data}`);
     } catch (error) {
       // Logging custom message to console
-      cy.log(`Test failed. Dynamic value: ${dynamicValue}, Actual: ${value}, Expected: ${dynamicValue}`);
+     // cy.log(`Test failed. Dynamic value: ${dynamicValue}, Actual: ${value}, Expected: ${dynamicValue}`);
+        
+      cy.log(data)
       throw new Error(`Test failed: ${error.message}`);
+      
   }
+});
 });
   it('Read/write test', () => {
     // Write the array to a file
