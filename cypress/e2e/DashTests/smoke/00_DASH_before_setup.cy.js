@@ -42,7 +42,7 @@ describe("Settings to enable for new DB",
   context("Enable all required permissions and settings", ()=>{
    // beforeEach(() => {
   //  }) 
-    it('Enable permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-4765
+    it.only('Enable permissions', () => { //https://app.clickup.com/t/4534343/DASHCU-4765
       task_id='DASHCU-4765'
       cy.contains('.link__title','Users').click()
       cy.url().should('include', '/Admin/Users')
@@ -56,41 +56,41 @@ describe("Settings to enable for new DB",
       cy.get('body').then(($body) => {   
         let uncheckedCheckboxes = $body.find('div:contains("Select all").ui-checkbox > input:not(:checked)');
         let count = uncheckedCheckboxes.length;    
-        if (count > 0) { // Check if there are unchecked checkboxes
-            for (let i = 0; i < count; i++) {
-                cy.get('div:contains("Select all").ui-checkbox > input:not(:checked)').first().next().scrollIntoView().click();
-                
-                // Re-fetch the unchecked checkboxes after each click to ensure the list is up-to-date
-                cy.get('body').then(($body) => {
-                    uncheckedCheckboxes = $body.find('div:contains("Select all").ui-checkbox > input:not(:checked)');
-                    count = uncheckedCheckboxes.length;
-                    cy.log(count);
-                });
-            }
-            changes=true
+        if (count == 0) { // Check if there are no unchecked checkboxes
+          cy.log("All sites and departments are set") 
         } else {
-            cy.log("All sites and departments are set");
+          for (let i = 0; i < count; i++) {
+            cy.get('div:contains("Select all").ui-checkbox > input:not(:checked)').first().next().scrollIntoView().click();
+          
+            // Re-fetch the unchecked checkboxes after each click to ensure the list is up-to-date
+            cy.get('body').then(($body) => {
+              uncheckedCheckboxes = $body.find('div:contains("Select all").ui-checkbox > input:not(:checked)');
+              count = uncheckedCheckboxes.length;
+              cy.log(count);
+          })
+          }
+        changes=true
         }
-        //select all permissions
         cy.get('body').then(($body) => {   
           let uncheckedCheckboxes = $body.find('.table-row-group__btns__checkbox> input:not(:checked)');
-          let count = uncheckedCheckboxes.length;    
-          if (count > 0) { // Check if there are unchecked checkboxes
-              for (let i = 0; i < count; i++) {
-                  cy.get('.table-row-group__btns__checkbox> input:not(:checked)').first().parent(1).scrollIntoView().click();
-                  
-                  // Re-fetch the unchecked checkboxes after each click to ensure the list is up-to-date
-                  cy.get('body').then(($body) => {
-                    uncheckedCheckboxes = $body.find('.table-row-group__btns__checkbox> input:not(:checked)');
-                    count = uncheckedCheckboxes.length;
-                    cy.log(count);
-                  });
-              } 
-              changes=true
-          } else {
-              cy.log("All permissions are set");
+          let count = uncheckedCheckboxes.length; 
+          if (count == 0) { // Check if there are no unchecked checkboxes
+            cy.log("All permissions are set");            
+          } else { 
+            for (let i = 0; i < count; i++) {
+              cy.get('.table-row-group__btns__checkbox> input:not(:checked)').first().parent(1).scrollIntoView().click();
+            
+              // Re-fetch the unchecked checkboxes after each click to ensure the list is up-to-date
+              cy.get('body').then(($body) => {
+              uncheckedCheckboxes = $body.find('.table-row-group__btns__checkbox> input:not(:checked)');
+              count = uncheckedCheckboxes.length;
+              cy.log(count);
+              });
+            } 
+            changes=true
           }
-          cy.log(changes)
+          cy.get('.table-row-group__btns__checkbox> input:not(:checked)').should('not.exist')
+          cy.get('div:contains("Select all").ui-checkbox > input:not(:checked)').should('not.exist')
           if (changes){
             cy.contains('.VButton__text','Save').click()
             cy.contains('successfully saved').should('exist')
