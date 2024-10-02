@@ -92,6 +92,7 @@ describe("Settings to enable for new DB",
           cy.get('.table-row-group__btns__checkbox> input:not(:checked)').should('not.exist')
           cy.get('div:contains("Select all").ui-checkbox > input:not(:checked)').should('not.exist')
           if (changes){
+            cy.wait(1000)
             cy.contains('.VButton__text','Save').click()
             cy.contains('successfully saved').should('exist')
           }
