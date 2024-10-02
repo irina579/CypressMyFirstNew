@@ -12,7 +12,7 @@ describe('DASH login', () => {
 
     expect(5).to.be.gte(1)
   }) 
-  it.only('should validate a condition and show custom error message', () => {
+  it('should validate a condition and show custom error message', () => {
     let dynamicValue=1
     let value=2
     cy.readFile('cypress/fixtures/assigned_artists.txt').then((data) => {
