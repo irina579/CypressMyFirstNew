@@ -9,6 +9,7 @@ describe('DASH login', () => {
       random_search="changed"
     }
     cy.log(random_search)
+    console.log("Test is finished")
 
     expect(5).to.be.gte(1)
   }) 

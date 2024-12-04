@@ -1,8 +1,25 @@
-describe('My Test Suite', () => {
-  it.skip('SQL', function () {
-    cy.task('queryDb', `SELECT COUNT(*) as "rowCount" FROM dwh.Artist WHERE EmployeeType='NH' and BuId=1001`).then((result) => {
+describe('Dynamic DB Query Test', () => {
+  it('Check if the third record has UserName "kate-mu"', () => {
+    const query = 'SELECT TOP 5 UserId, UserName FROM dbo.UserProfile';
 
-        expect(result[0].rowCount).to.equal(394)
-    })
-})
-})
+    cy.task('queryDb', query).then((result) => {
+      expect(result).to.have.length.greaterThan(2); // Ensure at least 3 records
+
+      const thirdRecord = result[2]; // Get the third record (index 2)
+
+      // Clean up the UserName by trimming and replacing &nbsp; with an empty string
+      const cleanedUserName = thirdRecord.UserName.trim().replace(/&nbsp;/g, '');
+
+      expect(cleanedUserName).to.equal('kate-mu'); // Assert UserName is 'kate-mu'
+      expect(thirdRecord.UserId).to.be.a('number'); // Ensure UserId is a number
+    });
+  });
+});
+
+
+
+
+
+
+
+
