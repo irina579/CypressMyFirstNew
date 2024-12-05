@@ -19,7 +19,7 @@ module.exports = {
             const dbConfig = {
               server: '167.235.134.236',
               user: 'dash-sql-admin',
-              password: 'MuKSn2zor%u7)Awt@7',
+              password: 'MuKSn2zor%u7)Awt@759',
               database: 'Dash_Anonymise_stage',
               options: {
                 encrypt: false,
