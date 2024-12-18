@@ -1,25 +1,29 @@
 const sqlServer = require('cypress-sql-server');
+const fs = require('fs'); // To read the fixture file
+const path = require('path'); // For resolving file paths
 
 module.exports = {
   projectId: "e3m7sj",
   reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     reportDir: 'cypress/reports',
-    charts: 'true'
+    charts: 'true',
   },
   e2e: {
-    experimentalStudio: true, // Keep this if you're using experimental Studio feature
+    experimentalStudio: true,
     setupNodeEvents(on, config) {
-      // Existing task for dynamic database queries
+      // Load DB credentials from the fixture file
+      const dbCreds = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'cypress/fixtures/DB_creds.json')));
+
       on('task', {
         // Task to execute dynamic SQL query and return the result
         queryDb(query) {
           return new Promise((resolve, reject) => {
-            const sql = require('mssql'); // Ensure this dependency is installed
+            const sql = require('mssql');
             const dbConfig = {
               server: '167.235.134.236',
-              user: 'dash-sql-admin',
-              password: 'MuKSn2zor%u7)Awt@759',
+              user: dbCreds.user, // Use the fixture data
+              password: dbCreds.password, // Use the fixture data
               database: 'Dash_Anonymise_stage',
               options: {
                 encrypt: false,
@@ -27,22 +31,15 @@ module.exports = {
               },
             };
 
-            // Connect to the database and execute the query dynamically
             sql.connect(dbConfig, (err) => {
               if (err) {
                 reject(`Error connecting to database: ${err.message}`);
               } else {
-                // Execute the provided query dynamically
                 new sql.Request().query(query, (err, result) => {
                   if (err) {
                     reject(`Error executing query: ${err.message}`);
                   } else {
-                    if (result.recordset.length > 0) {
-                      // Return the result in JSON format for easier parsing
-                      resolve(result.recordset);
-                    } else {
-                      resolve([]); // Return an empty array if no data is found
-                    }
+                    resolve(result.recordset || []);
                   }
                 });
               }
@@ -53,11 +50,11 @@ module.exports = {
         // Test DB connection to ensure database is reachable
         testDbConnection() {
           return new Promise((resolve, reject) => {
-            const sql = require('mssql'); // Ensure this dependency is installed
+            const sql = require('mssql');
             const dbConfig = {
               server: '167.235.134.236',
-              user: 'dash-sql-admin',
-              password: 'MuKSn2zor%u7)Awt@7',
+              user: dbCreds.user, // Use the fixture data
+              password: dbCreds.password, // Use the fixture data
               database: 'Dash_Anonymise_stage',
               options: {
                 encrypt: false,
@@ -65,7 +62,6 @@ module.exports = {
               },
             };
 
-            // Connect to the database and test the connection
             sql.connect(dbConfig, (err) => {
               if (err) {
                 reject(`Error connecting to database: ${err.message}`);
@@ -77,7 +73,6 @@ module.exports = {
         },
       });
 
-      // Optional: Include other plugins (like cypress-mochawesome-reporter) if needed
       require('cypress-mochawesome-reporter/plugin')(on);
     },
     retries: 1,
@@ -99,10 +94,10 @@ module.exports = {
     discipline: 'Assets',
     generalist: ['London (MPC)', 'Berlin (MPC)'],
     bu: 'MPC',
-    url_g: 'http://5.75.182.20', // cloud stage
-    site_id: 23002, // London
-    IDL_dept_id: 23042, // Studio Operations
-    DL_dept_id: 23012, // Assets
+    url_g: 'http://5.75.182.20',
+    site_id: 23002,
+    IDL_dept_id: 23042,
+    DL_dept_id: 23012,
     EP_approval: true,
     India_site: false,
   },

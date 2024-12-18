@@ -1,4 +1,10 @@
 describe('Dynamic DB Query Test', () => {
+  it('Should successfully connect to the database', () => {
+    cy.task('testDbConnection').then((result) => {
+      // Assert that the connection was successful
+      expect(result).to.equal('Connection successful');
+    });
+  });
   it('Check if the third record has UserName "kate-mu"', () => {
     const query = 'SELECT TOP 5 UserId, UserName FROM dbo.UserProfile';
 

@@ -4,3 +4,4 @@ cypress/screenshots
 cypress/reports
 cypress/fixtures/assigned_artists.txt
 cypress/fixtures/show_elements.json
+cypress/fixtures/DB_creds.json
